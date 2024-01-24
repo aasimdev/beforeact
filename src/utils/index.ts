@@ -105,3 +105,59 @@ export function formatMonthYear(dateString: string) {
   );
   return formattedDate;
 }
+
+export const generateColor = (str: string) => {
+  const colors = [
+    { background: "#E7E7FF", color: "#696CFF" }, // A, B, C,
+    { background: "#E5F9FD", color: "#03C3EC" }, // D, E, F,
+    { background: "#FFEBE8", color: "#FF3E1D" }, // G, H, I,
+    { background: "#FFF2D6", color: "#FFAB00" }, // J, K, L,
+    { background: "#F0FCEA", color: "#82E14F" }, // M, N, O,
+    { background: "#FCE4F3", color: "#F73C7E" }, // P, Q, R,
+    { background: "#E4F1FF", color: "#1E9FFF" }, // S, T, U,
+    { background: "#F0F0F0", color: "#909399" }, // V, W, X,
+    { background: "#F8F0FF", color: "#B37FEB" }, // Y, Z
+  ];
+
+  const firstLetter = str.charAt(0).toUpperCase();
+
+  switch (firstLetter) {
+    case "A":
+    case "B":
+    case "C":
+      return colors[0];
+    case "D":
+    case "E":
+    case "F":
+      return colors[1];
+    case "G":
+    case "H":
+    case "I":
+      return colors[2];
+    case "J":
+    case "K":
+    case "L":
+      return colors[3];
+    case "M":
+    case "N":
+    case "O":
+      return colors[4];
+    case "P":
+    case "Q":
+    case "R":
+      return colors[5];
+    case "S":
+    case "T":
+    case "U":
+      return colors[6];
+    case "V":
+    case "W":
+    case "X":
+      return colors[7];
+    case "Y":
+    case "Z":
+      return colors[8];
+    default:
+      return colors[Math.floor(Math.random() * colors.length)];
+  }
+};
