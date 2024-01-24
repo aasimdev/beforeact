@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@layer tailwind-base, primereact, tailwind-utilities;
+
+@layer tailwind-base {
+  @tailwind base;
+}
+
+@layer tailwind-utilities {
+  @tailwind components;
+  @tailwind utilities;
+}
+
+
+body {
+  @apply m-0 bg-body font-sans;
+}
+
+.theme-btn {
+  @apply text-white text-[22px] bg-blue font-normal shadow-btn rounded-lg border-0 px-10 transition-all duration-300 hover:bg-blue-100
+}
+
+.theme-btn-default {
+  @apply text-gray-100 text-[22px] bg-gray-500 font-normal rounded-lg border-0 px-10 transition-all duration-300 hover:bg-gray-100 hover:text-white focus:outline-0 focus:ring-0
+}
+
+.theme-table th {
+  @apply text-lg font-semibold text-gray-200 border-0 bg-body-2
+}
+
+.theme-table .p-datatable-thead tr th:first-of-type {
+  @apply pl-6;
+}
+
+.theme-table .p-datatable-thead tr th:last-of-type {
+  @apply pr-6;
+}
+
+.theme-table .p-datatable-tbody td {
+  @apply text-gray text-lg border-gray-300
+}
+
+.theme-table .p-datatable-tbody tr td:first-of-type {
+  @apply pl-6;
+}
+
+.theme-table .p-datatable-tbody tr td:last-of-type {
+  @apply pr-6;
+}
+
+.theme-table .p-button {
+  @apply p-0 text-lg font-medium text-blue w-32 hover:bg-transparent border-0 focus:outline-0 focus:ring-0
+}
+
+.theme-input {
+  @apply rounded-lg bg-white border-gray-300 py-2 px-4 text-lg text-gray font-normal placeholder:text-gray-400 hover:border-gray-400 focus:shadow-input focus:border-blue
+}
+
+.p-dialog-header-close {
+  @apply w-8 h-8 absolute top-0 right-0 text-white hover:bg-transparent
+}
+
+.p-button,
+.p-datatable-tbody tr td,
+.p-datatable-thead tr th {
+  @apply font-sans;
+}
+
+.theme-table .p-button .p-button-label {
+  font-weight: 500;
+}
+
+.p-button-label {
+  font-weight: 400;
+}
+
+.p-dropdown-label {
+  @apply p-0
+}
+
+.navItem.active {
+  @apply bg-purple-100 text-blue
+}
+
+.p-sidebar-header {
+  @apply md:hidden
+}
+
+.p-dialog-header {
+  @apply bg-dialogHeader text-center text-white bg-no-repeat bg-center bg-cover
+}
+
+.p-dialog-title {
+  @apply text-5xl font-extrabold
+}
+
+.custom-upload-icon .p-button-label {
+  @apply hidden
+}
+
+.brand-upload .p-fileupload-choose {
+  @apply bg-transparent text-blue border-blue w-full px-10 text-[22px] py-[10.7px]
+}
+
+.brand-upload .p-fileupload-choose:focus {
+  @apply focus:outline-0 focus:ring-0
+}
+
+.brand-upload .p-button-icon {
+  @apply hidden
+}
