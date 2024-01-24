@@ -10,11 +10,14 @@ import BrandList from "./components/BrandList";
 // import diceIMG from "../../assets/images/dice.png";
 import { useNavigate } from "react-router-dom";
 import AddBrand from "./components/AddBrand";
-import api from "../../api/api";
 // import { log } from "console";
 import Sidebar from "../../common/Sidebar";
-import { useGetAllTenantsQuery } from "../../redux/api/brandApiSlice";
+import {
+  useCreateTenantMutation,
+  useGetAllTenantsQuery,
+} from "../../redux/api/brandApiSlice";
 import OverlayLoader from "../../components/Spinner/OverlayLoader";
+import ToastAlert from "../../components/Toast";
 
 interface BrandDT {
   name: any;
@@ -42,37 +45,38 @@ const Brands = () => {
     }
   }, [data]);
 
-  // // Get Brands
-  // const fetchData = async () => {
-  //   try {
-  //     const response = await api.tenants.getTenants();
-  //     setBrands(response.data.tenants);
-  //   } catch (error) {
-  //     // Handle error
-  //     console.error("Error fetching data:", error);
-  //   }
-  // };
+  // CREATE BRAND API BIND
+  const [createBrandAPI, { isLoading: createBandLoading }] =
+    useCreateTenantMutation();
 
-  // // Get Brands Call
-  // useEffect(() => {
-  //   fetchData();
-  // }, []);
-
-  // Create Brand
   const createBrand = async (e: FormEvent) => {
     e.preventDefault();
+
+    const payload = {
+      name: formData.name,
+      filterId: formData.filterId,
+      website: formData.website,
+    };
+
     try {
-      const response = await api.tenants.createTenant(
-        formData.name,
-        formData.filterId,
-        formData.website
-      );
-      if (response.status === 200) {
+      const brand: any = await createBrandAPI(payload);
+
+      if (brand?.data === null) {
         setVisible(false);
-        // fetchData();
+        ToastAlert("Brand created successfully", "success");
+        setFormData({
+          name: "",
+          filterId: "",
+          website: "",
+        });
+      }
+
+      if (brand?.error) {
+        ToastAlert(brand?.error?.data?.title, "error");
       }
     } catch (error) {
-      console.error("Error creating brand:", error);
+      console.error("Create Brand Error:", error);
+      ToastAlert("Something went wrong", "error");
     }
   };
 
@@ -129,7 +133,9 @@ const Brands = () => {
             visible={visible}
             createBrand={createBrand}
             formData={formData}
+            setFormData={setFormData}
             handleChange={handleChange}
+            loading={createBandLoading}
           />
         </div>
       </div>

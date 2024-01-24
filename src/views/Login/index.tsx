@@ -73,7 +73,7 @@ const Login: React.FC = () => {
                 <div
                   className="theme-btn"
                   style={{
-                    height: "45px",
+                    height: "55px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",

@@ -3,6 +3,16 @@ import { apiSlice } from "./apiSlice";
 
 export const brandApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    createTenant: builder.mutation({
+      query: (data) => {
+        return {
+          url: "tenant/create-tenant",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["Brands"],
+    }),
     getAllTenants: builder.query({
       query: () => {
         return {
@@ -24,4 +34,8 @@ export const brandApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllTenantsQuery, useGetTenantUsersQuery } = brandApiSlice;
+export const {
+  useCreateTenantMutation,
+  useGetAllTenantsQuery,
+  useGetTenantUsersQuery,
+} = brandApiSlice;

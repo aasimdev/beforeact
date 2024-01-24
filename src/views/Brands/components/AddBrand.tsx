@@ -3,6 +3,7 @@ import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import React, { useState } from "react";
 import BrandLogo from "./BrandLogo";
+import DotLoader from "../../../components/Spinner/dotLoader";
 // import api from "../../api/api";
 
 interface AddBrandDataType {
@@ -10,17 +11,35 @@ interface AddBrandDataType {
   visible?: boolean;
   createBrand?: any;
   formData?: any;
+  setFormData?: any;
   handleChange?: any;
+  loading?: boolean;
 }
 
 const AddBrand: React.FC<AddBrandDataType> = (props) => {
-  const { setVisible, visible, createBrand, formData, handleChange } = props;
+  const {
+    setVisible,
+    visible,
+    createBrand,
+    setFormData,
+    formData,
+    handleChange,
+    loading,
+  } = props;
   const [visibleLogo, setVisibleLogo] = useState(false);
+
   return (
     <>
       <Dialog
         visible={visible}
-        onHide={() => setVisible(false)}
+        onHide={() => {
+          setVisible(false);
+          setFormData({
+            name: "",
+            filterId: "",
+            website: "",
+          });
+        }}
         style={{ width: "50vw" }}
         breakpoints={{ "960px": "75vw", "641px": "100vw" }}
         header="Create Brand"
@@ -95,9 +114,36 @@ const AddBrand: React.FC<AddBrandDataType> = (props) => {
                 type="button"
                 className="theme-btn-default"
                 label="Cancel"
-                onClick={() => setVisible(false)}
+                onClick={() => {
+                  setVisible(false);
+                  setFormData({
+                    name: "",
+                    filterId: "",
+                    website: "",
+                  });
+                }}
+                disabled={loading}
               />
-              <Button type="submit" className="theme-btn" label="Create" />
+              {loading ? (
+                <div
+                  className="theme-btn"
+                  style={{
+                    height: "55px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <DotLoader color="#fff" size={12} />
+                </div>
+              ) : (
+                <Button
+                  type="submit"
+                  disabled={loading}
+                  className="theme-btn"
+                  label="Create"
+                />
+              )}
             </div>
           </form>
         </div>
