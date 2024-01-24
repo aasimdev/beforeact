@@ -50,9 +50,9 @@ const Users = () => {
   };
 
   // Edit Brand
-  const editBrand = (data: UserDT) => {
-    console.log(data);
-  };
+  // const editBrand = (data: UserDT) => {
+  //   console.log(data);
+  // };
 
   const onRowEditComplete = (e: DataTableRowEditCompleteEvent) => {
     let _products = [...users];

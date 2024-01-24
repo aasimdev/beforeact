@@ -111,13 +111,13 @@ const EditBrand = () => {
     setVisible(true);
   };
 
-  const handleDeleteUser = () => {
-    // const updatedUsers = users.filter((user) => user.userName !== selectedUser?.userName);
-    // setUsers(updatedUsers);
-    // setVisible(false);
+  // const handleDeleteUser = () => {
+  //   // const updatedUsers = users.filter((user) => user.userName !== selectedUser?.userName);
+  //   // setUsers(updatedUsers);
+  //   // setVisible(false);
 
-    setSelectedUser(null);
-  };
+  //   setSelectedUser(null);
+  // };
 
   return (
     <>

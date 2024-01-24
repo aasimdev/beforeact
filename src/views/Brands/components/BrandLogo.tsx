@@ -26,11 +26,11 @@ const BrandLogo: React.FC<{ setVisibleLogo?: any; visibleLogo?: boolean }> = ({
     console.log(e);
   };
 
-  const chooseOptions = {
-    icon: "pi pi-fw pi-images",
-    iconOnly: true,
-    className: "custom-choose-btn p-button-rounded p-button-outlined",
-  };
+  // const chooseOptions = {
+  //   icon: "pi pi-fw pi-images",
+  //   iconOnly: true,
+  //   className: "custom-choose-btn p-button-rounded p-button-outlined",
+  // };
 
   return (
     <Dialog
