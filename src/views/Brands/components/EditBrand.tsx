@@ -14,6 +14,9 @@ import { Image } from "primereact/image";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import api from "../../../api/api";
 import Sidebar from "../../../common/Sidebar";
+import { useGetTenantUsersQuery } from "../../../redux/api/brandApiSlice";
+import OverlayLoader from "../../../components/Spinner/OverlayLoader";
+import { capitalizeFirstLetter, formatDate } from "../../../utils";
 
 interface UserDT {
   userName: any;
@@ -24,20 +27,29 @@ interface UserDT {
 }
 
 const EditBrand = () => {
-  const [title, setTitle] = useState("");
+  const { pathname } = useLocation();
+  const { id } = useParams<{ id: string }>();
+
+  // states
   const [users, setUsers] = useState<UserDT[]>([]);
+  const [title, setTitle] = useState("");
   const [selectUser, setSelectUser] = useState("");
   const [newUser, setNewUser] = useState(false);
-  const { pathname } = useLocation();
   const [visible, setVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserDT | null>(null);
-  const { id } = useParams<{ id: string }>();
   const [brandId, setBrandId] = useState<any>("");
 
-  // Capitalize First Letter
-  const capitalizeFirstLetter = (str: string) => {
-    return str.replace(/\b\w/g, (match) => match.toUpperCase());
-  };
+  // GET TENANT USERS
+  const { data, isLoading } = useGetTenantUsersQuery(id);
+
+  useEffect(() => {
+    if (data) {
+      // Find all users who are not deleted
+      const allUsers: UserDT[] = data.users;
+      const activeUsers: UserDT[] = allUsers.filter((user) => !user.deleted);
+      setUsers(activeUsers);
+    }
+  }, [data]);
 
   useEffect(() => {
     const lastSegment = pathname.split("/").pop();
@@ -53,33 +65,13 @@ const EditBrand = () => {
     { name: "Option C", code: "3" },
   ];
 
-  // Get Users
-  // Get Users
-  const fetchData = async () => {
-    setBrandId(id);
-    try {
-      const response = await api.tenants.getUsers(id);
-      const allUsers: UserDT[] = response.data.users;
-      const activeUsers: UserDT[] = allUsers.filter((user) => !user.deleted);
-      setUsers(activeUsers);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    }
-  };
-
-  // Get Users Call
-  useEffect(() => {
-    fetchData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
-
   // Remove User
   const removeUser = async (userId: string) => {
     try {
       const response = await api.tenants.removeUserFromTenant(userId, brandId);
       if (response.status === 200) {
         setVisible(false);
-        fetchData();
+        // fetchData();
       }
     } catch (error) {
       console.error("Error removing user:", error);
@@ -88,18 +80,9 @@ const EditBrand = () => {
 
   // Table body templates
   const actionBodyTemplate = (data: UserDT) => {
-    console.log(data);
+    // console.log(data);
 
     return <Button label="Delete" text onClick={() => deleteUser(data)} />;
-  };
-
-  // Date format
-  const formatDate = (dateString: string) => {
-    const originalDate = new Date(dateString);
-    const formattedDate = `${
-      originalDate.getMonth() + 1
-    }/${originalDate.getDate()}/${originalDate.getFullYear()}`;
-    return formattedDate;
   };
 
   // Close Popup Icon
@@ -111,16 +94,9 @@ const EditBrand = () => {
     setVisible(true);
   };
 
-  // const handleDeleteUser = () => {
-  //   // const updatedUsers = users.filter((user) => user.userName !== selectedUser?.userName);
-  //   // setUsers(updatedUsers);
-  //   // setVisible(false);
-
-  //   setSelectedUser(null);
-  // };
-
   return (
     <>
+      {isLoading && <OverlayLoader />}
       <div className="flex">
         <Sidebar />
 
@@ -134,7 +110,7 @@ const EditBrand = () => {
             </h3>
 
             <DataTable value={users} className="theme-table">
-              <Column field="userName" header="USERNAME"></Column>
+              <Column field="userName" header="USER NAME"></Column>
               <Column
                 field="email"
                 header="EMAIL"

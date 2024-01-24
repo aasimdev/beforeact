@@ -12,7 +12,16 @@ export const brandApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["Brands"],
     }),
+    getTenantUsers: builder.query({
+      query: (tenantId) => {
+        return {
+          url: `tenant/get-users?tenantId=${tenantId}`,
+          method: "GET",
+        };
+      },
+      providesTags: ["Brands"],
+    }),
   }),
 });
 
-export const { useGetAllTenantsQuery } = brandApiSlice;
+export const { useGetAllTenantsQuery, useGetTenantUsersQuery } = brandApiSlice;
