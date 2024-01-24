@@ -1,7 +1,7 @@
 import Header from "../../common/Header";
 import Title from "../../common/Title";
 import { Button } from "primereact/button";
-import { FormEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BrandList from "./components/BrandList";
 
 // Images
@@ -12,12 +12,8 @@ import { useNavigate } from "react-router-dom";
 import AddBrand from "./components/AddBrand";
 // import { log } from "console";
 import Sidebar from "../../common/Sidebar";
-import {
-  useCreateTenantMutation,
-  useGetAllTenantsQuery,
-} from "../../redux/api/brandApiSlice";
+import { useGetAllTenantsQuery } from "../../redux/api/brandApiSlice";
 import OverlayLoader from "../../components/Spinner/OverlayLoader";
-import ToastAlert from "../../components/Toast";
 
 interface BrandDT {
   name: any;
@@ -27,14 +23,11 @@ interface BrandDT {
 }
 
 const Brands = () => {
-  const [visible, setVisible] = useState(false);
   const navigate = useNavigate();
+
+  // states
+  const [addBrandVisible, setAddBrandVisible] = useState(false);
   const [brands, setBrands] = useState([]);
-  const [formData, setFormData] = useState({
-    name: "",
-    filterId: "",
-    website: "",
-  });
 
   // GET ALL BRANDS
   const { data, isLoading } = useGetAllTenantsQuery({});
@@ -44,50 +37,6 @@ const Brands = () => {
       setBrands(data.tenants);
     }
   }, [data]);
-
-  // CREATE BRAND API BIND
-  const [createBrandAPI, { isLoading: createBandLoading }] =
-    useCreateTenantMutation();
-
-  const createBrand = async (e: FormEvent) => {
-    e.preventDefault();
-
-    const payload = {
-      name: formData.name,
-      filterId: formData.filterId,
-      website: formData.website,
-    };
-
-    try {
-      const brand: any = await createBrandAPI(payload);
-
-      if (brand?.data === null) {
-        setVisible(false);
-        ToastAlert("Brand created successfully", "success");
-        setFormData({
-          name: "",
-          filterId: "",
-          website: "",
-        });
-      }
-
-      if (brand?.error) {
-        ToastAlert(brand?.error?.data?.title, "error");
-      }
-    } catch (error) {
-      console.error("Create Brand Error:", error);
-      ToastAlert("Something went wrong", "error");
-    }
-  };
-
-  // Create Brand onChange Handler
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [id]: value,
-    }));
-  };
 
   // View Brands
   const viewBrand = (data: BrandDT) => {
@@ -121,22 +70,17 @@ const Brands = () => {
           <Header />
           <Title brand={false} title="Brands" />
           <div className="my-6 text-right">
-            <Button className="theme-btn" onClick={() => setVisible(true)}>
+            <Button
+              className="theme-btn"
+              onClick={() => setAddBrandVisible(true)}
+            >
               + Create Brand
             </Button>
           </div>
 
           <BrandList brands={brands} actionBodyTemplate={actionBodyTemplate} />
 
-          <AddBrand
-            setVisible={setVisible}
-            visible={visible}
-            createBrand={createBrand}
-            formData={formData}
-            setFormData={setFormData}
-            handleChange={handleChange}
-            loading={createBandLoading}
-          />
+          <AddBrand visible={addBrandVisible} setVisible={setAddBrandVisible} />
         </div>
       </div>
     </>

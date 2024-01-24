@@ -1,32 +1,69 @@
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import BrandLogo from "./BrandLogo";
 import DotLoader from "../../../components/Spinner/dotLoader";
+import ToastAlert from "../../../components/Toast";
+import { useCreateTenantMutation } from "../../../redux/api/brandApiSlice";
 // import api from "../../api/api";
 
 interface AddBrandDataType {
-  setVisible?: any;
   visible?: boolean;
-  createBrand?: any;
-  formData?: any;
-  setFormData?: any;
-  handleChange?: any;
-  loading?: boolean;
+  setVisible?: any;
 }
 
 const AddBrand: React.FC<AddBrandDataType> = (props) => {
-  const {
-    setVisible,
-    visible,
-    createBrand,
-    setFormData,
-    formData,
-    handleChange,
-    loading,
-  } = props;
+  const { visible, setVisible } = props;
+
   const [visibleLogo, setVisibleLogo] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    filterId: "",
+    website: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [id]: value,
+    }));
+  };
+
+  // CREATE BRAND API BIND
+  const [createBrandAPI, { isLoading }] = useCreateTenantMutation();
+
+  const createBrand = async (e: FormEvent) => {
+    e.preventDefault();
+
+    const payload = {
+      name: formData.name,
+      filterId: formData.filterId,
+      website: formData.website,
+    };
+
+    try {
+      const brand: any = await createBrandAPI(payload);
+
+      if (brand?.data === null) {
+        setVisible(false);
+        ToastAlert("Brand created successfully", "success");
+        setFormData({
+          name: "",
+          filterId: "",
+          website: "",
+        });
+      }
+
+      if (brand?.error) {
+        ToastAlert(brand?.error?.data?.title, "error");
+      }
+    } catch (error) {
+      console.error("Create Brand Error:", error);
+      ToastAlert("Something went wrong", "error");
+    }
+  };
 
   return (
     <>
@@ -122,9 +159,9 @@ const AddBrand: React.FC<AddBrandDataType> = (props) => {
                     website: "",
                   });
                 }}
-                disabled={loading}
+                disabled={isLoading}
               />
-              {loading ? (
+              {isLoading ? (
                 <div
                   className="theme-btn"
                   style={{
@@ -139,7 +176,7 @@ const AddBrand: React.FC<AddBrandDataType> = (props) => {
               ) : (
                 <Button
                   type="submit"
-                  disabled={loading}
+                  disabled={isLoading}
                   className="theme-btn"
                   label="Create"
                 />
