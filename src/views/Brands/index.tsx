@@ -13,6 +13,8 @@ import AddBrand from "./components/AddBrand";
 import api from "../../api/api";
 // import { log } from "console";
 import Sidebar from "../../common/Sidebar";
+import { useGetAllTenantsQuery } from "../../redux/api/brandApiSlice";
+import OverlayLoader from "../../components/Spinner/OverlayLoader";
 
 interface BrandDT {
   name: any;
@@ -31,21 +33,30 @@ const Brands = () => {
     website: "",
   });
 
-  // Get Brands
-  const fetchData = async () => {
-    try {
-      const response = await api.tenants.getTenants();
-      setBrands(response.data.tenants);
-    } catch (error) {
-      // Handle error
-      console.error("Error fetching data:", error);
-    }
-  };
+  // GET ALL BRANDS
+  const { data, isLoading } = useGetAllTenantsQuery({});
 
-  // Get Brands Call
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (data) {
+      setBrands(data.tenants);
+    }
+  }, [data]);
+
+  // // Get Brands
+  // const fetchData = async () => {
+  //   try {
+  //     const response = await api.tenants.getTenants();
+  //     setBrands(response.data.tenants);
+  //   } catch (error) {
+  //     // Handle error
+  //     console.error("Error fetching data:", error);
+  //   }
+  // };
+
+  // // Get Brands Call
+  // useEffect(() => {
+  //   fetchData();
+  // }, []);
 
   // Create Brand
   const createBrand = async (e: FormEvent) => {
@@ -58,7 +69,7 @@ const Brands = () => {
       );
       if (response.status === 200) {
         setVisible(false);
-        fetchData();
+        // fetchData();
       }
     } catch (error) {
       console.error("Error creating brand:", error);
@@ -97,6 +108,8 @@ const Brands = () => {
 
   return (
     <>
+      {isLoading && <OverlayLoader />}
+
       <div className="flex">
         <Sidebar />
 

@@ -23,7 +23,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["User Details"],
+      providesTags: ["User"],
     }),
     addUserDetails: builder.mutation({
       query: (data) => {
@@ -33,7 +33,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ["User Details"],
+      invalidatesTags: ["User"],
     }),
     updateUserDetails: builder.mutation({
       query: (data) => {
@@ -43,7 +43,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
           body: data,
         };
       },
-      invalidatesTags: ["User Details"],
+      invalidatesTags: ["User"],
     }),
   }),
 });
