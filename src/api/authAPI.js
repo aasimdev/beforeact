@@ -73,6 +73,7 @@ const updateUser = async (id, email) => {
   });
 };
 
+// TODO: Salman Done
 const deleteUser = async (id) => {
   return await instance.post("/admin/delete-user", {
     id,

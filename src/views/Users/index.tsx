@@ -12,6 +12,7 @@ import ConfirmPopup from "../../components/ConfirmPopup";
 import Sidebar from "../../components/Sidebar";
 import {
   useCreateUserMutation,
+  useDeleteUserMutation,
   useGetAllUsersQuery,
 } from "../../redux/api/userApiSlice";
 import OverlayLoader from "../../components/Spinner/OverlayLoader";
@@ -23,6 +24,7 @@ interface UserDT {
   userName: any;
   email: string | null;
   dateJoined: any;
+  id: string;
 }
 
 const Users = () => {
@@ -133,13 +135,30 @@ const Users = () => {
     setConfirmPopup(true);
   };
 
-  const handleDelete = () => {
-    // const updatedUsers = acti.filter(
-    //   (user) => user.userName !== selectedUser?.userName
-    // );
-    // setUsers(updatedUsers);
-    setConfirmPopup(false);
-    setSelectedUser(null);
+  // DELETE USER API BIND
+  const [deleteUserAPI, { isLoading: deleteUserLoading }] =
+    useDeleteUserMutation();
+
+  const handleDelete = async () => {
+    const payload = {
+      id: selectedUser?.id,
+    };
+
+    try {
+      const user: any = await deleteUserAPI(payload);
+
+      if (user?.data === null) {
+        setConfirmPopup(false);
+        setSelectedUser(null);
+        ToastAlert("User Deleted Successfully", "success");
+      }
+      if (user?.error) {
+        ToastAlert(user?.error?.data?.title, "error");
+      }
+    } catch (error) {
+      console.error("Deleting User Error:", error);
+      ToastAlert("Something went wrong", "error");
+    }
   };
 
   // Deleted Users View Information
@@ -259,7 +278,7 @@ const Users = () => {
             </div>
           </div>
 
-          {/* Deleted Users */}
+          {/* Deleted Users List */}
           <DeletedUsers
             actionDeletedBodyTemplate={actionDeletedBodyTemplate}
             users={deletedUsers}
@@ -267,9 +286,8 @@ const Users = () => {
 
           {/* Confirm Popup */}
           <ConfirmPopup
-            setConfirmPopup={setConfirmPopup}
             confirmPopup={confirmPopup}
-            onDelete={handleDelete}
+            setConfirmPopup={setConfirmPopup}
           >
             <div className="text-center">
               <h2 className="mb-6 text-4xl text-gray-200 font-semibold">
@@ -277,8 +295,39 @@ const Users = () => {
               </h2>
               <p className="text-[22px] text-gray-200">
                 You are about to delete the user:{" "}
-                <span className="text-blue font-semibold">XXX</span>
+                <span className="text-blue font-semibold">
+                  {selectedUser?.userName}
+                </span>
               </p>
+            </div>
+            <div className="flex items-center justify-end gap-6 mt-10">
+              <Button
+                type="button"
+                className="theme-btn-default"
+                label="Cancel"
+                onClick={() => setConfirmPopup(false)}
+                disabled={deleteUserLoading}
+              />
+              {deleteUserLoading ? (
+                <div
+                  className="theme-btn leading-none"
+                  style={{
+                    height: "55px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <DotLoader color="#fff" size={12} />
+                </div>
+              ) : (
+                <Button
+                  type="button"
+                  className="theme-btn"
+                  label="Yes, delete this user"
+                  onClick={handleDelete}
+                />
+              )}
             </div>
           </ConfirmPopup>
 

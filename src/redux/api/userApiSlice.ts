@@ -13,11 +13,21 @@ export const userApiSlice = apiSlice.injectEndpoints({
       providesTags: ["User"],
     }),
     createUser: builder.mutation({
-      query: (body) => {
+      query: (data) => {
         return {
           url: "admin/create-user",
           method: "POST",
-          body,
+          body: data,
+        };
+      },
+      invalidatesTags: ["User"],
+    }),
+    deleteUser: builder.mutation({
+      query: (data) => {
+        return {
+          url: "admin/delete-user",
+          method: "POST",
+          body: data,
         };
       },
       invalidatesTags: ["User"],
@@ -25,4 +35,8 @@ export const userApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetAllUsersQuery, useCreateUserMutation } = userApiSlice;
+export const {
+  useGetAllUsersQuery,
+  useCreateUserMutation,
+  useDeleteUserMutation,
+} = userApiSlice;
