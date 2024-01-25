@@ -1,21 +1,23 @@
+// React Imports
+import React, { ReactNode } from "react";
+// Prime Imports
 import { Dialog } from "primereact/dialog";
 import { Image } from "primereact/image";
-import React, { ReactNode } from "react";
-import closeIcon from "../assets/images/close-icon.svg";
+// Local Imports
+import closeIcon from "../../assets/images/close-icon.svg";
 
 interface ConfirmPopupProps {
-  setConfirmPopup: React.Dispatch<React.SetStateAction<boolean>>;
   confirmPopup: boolean;
+  setConfirmPopup: React.Dispatch<React.SetStateAction<boolean>>;
   children: ReactNode;
 }
 
-const ConfirmPopup: React.FC<ConfirmPopupProps> = ({
-  setConfirmPopup,
-  confirmPopup,
-  children,
-}) => {
+const ConfirmPopup: React.FC<ConfirmPopupProps> = (props) => {
+  const { confirmPopup, setConfirmPopup, children } = props;
+
   // Close Popup Icon
   const closeIconTemplate = <Image src={closeIcon} alt="close icon" />;
+
   return (
     <Dialog
       visible={confirmPopup}

@@ -1,9 +1,13 @@
+// React Imports
 import React from "react";
+// Prime Imports
+import { Button } from "primereact/button";
+// Redux
+import { useDeleteUserMutation } from "../../../redux/api/userApiSlice";
+// Custom
 import ConfirmPopup from "../../../components/ConfirmPopup";
 import DotLoader from "../../../components/Spinner/dotLoader";
-import { Button } from "primereact/button";
-import { useDeleteUserMutation } from "../../../redux/api/userApiSlice";
-import ToastAlert from "../../../components/Toast";
+import ToastAlert from "../../../components/ToastAlert";
 
 interface ConfirmPopupProps {
   confirmPopup: boolean;

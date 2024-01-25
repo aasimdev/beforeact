@@ -4,7 +4,7 @@ import { InputText } from "primereact/inputtext";
 import React, { FormEvent, useState } from "react";
 import BrandLogoModal from "./BrandLogoModal";
 import DotLoader from "../../../components/Spinner/dotLoader";
-import ToastAlert from "../../../components/Toast";
+import ToastAlert from "../../../components/ToastAlert";
 import { useCreateTenantMutation } from "../../../redux/api/brandApiSlice";
 // import api from "../../api/api";
 

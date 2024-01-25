@@ -4,7 +4,7 @@ import { Dialog } from "primereact/dialog";
 // React imports
 import { useRef, useState } from "react";
 // Custom Imports
-import ToastAlert from "../../../components/Toast";
+import ToastAlert from "../../../components/ToastAlert";
 
 interface BrandLogoModalProps {
   setVisibleLogo?: any;

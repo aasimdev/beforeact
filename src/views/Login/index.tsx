@@ -6,7 +6,7 @@ import { setUser } from "../../redux/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useLoginMutation } from "../../redux/api/authApiSlice";
 import DotLoader from "../../components/Spinner/dotLoader";
-import ToastAlert from "../../components/Toast";
+import ToastAlert from "../../components/ToastAlert";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

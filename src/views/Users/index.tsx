@@ -1,20 +1,25 @@
+// React Imports
 import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
-import Title from "../../components/Title";
+// Prime React Imports
 import { DataTable, DataTableRowEditCompleteEvent } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
-import DeletedUsers from "./components/DeleteUser";
-import ViewUserModal from "./components/ViewUserModal";
-import Sidebar from "../../components/Sidebar";
+// Redux
 import {
   useCreateUserMutation,
   useGetAllUsersQuery,
 } from "../../redux/api/userApiSlice";
-import OverlayLoader from "../../components/Spinner/OverlayLoader";
+// Utils
 import { formatDate } from "../../utils";
-import ToastAlert from "../../components/Toast";
+// Custom
+import Header from "../../components/Header";
+import Title from "../../components/Title";
+import DeletedUsers from "./components/DeleteUser";
+import ViewUserModal from "./components/ViewUserModal";
+import Sidebar from "../../components/Sidebar";
+import OverlayLoader from "../../components/Spinner/OverlayLoader";
+import ToastAlert from "../../components/ToastAlert";
 import DotLoader from "../../components/Spinner/dotLoader";
 import DeleteUserModal from "./components/DeleteUserModal";
 
@@ -30,7 +35,6 @@ const Users = () => {
   const [visible, setVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserDT | null>(null);
   const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
-  // new
   const [activeUsers, setActiveUsers] = useState<UserDT[]>([]);
   const [deletedUsers, setDeletedUsers] = useState<UserDT[]>([]);
 
@@ -76,13 +80,24 @@ const Users = () => {
     }
   };
 
+  // Deleted Users View Information
+  const actionDeletedBodyTemplate = (data: UserDT) => {
+    return (
+      <>
+        <Button
+          label="View"
+          text
+          onClick={() => {
+            setVisible(true);
+            setSelectedUser(data);
+          }}
+        />
+      </>
+    );
+  };
+
   // View Brands
   const viewBrand = (data: UserDT) => {};
-
-  // Edit Brand
-  // const editBrand = (data: UserDT) => {
-  //   console.log(data);
-  // };
 
   const onRowEditComplete = (e: DataTableRowEditCompleteEvent) => {
     let _products = [...activeUsers];
@@ -101,12 +116,19 @@ const Users = () => {
           label="View"
           text
           onClick={() => {
-            setVisible(true);
             setSelectedUser(data);
+            setVisible(true);
           }}
         />
         <Button label="Edit" text onClick={() => viewBrand(data)} />
-        <Button label="Delete" text onClick={() => deleteUser(data)} />
+        <Button
+          label="Delete"
+          text
+          onClick={() => {
+            setSelectedUser(data);
+            setConfirmPopup(true);
+          }}
+        />
       </>
     );
   };
@@ -120,32 +142,6 @@ const Users = () => {
           options.editorCallback!(e.target.value)
         }
       />
-    );
-  };
-
-  // const saveBtn = (options: any) => {
-  //   return <Button label="Save" className="theme-btn" />;
-  // };
-
-  // Handlers
-  const deleteUser = (data: UserDT) => {
-    setSelectedUser(data);
-    setConfirmPopup(true);
-  };
-
-  // Deleted Users View Information
-  const actionDeletedBodyTemplate = (data: UserDT) => {
-    return (
-      <>
-        <Button
-          label="View"
-          text
-          onClick={() => {
-            setVisible(true);
-            setSelectedUser(data);
-          }}
-        />
-      </>
     );
   };
 
@@ -256,7 +252,7 @@ const Users = () => {
             users={deletedUsers}
           />
 
-          {/* Confirm Popup */}
+          {/* Delete User Modal */}
           <DeleteUserModal
             confirmPopup={confirmPopup}
             setConfirmPopup={setConfirmPopup}
