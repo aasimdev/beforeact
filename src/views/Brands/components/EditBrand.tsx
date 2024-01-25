@@ -12,11 +12,15 @@ import closeIcon from "../../../assets/images/close-icon.svg";
 import BrandLogoImg from "../../../assets/images/banana.png";
 import { Image } from "primereact/image";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
-import api from "../../../api/api";
 import Sidebar from "../../../components/Sidebar";
-import { useGetTenantUsersQuery } from "../../../redux/api/brandApiSlice";
+import {
+  useGetTenantUsersQuery,
+  useRemoveUserFromTenantMutation,
+} from "../../../redux/api/brandApiSlice";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import { capitalizeFirstLetter, formatDate } from "../../../utils";
+import ToastAlert from "../../../components/ToastAlert";
+import DotLoader from "../../../components/Spinner/dotLoader";
 
 interface UserDT {
   userName: any;
@@ -37,7 +41,6 @@ const EditBrand = () => {
   const [newUser, setNewUser] = useState(false);
   const [visible, setVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserDT | null>(null);
-  const [brandId, setBrandId] = useState<any>("");
 
   // GET TENANT USERS
   const { data, isLoading } = useGetTenantUsersQuery(id);
@@ -65,16 +68,30 @@ const EditBrand = () => {
     { name: "Option C", code: "3" },
   ];
 
-  // Remove User
-  const removeUser = async (userId: string) => {
+  // REMOVE USER API BIND
+  const [removeUserApi, { isLoading: removeUserLoading }] =
+    useRemoveUserFromTenantMutation();
+
+  const removeUser = async (user: any) => {
+    const payload = {
+      userId: user.id,
+      tenantId: id,
+    };
+
     try {
-      const response = await api.tenants.removeUserFromTenant(userId, brandId);
-      if (response.status === 200) {
+      const user: any = await removeUserApi(payload);
+
+      if (user?.data === null) {
+        ToastAlert("User Deleted Successfully", "success");
         setVisible(false);
-        // fetchData();
+      }
+
+      if (user?.error) {
+        ToastAlert(user?.error?.data?.title, "error");
       }
     } catch (error) {
-      console.error("Error removing user:", error);
+      console.error("Deleting User Error:", error);
+      ToastAlert("Something went wrong", "error");
     }
   };
 
@@ -152,7 +169,6 @@ const EditBrand = () => {
           </div>
 
           {/* Confirm Popup */}
-
           <Dialog
             visible={visible}
             onHide={() => setVisible(false)}
@@ -185,13 +201,29 @@ const EditBrand = () => {
                     className="theme-btn-default"
                     label="Cancel"
                     onClick={() => setVisible(false)}
+                    disabled={removeUserLoading}
                   />
-                  <Button
-                    type="button"
-                    className="theme-btn"
-                    label="Yes, delete this user"
-                    onClick={() => removeUser(selectedUser?.id)}
-                  />
+
+                  {removeUserLoading ? (
+                    <div
+                      className="theme-btn leading-none"
+                      style={{
+                        height: "55px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <DotLoader color="#fff" size={12} />
+                    </div>
+                  ) : (
+                    <Button
+                      type="button"
+                      className="theme-btn"
+                      label="Yes, delete this user"
+                      onClick={() => removeUser(selectedUser)}
+                    />
+                  )}
                 </div>
               </div>
             </div>

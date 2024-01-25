@@ -26,6 +26,7 @@ const addUserToTenant = async (userName, tenantId) => {
   });
 };
 
+// TODO: Salman Done
 const removeUserFromTenant = async (userId, tenantId) => {
   return await instance.post("/tenant/remove-user", {
     userId,
