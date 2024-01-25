@@ -7,7 +7,7 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 
 import DeletedUsers from "./components/DeleteUser";
-import ViewUser from "./components/ViewUser";
+import ViewUserModal from "./components/ViewUserModal";
 import ConfirmPopup from "../../components/ConfirmPopup";
 import Sidebar from "../../components/Sidebar";
 import {
@@ -58,7 +58,6 @@ const Users = () => {
     const payload = {
       userName: e.currentTarget.userName.value,
       email: e.currentTarget.email.value,
-      // dateJoined: new Date(),
     };
 
     try {
@@ -98,7 +97,14 @@ const Users = () => {
   const actionBodyTemplate = (data: UserDT) => {
     return (
       <>
-        <Button label="View" text onClick={() => setVisible(true)} />
+        <Button
+          label="View"
+          text
+          onClick={() => {
+            setVisible(true);
+            setSelectedUser(data);
+          }}
+        />
         <Button label="Edit" text onClick={() => viewBrand(data)} />
         <Button label="Delete" text onClick={() => deleteUser(data)} />
       </>
@@ -269,8 +275,12 @@ const Users = () => {
             </div>
           </ConfirmPopup>
 
-          {/* View Popup */}
-          <ViewUser setVisible={setVisible} visible={visible} />
+          {/* View User Modal */}
+          <ViewUserModal
+            visible={visible}
+            setVisible={setVisible}
+            selectedUser={selectedUser}
+          />
         </div>
       </div>
     </>

@@ -53,16 +53,17 @@ const getUsers = async () => {
   return await instance.get("/admin/get-users");
 };
 
-const getRoles = async () => {
-  return await instance.get("/admin/get-roles");
-};
-
 // TODO: Salman Done
 const createUser = async (userName, email) => {
   return await instance.post("/admin/create-user", {
     userName,
     email,
   });
+};
+
+// TODO: Salman Done
+const getUser = async (id) => {
+  return await instance.get("/admin/get-user?id=" + id);
 };
 
 const updateUser = async (id, email) => {
@@ -72,8 +73,14 @@ const updateUser = async (id, email) => {
   });
 };
 
-const getUser = async (id) => {
-  return await instance.get("/admin/get-user?id=" + id);
+const deleteUser = async (id) => {
+  return await instance.post("/admin/delete-user", {
+    id,
+  });
+};
+
+const getRoles = async () => {
+  return await instance.get("/admin/get-roles");
 };
 
 const createRole = async (name) => {
@@ -118,12 +125,6 @@ const removeUserFromRole = async (roleId, userId) => {
   return await instance.post("/admin/remove-user-from-role", {
     roleId,
     userId,
-  });
-};
-
-const deleteUser = async (id) => {
-  return await instance.post("/admin/delete-user", {
-    id,
   });
 };
 
