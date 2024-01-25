@@ -66,6 +66,7 @@ const getUser = async (id) => {
   return await instance.get("/admin/get-user?id=" + id);
 };
 
+// TODO: Salman Done
 const updateUser = async (id, email) => {
   return await instance.post("/admin/update-user", {
     id,
