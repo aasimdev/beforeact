@@ -9,19 +9,19 @@ import { useCreateTenantMutation } from "../../../redux/api/brandApiSlice";
 // import api from "../../api/api";
 
 interface AddBrandDataType {
-  visible?: boolean;
-  setVisible?: any;
+  addBrandVisible?: boolean;
+  setAddBrandVisible?: any;
 }
 
-const AddBrand: React.FC<AddBrandDataType> = (props) => {
-  const { visible, setVisible } = props;
+const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
+  const { addBrandVisible, setAddBrandVisible } = props;
 
-  const [visibleLogo, setVisibleLogo] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     filterId: "",
     website: "",
   });
+  const [visibleLogo, setVisibleLogo] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -47,7 +47,7 @@ const AddBrand: React.FC<AddBrandDataType> = (props) => {
       const brand: any = await createBrandAPI(payload);
 
       if (brand?.data === null) {
-        setVisible(false);
+        setAddBrandVisible(false);
         ToastAlert("Brand created successfully", "success");
         setFormData({
           name: "",
@@ -68,9 +68,9 @@ const AddBrand: React.FC<AddBrandDataType> = (props) => {
   return (
     <>
       <Dialog
-        visible={visible}
+        visible={addBrandVisible}
         onHide={() => {
-          setVisible(false);
+          setAddBrandVisible(false);
           setFormData({
             name: "",
             filterId: "",
@@ -93,7 +93,7 @@ const AddBrand: React.FC<AddBrandDataType> = (props) => {
                 rounded
                 className="bg-gray w-12 h-12 rounded-full p-0 border-0 focus:outline-0 focus:ring-0 absolute bottom-0 left-[calc(50%_+_36px)] flex justify-center text-[32px]"
                 onClick={() => {
-                  setVisible(false);
+                  setAddBrandVisible(false);
                   setVisibleLogo(true);
                 }}
               />
@@ -152,7 +152,7 @@ const AddBrand: React.FC<AddBrandDataType> = (props) => {
                 className="theme-btn-default"
                 label="Cancel"
                 onClick={() => {
-                  setVisible(false);
+                  setAddBrandVisible(false);
                   setFormData({
                     name: "",
                     filterId: "",
@@ -191,4 +191,4 @@ const AddBrand: React.FC<AddBrandDataType> = (props) => {
   );
 };
 
-export default AddBrand;
+export default AddBrandModal;

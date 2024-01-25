@@ -3,7 +3,7 @@ import Title from "../../components/Title";
 import { Button } from "primereact/button";
 import { useState } from "react";
 import BrandList from "./components/BrandList";
-import AddBrand from "./components/AddBrand";
+import AddBrandModal from "./components/AddBrandModal";
 import Sidebar from "../../components/Sidebar";
 
 const Brands = () => {
@@ -31,7 +31,10 @@ const Brands = () => {
         </div>
       </div>
       {/* Modal */}
-      <AddBrand visible={addBrandVisible} setVisible={setAddBrandVisible} />
+      <AddBrandModal
+        addBrandVisible={addBrandVisible}
+        setAddBrandVisible={setAddBrandVisible}
+      />
     </>
   );
 };
