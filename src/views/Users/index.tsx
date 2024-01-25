@@ -226,7 +226,7 @@ const Users = () => {
                   <InputText
                     type="text"
                     id="userName"
-                    placeholder="USER NAME"
+                    placeholder="User Name"
                     className="theme-input shadow-btn w-56"
                   />
                   <InputText
