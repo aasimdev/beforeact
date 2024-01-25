@@ -48,6 +48,7 @@ const getSessions = async () => {
   return await instance.get("/user/get-sessions");
 };
 
+// TODO: Salman Done
 const getUsers = async () => {
   return await instance.get("/admin/get-users");
 };
@@ -56,6 +57,7 @@ const getRoles = async () => {
   return await instance.get("/admin/get-roles");
 };
 
+// TODO: Salman Done
 const createUser = async (userName, email) => {
   return await instance.post("/admin/create-user", {
     userName,

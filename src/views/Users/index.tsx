@@ -10,9 +10,14 @@ import DeletedUsers from "./components/DeleteUser";
 import ViewUser from "./components/ViewUser";
 import ConfirmPopup from "../../components/ConfirmPopup";
 import Sidebar from "../../components/Sidebar";
-import { useGetAllUsersQuery } from "../../redux/api/userApiSlice";
+import {
+  useCreateUserMutation,
+  useGetAllUsersQuery,
+} from "../../redux/api/userApiSlice";
 import OverlayLoader from "../../components/Spinner/OverlayLoader";
 import { formatDate } from "../../utils";
+import ToastAlert from "../../components/Toast";
+import DotLoader from "../../components/Spinner/dotLoader";
 
 interface UserDT {
   userName: any;
@@ -43,6 +48,34 @@ const Users = () => {
       setDeletedUsers(deletedUsers);
     }
   }, [data]);
+
+  // CREATE NEW USER API BIND
+  const [createNewUser, { isLoading: createUserLoading }] =
+    useCreateUserMutation();
+
+  const CreateUserHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const payload = {
+      userName: e.currentTarget.userName.value,
+      email: e.currentTarget.email.value,
+      // dateJoined: new Date(),
+    };
+
+    try {
+      const userResponse: any = await createNewUser(payload);
+
+      if (userResponse?.data) {
+        ToastAlert("User Created Successfully", "success");
+        setNewUser(false);
+      }
+      if (userResponse?.error) {
+        ToastAlert(userResponse?.error?.data?.title, "error");
+      }
+    } catch (error) {
+      console.error("Login Error:", error);
+      ToastAlert("Something went wrong", "error");
+    }
+  };
 
   // View Brands
   const viewBrand = (data: UserDT) => {};
@@ -93,9 +126,9 @@ const Users = () => {
     );
   };
 
-  const saveBtn = (options: any) => {
-    return <Button label="Save" className="theme-btn" />;
-  };
+  // const saveBtn = (options: any) => {
+  //   return <Button label="Save" className="theme-btn" />;
+  // };
 
   // Handlers
   const deleteUser = (data: UserDT) => {
@@ -152,11 +185,15 @@ const Users = () => {
 
             {newUser && (
               <div className="py-1 px-6 border-b-gray-300 border-b">
-                <form className="flex items-center gap-8">
+                <form
+                  className="flex items-center gap-8"
+                  onSubmit={CreateUserHandler}
+                  autoComplete="off"
+                >
                   <InputText
                     type="text"
                     id="userName"
-                    placeholder="userName"
+                    placeholder="USER NAME"
                     className="theme-input shadow-btn w-56"
                   />
                   <InputText
@@ -166,15 +203,31 @@ const Users = () => {
                     className="theme-input shadow-btn w-56"
                   />
                   <div className="flex items-center gap-2">
-                    <Button
-                      type="submit"
-                      label="Create"
-                      className="theme-btn leading-none"
-                    />
+                    {createUserLoading ? (
+                      <div
+                        className="theme-btn leading-none"
+                        style={{
+                          height: "45px",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}
+                      >
+                        <DotLoader color="#fff" size={12} />
+                      </div>
+                    ) : (
+                      <Button
+                        type="submit"
+                        label="Create"
+                        className="theme-btn leading-none"
+                        disabled={createUserLoading}
+                      />
+                    )}
                     <Button
                       type="button"
                       label="Cancel"
                       className="theme-btn-default leading-none"
+                      disabled={createUserLoading}
                       onClick={() => setNewUser(false)}
                     />
                   </div>
