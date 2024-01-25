@@ -81,6 +81,7 @@ const deleteUser = async (id) => {
   });
 };
 
+// TODO: ROLES API STARTS HERE
 const getRoles = async () => {
   return await instance.get("/admin/get-roles");
 };

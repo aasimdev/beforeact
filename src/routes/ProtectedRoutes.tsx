@@ -1,5 +1,5 @@
 // React Imports
-import { Navigate } from "react-router-dom";
+// import { Navigate } from "react-router-dom";
 
 const ProtectedRoutes = (props: any) => {
   if (localStorage.getItem("user")) {
