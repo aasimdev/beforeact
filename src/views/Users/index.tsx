@@ -111,15 +111,6 @@ const Users = () => {
     );
   };
 
-  // Action Deleted Body
-  const actionDeletedBodyTemplate = (data: UserDT) => {
-    return (
-      <>
-        <Button label="View" text onClick={() => viewBrand(data)} />
-      </>
-    );
-  };
-
   const textEditor = (options: any) => {
     return (
       <InputText
@@ -149,6 +140,22 @@ const Users = () => {
     // setUsers(updatedUsers);
     setConfirmPopup(false);
     setSelectedUser(null);
+  };
+
+  // Deleted Users View Information
+  const actionDeletedBodyTemplate = (data: UserDT) => {
+    return (
+      <>
+        <Button
+          label="View"
+          text
+          onClick={() => {
+            setVisible(true);
+            setSelectedUser(data);
+          }}
+        />
+      </>
+    );
   };
 
   return (

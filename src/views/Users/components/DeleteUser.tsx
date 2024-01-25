@@ -1,6 +1,9 @@
+// React Imports
+import React from "react";
+// Prime Imports
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-import React from "react";
+// Utils Imports
 import { formatDate } from "../../../utils";
 
 interface DUsersDataType {
@@ -8,10 +11,9 @@ interface DUsersDataType {
   actionDeletedBodyTemplate: any;
 }
 
-const DeletedUser: React.FC<DUsersDataType> = ({
-  users,
-  actionDeletedBodyTemplate,
-}) => {
+const DeletedUser: React.FC<DUsersDataType> = (props) => {
+  const { users, actionDeletedBodyTemplate } = props;
+
   return (
     <div className="bg-white p-4 rounded-lg shadow-sidebar mt-6">
       <h3 className="text-[22px] text-gray pb-6 px-6 font-normal">
