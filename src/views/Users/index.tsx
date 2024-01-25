@@ -9,6 +9,7 @@ import { InputText } from "primereact/inputtext";
 import {
   useCreateUserMutation,
   useGetAllUsersQuery,
+  useUpdateUserMutation,
 } from "../../redux/api/userApiSlice";
 // Utils
 import { formatDate } from "../../utils";
@@ -75,7 +76,7 @@ const Users = () => {
         ToastAlert(userResponse?.error?.data?.title, "error");
       }
     } catch (error) {
-      console.error("Login Error:", error);
+      console.error("Creating User Error:", error);
       ToastAlert("Something went wrong", "error");
     }
   };
@@ -96,42 +97,57 @@ const Users = () => {
     );
   };
 
-  // View Brands
-  const viewBrand = (data: UserDT) => {};
+  // UPDATE USER API BIND
+  const [updateUser] = useUpdateUserMutation();
 
-  const onRowEditComplete = (e: DataTableRowEditCompleteEvent) => {
+  const onRowEditComplete = async (e: DataTableRowEditCompleteEvent) => {
     let _products = [...activeUsers];
     let { newData, index } = e;
 
     _products[index] = newData as UserDT;
 
-    // setUsers(_products);
+    const payload = {
+      id: newData.id,
+      userName: newData.userName,
+      email: newData.email,
+    };
+
+    try {
+      const user: any = await updateUser(payload);
+
+      if (user?.data === null) {
+        ToastAlert("User Updated Successfully", "success");
+      }
+      if (user?.error) {
+        ToastAlert(user?.error?.data?.title, "error");
+      }
+    } catch (error) {
+      console.error("Update User Error:", error);
+      ToastAlert("Something went wrong", "error");
+    }
   };
 
-  // Action Body
-  const actionBodyTemplate = (data: UserDT) => {
-    return (
-      <>
-        <Button
-          label="View"
-          text
-          onClick={() => {
-            setSelectedUser(data);
-            setVisible(true);
-          }}
-        />
-        <Button label="Edit" text onClick={() => viewBrand(data)} />
-        <Button
-          label="Delete"
-          text
-          onClick={() => {
-            setSelectedUser(data);
-            setConfirmPopup(true);
-          }}
-        />
-      </>
-    );
-  };
+  const ViewColumn = (data: UserDT) => (
+    <Button
+      label="View"
+      text
+      onClick={() => {
+        setSelectedUser(data);
+        setVisible(true);
+      }}
+    />
+  );
+
+  const DeleteColumn = (data: UserDT) => (
+    <Button
+      label="Delete"
+      text
+      onClick={() => {
+        setSelectedUser(data);
+        setConfirmPopup(true);
+      }}
+    />
+  );
 
   const textEditor = (options: any) => {
     return (
@@ -164,6 +180,18 @@ const Users = () => {
               dataKey="userName"
               onRowEditComplete={onRowEditComplete}
               className="theme-table"
+              rowEditorInitIcon={
+                <button
+                  style={{
+                    color: "#696cff",
+                    fontSize: "18px",
+                    lineHeight: "28px",
+                    fontWeight: 500,
+                  }}
+                >
+                  Edit
+                </button>
+              }
             >
               <Column
                 field="userName"
@@ -180,7 +208,12 @@ const Users = () => {
                 body={(data) => formatDate(data.dateJoined)}
                 header="DATE JOINED"
               ></Column>
-              <Column body={actionBodyTemplate}></Column>
+              <Column field="View" body={(data) => ViewColumn(data)}></Column>
+              <Column rowEditor></Column>
+              <Column
+                field="Delete"
+                body={(data) => DeleteColumn(data)}
+              ></Column>
             </DataTable>
 
             {newUser && (
