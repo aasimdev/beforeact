@@ -10,44 +10,42 @@ import DeletedUsers from "./components/DeleteUser";
 import ViewUser from "./components/ViewUser";
 import ConfirmPopup from "../../components/ConfirmPopup";
 import Sidebar from "../../components/Sidebar";
+import { useGetAllUsersQuery } from "../../redux/api/userApiSlice";
+import OverlayLoader from "../../components/Spinner/OverlayLoader";
+import { formatDate } from "../../utils";
 
 interface UserDT {
-  username: any;
+  userName: any;
   email: string | null;
-  datejoined: any;
+  dateJoined: any;
 }
 
 const Users = () => {
-  const [users, setUsers] = useState<UserDT[]>([]);
   const [newUser, setNewUser] = useState(false);
   const [visible, setVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserDT | null>(null);
   const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
+  // new
+  const [activeUsers, setActiveUsers] = useState<UserDT[]>([]);
+  const [deletedUsers, setDeletedUsers] = useState<UserDT[]>([]);
+
+  // GET ALL USERS
+  const { data, isLoading } = useGetAllUsersQuery({});
 
   useEffect(() => {
-    setUsers([
-      {
-        username: "admin",
-        email: "admin@apescasino.com",
-        datejoined: "01/01/2024",
-      },
-      {
-        username: "user2",
-        email: "user2@apescasino.com",
-        datejoined: "01/01/2024",
-      },
-      {
-        username: "user3",
-        email: "user3@apescasino.com",
-        datejoined: "01/01/2024",
-      },
-    ]);
-  }, []);
+    if (data) {
+      // ACTIVE USERS
+      const activeUsers = data?.users?.filter((user: any) => !user.deleted);
+      setActiveUsers(activeUsers);
+
+      // DELETED USERS
+      const deletedUsers = data?.users?.filter((user: any) => user.deleted);
+      setDeletedUsers(deletedUsers);
+    }
+  }, [data]);
 
   // View Brands
-  const viewBrand = (data: UserDT) => {
-    console.log(data);
-  };
+  const viewBrand = (data: UserDT) => {};
 
   // Edit Brand
   // const editBrand = (data: UserDT) => {
@@ -55,12 +53,12 @@ const Users = () => {
   // };
 
   const onRowEditComplete = (e: DataTableRowEditCompleteEvent) => {
-    let _products = [...users];
+    let _products = [...activeUsers];
     let { newData, index } = e;
 
     _products[index] = newData as UserDT;
 
-    setUsers(_products);
+    // setUsers(_products);
   };
 
   // Action Body
@@ -106,16 +104,18 @@ const Users = () => {
   };
 
   const handleDelete = () => {
-    const updatedUsers = users.filter(
-      (user) => user.username !== selectedUser?.username
-    );
-    setUsers(updatedUsers);
+    // const updatedUsers = acti.filter(
+    //   (user) => user.userName !== selectedUser?.userName
+    // );
+    // setUsers(updatedUsers);
     setConfirmPopup(false);
     setSelectedUser(null);
   };
 
   return (
     <>
+      {isLoading && <OverlayLoader />}
+
       <div className="flex">
         <Sidebar />
 
@@ -123,17 +123,18 @@ const Users = () => {
           <Header />
           <Title brand={false} title="Users" />
 
+          {/* Active Users Table */}
           <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
             <DataTable
-              value={users}
+              value={activeUsers}
               editMode="row"
-              dataKey="username"
+              dataKey="userName"
               onRowEditComplete={onRowEditComplete}
               className="theme-table"
             >
               <Column
-                field="username"
-                header="USERNAME"
+                field="userName"
+                header="USER NAME"
                 editor={(options) => textEditor(options)}
               ></Column>
               <Column
@@ -142,19 +143,20 @@ const Users = () => {
                 editor={(options) => textEditor(options)}
               ></Column>
               <Column
-                field="datejoined"
-                editor={(options) => saveBtn(options)}
+                field="dateJoined"
+                body={(data) => formatDate(data.dateJoined)}
                 header="DATE JOINED"
               ></Column>
               <Column body={actionBodyTemplate}></Column>
             </DataTable>
+
             {newUser && (
               <div className="py-1 px-6 border-b-gray-300 border-b">
                 <form className="flex items-center gap-8">
                   <InputText
                     type="text"
-                    id="username"
-                    placeholder="Username"
+                    id="userName"
+                    placeholder="userName"
                     className="theme-input shadow-btn w-56"
                   />
                   <InputText
@@ -194,7 +196,7 @@ const Users = () => {
           {/* Deleted Users */}
           <DeletedUsers
             actionDeletedBodyTemplate={actionDeletedBodyTemplate}
-            users={users}
+            users={deletedUsers}
           />
 
           {/* Confirm Popup */}

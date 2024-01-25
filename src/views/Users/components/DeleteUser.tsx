@@ -1,6 +1,7 @@
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 import React from "react";
+import { formatDate } from "../../../utils";
 
 interface DUsersDataType {
   users: any;
@@ -17,9 +18,13 @@ const DeletedUser: React.FC<DUsersDataType> = ({
         Deleted Users
       </h3>
       <DataTable value={users} className="theme-table">
-        <Column field="username" header="USERNAME"></Column>
+        <Column field="userName" header="USER NAME"></Column>
         <Column field="email" header="EMAIL"></Column>
-        <Column field="datejoined" header="DATE JOINED"></Column>
+        <Column
+          field="dateJoined"
+          header="DATE JOINED"
+          body={(data) => formatDate(data.dateJoined)}
+        ></Column>
         <Column
           body={actionDeletedBodyTemplate}
           style={{ minWidth: "12rem" }}

@@ -3,54 +3,16 @@ import { apiSlice } from "./apiSlice";
 
 export const userApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    updateUser: builder.mutation({
-      query: (data) => {
+    getAllUsers: builder.query({
+      query: () => {
         return {
-          url: "users/updateMe",
-          method: "PUT",
-          body: data,
-        };
-      },
-    }),
-    getUserDetails: builder.query({
-      query: ({ language, name }) => {
-        const url =
-          language === "en"
-            ? `users/getUserDetails/${name}?lang=en`
-            : `users/getUserDetails/${name}?lang=ar`;
-        return {
-          url,
+          url: "admin/get-users",
           method: "GET",
         };
       },
       providesTags: ["User"],
     }),
-    addUserDetails: builder.mutation({
-      query: (data) => {
-        return {
-          url: "users/addUserDetails",
-          method: "POST",
-          body: data,
-        };
-      },
-      invalidatesTags: ["User"],
-    }),
-    updateUserDetails: builder.mutation({
-      query: (data) => {
-        return {
-          url: "users/updateUserDetails",
-          method: "PUT",
-          body: data,
-        };
-      },
-      invalidatesTags: ["User"],
-    }),
   }),
 });
 
-export const {
-  useUpdateUserMutation,
-  useGetUserDetailsQuery,
-  useAddUserDetailsMutation,
-  useUpdateUserDetailsMutation,
-} = userApiSlice;
+export const { useGetAllUsersQuery } = userApiSlice;
