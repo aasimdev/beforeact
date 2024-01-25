@@ -2,7 +2,8 @@ import { Image } from "primereact/image";
 import React, { useState } from "react";
 import cubeImg from "../../assets/images/fractal_cube.svg";
 import { Button } from "primereact/button";
-import BrandLogo from "../../views/Brands/components/BrandLogoModal";
+import BrandLogoModal from "../../views/Brands/components/BrandLogoModal";
+import { generateColor } from "../../utils";
 
 interface TitleProps {
   title: string;
@@ -11,15 +12,48 @@ interface TitleProps {
 
 const Title: React.FC<TitleProps> = ({ title, brand }) => {
   const [visibleLogo, setVisibleLogo] = useState(false);
+  const [brandImage, setBrandImage] = useState<any>("");
+
+  const randomColor = generateColor(title);
+
   return (
     <>
       <div className="mt-6 bg-title rounded-[10px] px-12 h-[120px] bg-no-repeat bg-cover bg-center">
         <div className="flex items-center gap-12 h-full">
           {brand ? (
             <div className="relative">
-              <div className="w-20 h-20 rounded-full bg-black relative flex items-center justify-center overflow-hidden p-2">
-                <img src={brand} alt="Cube" className="object-contain" />
-              </div>
+              {brandImage ? (
+                <>
+                  <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-100 flex justify-center items-center">
+                    <img
+                      src={brandImage}
+                      alt="Brand"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                </>
+              ) : (
+                <div
+                  className="w-20 h-20 flex justify-center items-center rounded-full  mx-auto"
+                  style={{
+                    background: randomColor.background,
+                  }}
+                >
+                  <span
+                    className="text-[45px] font-semibold"
+                    style={{
+                      color: randomColor.color,
+                    }}
+                  >
+                    {title?.charAt(0)?.toUpperCase()}
+                  </span>
+                </div>
+              )}
+
               <Button
                 icon="bx bx-edit-alt"
                 rounded
@@ -37,7 +71,12 @@ const Title: React.FC<TitleProps> = ({ title, brand }) => {
         </div>
       </div>
 
-      <BrandLogo setVisibleLogo={setVisibleLogo} visibleLogo={visibleLogo} />
+      <BrandLogoModal
+        visibleLogo={visibleLogo}
+        setVisibleLogo={setVisibleLogo}
+        brandImage={brandImage}
+        setBrandImage={setBrandImage}
+      />
     </>
   );
 };
