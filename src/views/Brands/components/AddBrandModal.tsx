@@ -2,7 +2,7 @@ import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import { InputText } from "primereact/inputtext";
 import React, { FormEvent, useState } from "react";
-import BrandLogo from "./BrandLogo";
+import BrandLogoModal from "./BrandLogoModal";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import ToastAlert from "../../../components/Toast";
 import { useCreateTenantMutation } from "../../../redux/api/brandApiSlice";
@@ -186,7 +186,10 @@ const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
         </div>
       </Dialog>
 
-      <BrandLogo setVisibleLogo={setVisibleLogo} visibleLogo={visibleLogo} />
+      <BrandLogoModal
+        visibleLogo={visibleLogo}
+        setVisibleLogo={setVisibleLogo}
+      />
     </>
   );
 };

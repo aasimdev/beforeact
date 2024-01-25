@@ -3,10 +3,10 @@ import { Dialog } from "primereact/dialog";
 import { FileUpload } from "primereact/fileupload";
 import { Image } from "primereact/image";
 
-const BrandLogo: React.FC<{ setVisibleLogo?: any; visibleLogo?: boolean }> = ({
-  visibleLogo,
-  setVisibleLogo,
-}) => {
+const BrandLogoModal: React.FC<{
+  setVisibleLogo?: any;
+  visibleLogo?: boolean;
+}> = ({ visibleLogo, setVisibleLogo }) => {
   const itemTemplate = (inFile: any) => {
     const file = inFile as File;
     console.log(inFile);
@@ -77,4 +77,4 @@ const BrandLogo: React.FC<{ setVisibleLogo?: any; visibleLogo?: boolean }> = ({
   );
 };
 
-export default BrandLogo;
+export default BrandLogoModal;

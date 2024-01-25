@@ -2,7 +2,7 @@ import { Image } from "primereact/image";
 import React, { useState } from "react";
 import cubeImg from "../../assets/images/fractal_cube.svg";
 import { Button } from "primereact/button";
-import BrandLogo from "../../views/Brands/components/BrandLogo";
+import BrandLogo from "../../views/Brands/components/BrandLogoModal";
 
 interface TitleProps {
   title: string;
