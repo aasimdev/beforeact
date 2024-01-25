@@ -22,6 +22,7 @@ const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
     website: "",
   });
   const [visibleLogo, setVisibleLogo] = useState(false);
+  const [brandImage, setBrandImage] = useState<any>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { id, value } = e.target;
@@ -65,18 +66,22 @@ const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
     }
   };
 
+  const handleClose = () => {
+    setAddBrandVisible(false);
+    setBrandImage("");
+    setFormData({
+      ...formData,
+      name: "",
+      filterId: "",
+      website: "",
+    });
+  };
+
   return (
     <>
       <Dialog
         visible={addBrandVisible}
-        onHide={() => {
-          setAddBrandVisible(false);
-          setFormData({
-            name: "",
-            filterId: "",
-            website: "",
-          });
-        }}
+        onHide={handleClose}
         style={{ width: "50vw" }}
         breakpoints={{ "960px": "75vw", "641px": "100vw" }}
         header="Create Brand"
@@ -87,13 +92,34 @@ const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
         <div className="px-[104px] py-16">
           <div className="text-center relative">
             <div className="w-40 h-40 rounded-full bg-purple-100 mx-auto">
-              <span className="text-blue text-[108px] font-semibold">A</span>
+              {brandImage ? (
+                <>
+                  <div className="w-40 h-40 rounded-full overflow-hidden bg-gray-100 flex justify-center items-center">
+                    <img
+                      src={brandImage}
+                      alt="Brand"
+                      style={{
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                      }}
+                    />
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span className="text-blue text-[108px] font-semibold">
+                    A
+                  </span>
+                </>
+              )}
+
               <Button
                 icon="bx bx-edit-alt"
                 rounded
                 className="bg-gray w-12 h-12 rounded-full p-0 border-0 focus:outline-0 focus:ring-0 absolute bottom-0 left-[calc(50%_+_36px)] flex justify-center text-[32px]"
                 onClick={() => {
-                  setAddBrandVisible(false);
+                  // setAddBrandVisible(false);
                   setVisibleLogo(true);
                 }}
               />
@@ -151,14 +177,7 @@ const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
                 type="button"
                 className="theme-btn-default"
                 label="Cancel"
-                onClick={() => {
-                  setAddBrandVisible(false);
-                  setFormData({
-                    name: "",
-                    filterId: "",
-                    website: "",
-                  });
-                }}
+                onClick={handleClose}
                 disabled={isLoading}
               />
               {isLoading ? (
@@ -189,6 +208,8 @@ const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
       <BrandLogoModal
         visibleLogo={visibleLogo}
         setVisibleLogo={setVisibleLogo}
+        brandImage={brandImage}
+        setBrandImage={setBrandImage}
       />
     </>
   );

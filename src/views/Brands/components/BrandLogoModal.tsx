@@ -1,41 +1,64 @@
+// Prime React imports
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
-import { FileUpload } from "primereact/fileupload";
-import { Image } from "primereact/image";
+// React imports
+import { useRef, useState } from "react";
+// Custom Imports
+import ToastAlert from "../../../components/Toast";
 
-const BrandLogoModal: React.FC<{
+interface BrandLogoModalProps {
   setVisibleLogo?: any;
   visibleLogo?: boolean;
-}> = ({ visibleLogo, setVisibleLogo }) => {
-  const itemTemplate = (inFile: any) => {
-    const file = inFile as File;
-    console.log(inFile);
+  brandImage?: any;
+  setBrandImage?: any;
+}
 
-    console.log(file);
+const dummyImage =
+  "https://res.cloudinary.com/moazam05/image/upload/v1706171308/portfolio/Salman%20Muazam-logog.png-1706171308434.png";
 
-    return (
-      <div className="flex align-items-center flex-wrap">
-        <div className="flex align-items-center" style={{ width: "40%" }}>
-          {/* <img alt={file.name} role="presentation" src={file.objectURL} width={100} /> */}
-        </div>
-      </div>
-    );
+const BrandLogoModal: React.FC<BrandLogoModalProps> = ({
+  visibleLogo,
+  setVisibleLogo,
+  brandImage,
+  setBrandImage,
+}) => {
+  const fileRef = useRef<HTMLInputElement | null | any>(null);
+  // states
+  const [file, setFile] = useState<any>("");
+
+  const handleImage = (e: any) => {
+    const file = e.target.files[0];
+    if (file.size > 1024 * 1024) {
+      ToastAlert("Image size is too large (Max: 1mb)", "error");
+    } else {
+      setFileToBase(file);
+      setFile(file);
+    }
   };
 
-  const onTemplateUpload = (e: any) => {
-    console.log(e);
+  const setFileToBase = (file: any) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      setBrandImage(reader.result);
+    };
   };
 
-  // const chooseOptions = {
-  //   icon: "pi pi-fw pi-images",
-  //   iconOnly: true,
-  //   className: "custom-choose-btn p-button-rounded p-button-outlined",
-  // };
+  // console.log("file", file);
+  // console.log("brandImage", brandImage);
+
+  const handleClose = () => {
+    setVisibleLogo(false);
+    if (brandImage) {
+      setBrandImage("");
+      setFile("");
+    }
+  };
 
   return (
     <Dialog
       visible={visibleLogo}
-      onHide={() => setVisibleLogo(false)}
+      onHide={handleClose}
       style={{ width: "50vw" }}
       breakpoints={{ "960px": "75vw", "641px": "100vw" }}
       header="Upload Logo"
@@ -45,21 +68,34 @@ const BrandLogoModal: React.FC<{
     >
       <div className="px-[104px] py-16">
         <div className="max-w-[305px] mx-auto">
-          <div className="text-center relative">
-            <div className="w-40 h-40 rounded-full bg-black mx-auto">
-              <Image src="" alt="Brand" />
+          <div className="flex justify-center items-center">
+            <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-100 flex justify-center items-center">
+              <img
+                src={brandImage || dummyImage}
+                alt="Brand"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              />
             </div>
           </div>
-          <FileUpload
-            mode="basic"
-            name="brand"
-            url="/api/upload"
-            accept="image/*"
-            maxFileSize={1000000}
+          <input
+            onChange={handleImage}
+            hidden
+            ref={fileRef}
+            type="file"
+            accept="brandImage/*"
+            name=""
+            id=""
+          />
+
+          <Button
+            type="button"
             className="mt-8 brand-upload"
-            chooseLabel="Upload new photo"
-            itemTemplate={itemTemplate}
-            onUpload={onTemplateUpload}
+            label="Upload new photo"
+            onClick={() => fileRef.current.click()}
           />
 
           <div className="flex items-center justify-center gap-6 mt-14">
@@ -67,9 +103,16 @@ const BrandLogoModal: React.FC<{
               type="button"
               className="theme-btn-default"
               label="Cancel"
-              onClick={() => setVisibleLogo(false)}
+              onClick={handleClose}
             />
-            <Button type="button" className="theme-btn" label="Save" />
+            <Button
+              type="button"
+              onClick={() => {
+                setVisibleLogo(false);
+              }}
+              className="theme-btn"
+              label="Save"
+            />
           </div>
         </div>
       </div>
