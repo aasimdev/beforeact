@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import Header from "../../../common/Header";
-import Title from "../../../common/Title";
+import Header from "../../../components/Header";
+import Title from "../../../components/Title";
 import { useLocation, useParams } from "react-router-dom";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -13,7 +13,7 @@ import BrandLogoImg from "../../../assets/images/banana.png";
 import { Image } from "primereact/image";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import api from "../../../api/api";
-import Sidebar from "../../../common/Sidebar";
+import Sidebar from "../../../components/Sidebar";
 import { useGetTenantUsersQuery } from "../../../redux/api/brandApiSlice";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import { capitalizeFirstLetter, formatDate } from "../../../utils";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../common/Header";
-import Title from "../../common/Title";
+import Header from "../../components/Header";
+import Title from "../../components/Title";
 import { DataTable, DataTableRowEditCompleteEvent } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
@@ -9,7 +9,7 @@ import { InputText } from "primereact/inputtext";
 import DeletedUsers from "./components/DeleteUser";
 import ViewUser from "./components/ViewUser";
 import ConfirmPopup from "../../components/ConfirmPopup";
-import Sidebar from "../../common/Sidebar";
+import Sidebar from "../../components/Sidebar";
 
 interface UserDT {
   username: any;

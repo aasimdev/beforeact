@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import Header from "../../common/Header";
-import Title from "../../common/Title";
+import Header from "../../components/Header";
+import Title from "../../components/Title";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
-import Sidebar from "../../common/Sidebar";
+import Sidebar from "../../components/Sidebar";
 
 interface RolesDT {
   name: string;

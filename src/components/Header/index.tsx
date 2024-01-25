@@ -2,13 +2,13 @@ import { Button } from "primereact/button";
 import { Image } from "primereact/image";
 import { InputText } from "primereact/inputtext";
 import React, { useRef, useState } from "react";
-import profilePhoro from "../assets/images/1.png";
+import profilePhoro from "../../assets/images/1.png";
 import { Menu } from "primereact/menu";
 // import api from "../api/api";
 // import { useAuth } from "../store/AuthStore";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setUser } from "../redux/auth/authSlice";
+import { setUser } from "../../redux/auth/authSlice";
 
 const Header: React.FC = () => {
   const [value, setValue] = useState("");

@@ -1,10 +1,10 @@
-import Header from "../../common/Header";
-import Title from "../../common/Title";
+import Header from "../../components/Header";
+import Title from "../../components/Title";
 import { Button } from "primereact/button";
 import { useState } from "react";
 import BrandList from "./components/BrandList";
 import AddBrand from "./components/AddBrand";
-import Sidebar from "../../common/Sidebar";
+import Sidebar from "../../components/Sidebar";
 
 const Brands = () => {
   // states

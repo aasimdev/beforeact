@@ -1,6 +1,6 @@
 import { Image } from "primereact/image";
-import LogoImg from "../assets/images/logo.svg";
-import MenuItem from "./MenuItem";
+import LogoImg from "../../assets/images/logo.svg";
+import MenuItem from "../../components/MenuItem";
 
 interface NavItem {
   icon: string;
