@@ -20,6 +20,7 @@ import { Dropdown } from "primereact/dropdown";
 import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
 import ToastAlert from "../../../components/ToastAlert";
 import DotLoader from "../../../components/Spinner/dotLoader";
+import DeleteUserFromRole from "./DeleteUserFromRole";
 
 const EditRole = () => {
   const location = useLocation();
@@ -28,7 +29,9 @@ const EditRole = () => {
 
   const [activeUsers, setActiveUsers] = useState<any[]>([]);
   const [newUser, setNewUser] = useState(false);
-  const [selectUser, setSelectUser] = useState<any>("");
+  const [dropDownUser, setDropDownUser] = useState<any>("");
+  const [selectedUser, setSelectedUser] = useState<any>({});
+  const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
 
   // GET ALL ROLES
   const { data, isLoading } = useGetRoleByIdQuery(id);
@@ -51,7 +54,7 @@ const EditRole = () => {
   const addUserToRoleHandler = async () => {
     const payload = {
       id,
-      name: selectUser?.userName,
+      name: dropDownUser?.userName,
     };
 
     try {
@@ -59,7 +62,7 @@ const EditRole = () => {
 
       if (user?.data === null) {
         setNewUser(false);
-        setSelectUser("");
+        setDropDownUser("");
         ToastAlert("User Created Successfully", "success");
       }
       if (user?.error) {
@@ -76,9 +79,8 @@ const EditRole = () => {
       label="Delete"
       text
       onClick={() => {
-        // setSelectedRole(data);
-        alert("ok");
-        // setConfirmPopup(true);
+        setSelectedUser(data);
+        setConfirmPopup(true);
       }}
     />
   );
@@ -130,8 +132,8 @@ const EditRole = () => {
               {newUser && (
                 <div className="py-1 px-6 flex gap-8 border-b-gray-300 border-b">
                   <Dropdown
-                    value={selectUser}
-                    onChange={(e) => setSelectUser(e.value)}
+                    value={dropDownUser}
+                    onChange={(e) => setDropDownUser(e.value)}
                     options={activeUsers}
                     optionLabel="userName"
                     placeholder="Select a user"
@@ -166,7 +168,7 @@ const EditRole = () => {
                     disabled={createUserLoading}
                     onClick={() => {
                       setNewUser(false);
-                      setSelectUser("");
+                      setDropDownUser("");
                     }}
                   />
                 </div>
@@ -216,9 +218,15 @@ const EditRole = () => {
                 </>
               ))}
             </div>
-            {/* border bottom gray */}
           </div>
         </div>
+        <DeleteUserFromRole
+          confirmPopup={confirmPopup}
+          setConfirmPopup={setConfirmPopup}
+          selectedUser={selectedUser}
+          setSelectedUser={setSelectedUser}
+          roleId={id}
+        />
       </div>
     </>
   );
