@@ -3,10 +3,11 @@ import { apiSlice } from "./apiSlice";
 
 export const roleApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
+    // TODO: DONE
     createRole: builder.mutation({
       query: (data) => {
         return {
-          url: "role/create-role",
+          url: "admin/create-role",
           method: "POST",
           body: data,
         };
