@@ -1,11 +1,17 @@
-import React, { useEffect, useState } from "react";
-import Header from "../../components/Header";
+// React Imports
+import { useEffect, useState } from "react";
 import Title from "../../components/Title";
+// Prime React Imports
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
+// Redux
+import { useGetAllRolesQuery } from "../../redux/api/roleApiSlice";
+// Custom
+import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
+import OverlayLoader from "../../components/Spinner/OverlayLoader";
 
 interface RolesDT {
   name: string;
@@ -18,31 +24,20 @@ interface RolesDT {
 const Roles = () => {
   const [roles, setRoles] = useState<RolesDT[]>([]);
 
+  // GET ALL ROLES
+  const { data, isLoading } = useGetAllRolesQuery({});
+
   useEffect(() => {
-    setRoles([
-      {
-        name: "admin",
-        users: 2,
-        manageUsers: true,
-        manageRoles: true,
-        manageTenants: true,
-      },
-      {
-        name: "operator",
-        users: 2,
-        manageUsers: true,
+    if (data) {
+      const roles = data?.roles?.map((role: any) => ({
+        ...role,
+        manageUsers: false,
         manageRoles: true,
         manageTenants: false,
-      },
-      {
-        name: "support",
-        users: 2,
-        manageUsers: true,
-        manageRoles: false,
-        manageTenants: false,
-      },
-    ]);
-  }, []);
+      }));
+      setRoles(roles);
+    }
+  }, [data]);
 
   const handleCheckboxChange = (clickedRole: RolesDT, field: any) => {
     setRoles((prevRoles) =>
@@ -74,6 +69,8 @@ const Roles = () => {
 
   return (
     <>
+      {isLoading && <OverlayLoader />}
+
       <div className="flex">
         <Sidebar />
 
