@@ -119,7 +119,7 @@ export const generateColor = (str: string) => {
     { background: "#F8F0FF", color: "#B37FEB" }, // Y, Z
   ];
 
-  const firstLetter = str.charAt(0).toUpperCase();
+  const firstLetter = str?.charAt(0)?.toUpperCase();
 
   switch (firstLetter) {
     case "A":

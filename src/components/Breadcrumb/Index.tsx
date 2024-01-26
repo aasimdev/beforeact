@@ -1,19 +1,28 @@
 import { BreadCrumb } from "primereact/breadcrumb";
+import React from "react";
 
-const Breadcrumb = () => {
+interface BreadcrumbProps {
+  mainLabel: string;
+  label: string;
+  url: string;
+}
+
+const Breadcrumb: React.FC<BreadcrumbProps> = (props) => {
+  const { mainLabel, label, url } = props;
+
   const iconItemTemplate = (item: any, options: any) => {
     return <span className="text-gray">{item.label}</span>;
   };
 
   const items = [
     {
-      label: "Manage Brands",
+      label: mainLabel || "Manage Brands",
       template: iconItemTemplate,
     },
   ];
   const home = {
-    label: "Brands",
-    url: "/brands",
+    label: label || "Brands",
+    url: url || "/brands",
   };
   return (
     <BreadCrumb

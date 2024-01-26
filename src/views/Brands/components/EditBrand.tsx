@@ -82,7 +82,7 @@ const EditBrand = () => {
         <div className="p-8 w-full flex-1 lg:ml-80">
           <Header />
           <Title brand={BrandLogoImg} title={title} />
-          <Breadcrumb />
+          <Breadcrumb mainLabel="Manage Brands" label="Brands" url="/brands" />
           <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
             <h3 className="text-[28px] text-blue pt-2 pb-8 px-6 font-medium">
               Users in Brand
