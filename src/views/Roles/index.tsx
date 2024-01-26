@@ -233,7 +233,7 @@ const Roles = () => {
             {newRole && (
               <div className="py-1 px-6 border-b-gray-300 border-b">
                 <form
-                  className="flex items-center gap-2"
+                  className="flex items-center gap-5"
                   onSubmit={CreateRoleHandler}
                   autoComplete="off"
                 >
@@ -247,7 +247,7 @@ const Roles = () => {
                     type="number"
                     id="users"
                     placeholder="Users"
-                    className="theme-input shadow-btn w-56"
+                    className="theme-input shadow-btn w-32"
                   />
                   <Checkbox
                     inputId="manageUsers"
