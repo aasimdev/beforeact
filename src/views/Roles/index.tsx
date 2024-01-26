@@ -12,6 +12,7 @@ import { useGetAllRolesQuery } from "../../redux/api/roleApiSlice";
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import OverlayLoader from "../../components/Spinner/OverlayLoader";
+import { InputText } from "primereact/inputtext";
 
 interface RolesDT {
   name: string;
@@ -31,6 +32,7 @@ const Roles = () => {
     if (data) {
       const roles = data?.roles?.map((role: any) => ({
         ...role,
+        users: 3,
         manageUsers: false,
         manageRoles: true,
         manageTenants: false,
@@ -49,15 +51,6 @@ const Roles = () => {
     );
   };
 
-  const actionBodyTemplate = () => {
-    return (
-      <>
-        <Button label="Edit" text />
-        <Button label="Delete" text />
-      </>
-    );
-  };
-
   const checkboxTemplate = (field: string) => (data: any) => {
     return (
       <Checkbox
@@ -65,6 +58,27 @@ const Roles = () => {
         checked={data[field]}
       />
     );
+  };
+
+  const textEditor = (options: any, type: string) => {
+    return (
+      <InputText
+        type={type}
+        value={options.value}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          options.editorCallback!(e.target.value)
+        }
+      />
+    );
+  };
+
+  const onRowEditComplete = async (event: any) => {
+    let _products = [...roles];
+    let { newData, index } = event;
+
+    _products[index] = newData as RolesDT;
+
+    console.log("newData", newData);
   };
 
   return (
@@ -78,9 +92,35 @@ const Roles = () => {
           <Header />
           <Title brand={false} title="Roles" />
           <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
-            <DataTable value={roles} className="theme-table">
-              <Column field="name" header="NAME"></Column>
-              <Column field="users" header="USERS"></Column>
+            <DataTable
+              value={roles}
+              editMode="row"
+              dataKey="name"
+              onRowEditComplete={onRowEditComplete}
+              className="theme-table"
+              rowEditorInitIcon={
+                <button
+                  style={{
+                    color: "#696cff",
+                    fontSize: "18px",
+                    lineHeight: "28px",
+                    fontWeight: 500,
+                  }}
+                >
+                  Edit
+                </button>
+              }
+            >
+              <Column
+                field="name"
+                header="NAME"
+                editor={(options) => textEditor(options, "text")}
+              ></Column>
+              <Column
+                field="users"
+                header="USERS"
+                editor={(options) => textEditor(options, "number")}
+              ></Column>
               <Column
                 field="manageUsers"
                 header="MANAGE USERS"
@@ -96,7 +136,7 @@ const Roles = () => {
                 header="MANAGE TENANTS"
                 body={checkboxTemplate("manageTenants")}
               ></Column>
-              <Column body={actionBodyTemplate}></Column>
+              <Column rowEditor></Column>
             </DataTable>
           </div>
         </div>
