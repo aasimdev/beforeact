@@ -44,8 +44,7 @@ const BrandLogoModal: React.FC<BrandLogoModalProps> = ({
     };
   };
 
-  // console.log("file", file);
-  // console.log("brandImage", brandImage);
+  console.log("file", file);
 
   const handleClose = () => {
     setVisibleLogo(false);

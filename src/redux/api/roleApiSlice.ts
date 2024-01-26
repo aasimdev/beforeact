@@ -13,10 +13,11 @@ export const roleApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Roles"],
     }),
+    // TODO: DONE
     getAllRoles: builder.query({
       query: () => {
         return {
-          url: "role/get-roles",
+          url: "/admin/get-roles",
           method: "GET",
         };
       },

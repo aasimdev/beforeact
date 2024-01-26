@@ -10,53 +10,51 @@ import Sidebar from "../../components/Sidebar";
 interface RolesDT {
   name: string;
   users: number;
-  manageusers: boolean;
-  manageroles: boolean;
-  managetenants: boolean;
+  manageUsers: boolean;
+  manageRoles: boolean;
+  manageTenants: boolean;
 }
 
 const Roles = () => {
   const [roles, setRoles] = useState<RolesDT[]>([]);
-  const [checkedStates, setCheckedStates] = useState<{
-    [key: string]: boolean;
-  }>({});
 
   useEffect(() => {
     setRoles([
       {
         name: "admin",
         users: 2,
-        manageusers: true,
-        manageroles: true,
-        managetenants: true,
+        manageUsers: true,
+        manageRoles: true,
+        manageTenants: true,
       },
       {
         name: "operator",
         users: 2,
-        manageusers: true,
-        manageroles: true,
-        managetenants: false,
+        manageUsers: true,
+        manageRoles: true,
+        manageTenants: false,
       },
       {
         name: "support",
         users: 2,
-        manageusers: true,
-        manageroles: false,
-        managetenants: false,
+        manageUsers: true,
+        manageRoles: false,
+        manageTenants: false,
       },
     ]);
   }, []);
 
-  useEffect(() => {
-    // Initialize checked states for each role
-    const initialCheckedStates: { [key: string]: boolean } = {};
-    roles.forEach((role) => {
-      initialCheckedStates[role.name] = false;
-    });
-    setCheckedStates(initialCheckedStates);
-  }, [roles]);
+  const handleCheckboxChange = (clickedRole: RolesDT, field: any) => {
+    setRoles((prevRoles) =>
+      prevRoles.map((role: any) =>
+        role.name === clickedRole.name
+          ? { ...role, [field]: !role[field] }
+          : role
+      )
+    );
+  };
 
-  const actionBodyTemplate = (data: RolesDT) => {
+  const actionBodyTemplate = () => {
     return (
       <>
         <Button label="Edit" text />
@@ -65,20 +63,13 @@ const Roles = () => {
     );
   };
 
-  const checkboxTemplate = (data: RolesDT) => {
+  const checkboxTemplate = (field: string) => (data: any) => {
     return (
       <Checkbox
-        onChange={() => handleCheckboxChange(data)}
-        checked={checkedStates[data.name]}
+        onChange={() => handleCheckboxChange(data, field)}
+        checked={data[field]}
       />
     );
-  };
-
-  const handleCheckboxChange = (clickedRole: RolesDT) => {
-    setCheckedStates((prevCheckedStates) => ({
-      ...prevCheckedStates,
-      [clickedRole.name]: !prevCheckedStates[clickedRole.name],
-    }));
   };
 
   return (
@@ -94,31 +85,22 @@ const Roles = () => {
               <Column field="name" header="NAME"></Column>
               <Column field="users" header="USERS"></Column>
               <Column
-                field="manageusers"
+                field="manageUsers"
                 header="MANAGE USERS"
-                body={checkboxTemplate}
+                body={checkboxTemplate("manageUsers")}
               ></Column>
               <Column
-                field="manageroles"
+                field="manageRoles"
                 header="MANAGE ROLES"
-                body={checkboxTemplate}
+                body={checkboxTemplate("manageRoles")}
               ></Column>
               <Column
-                field="managetenants"
+                field="manageTenants"
                 header="MANAGE TENANTS"
-                body={checkboxTemplate}
+                body={checkboxTemplate("manageTenants")}
               ></Column>
               <Column body={actionBodyTemplate}></Column>
             </DataTable>
-
-            <div className="py-4 px-6 border-b-gray-300 border-b transition-all duration-300 hover:bg-blue-200">
-              <Button
-                label="New Role"
-                icon="bx bx-plus"
-                text
-                className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
-              />
-            </div>
           </div>
         </div>
       </div>
