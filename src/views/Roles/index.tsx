@@ -10,6 +10,7 @@ import { Checkbox } from "primereact/checkbox";
 import {
   useCreateRoleMutation,
   useGetAllRolesQuery,
+  useUpdateRoleMutation,
 } from "../../redux/api/roleApiSlice";
 // Custom
 import Header from "../../components/Header";
@@ -88,6 +89,39 @@ const Roles = () => {
     }
   };
 
+  // UPDATE ROLE API BIND
+  const [updateRole] = useUpdateRoleMutation();
+
+  const onRowEditComplete = async (event: any) => {
+    let _products = [...roles];
+    let { newData, index } = event;
+
+    _products[index] = newData as RolesDT;
+
+    const payload = {
+      id: newData.id,
+      name: newData.name,
+      users: newData.users,
+      manageUsers: newData.manageUsers,
+      manageRoles: newData.manageRoles,
+      manageTenants: newData.manageTenants,
+    };
+
+    try {
+      const role: any = await updateRole(payload);
+
+      if (role?.data === null) {
+        ToastAlert("Role Updated Successfully", "success");
+      }
+      if (role?.error) {
+        ToastAlert(role?.error?.data?.title, "error");
+      }
+    } catch (error) {
+      console.error("Update Role Error:", error);
+      ToastAlert("Something went wrong", "error");
+    }
+  };
+
   const handleCheckboxChange = (clickedRole: RolesDT, field: any) => {
     setRoles((prevRoles) =>
       prevRoles.map((role: any) =>
@@ -117,15 +151,6 @@ const Roles = () => {
         }
       />
     );
-  };
-
-  const onRowEditComplete = async (event: any) => {
-    let _products = [...roles];
-    let { newData, index } = event;
-
-    _products[index] = newData as RolesDT;
-
-    console.log("newData", newData);
   };
 
   return (

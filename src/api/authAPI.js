@@ -97,6 +97,7 @@ const getRole = async (id) => {
   return await instance.get("/admin/get-role?id=" + id);
 };
 
+// TODO: Salman Done
 const updateRole = async (id, name) => {
   return await instance.post("/admin/update-role", {
     id,

@@ -3,7 +3,6 @@ import { apiSlice } from "./apiSlice";
 
 export const roleApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    // TODO: DONE
     createRole: builder.mutation({
       query: (data) => {
         return {
@@ -14,7 +13,6 @@ export const roleApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Roles"],
     }),
-    // TODO: DONE
     getAllRoles: builder.query({
       query: () => {
         return {
@@ -24,14 +22,15 @@ export const roleApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["Roles"],
     }),
-    getRoleUsers: builder.query({
-      query: (roleId) => {
+    updateRole: builder.mutation({
+      query: (data) => {
         return {
-          url: `role/get-users?roleId=${roleId}`,
-          method: "GET",
+          url: "/admin/update-role",
+          method: "POST",
+          body: data,
         };
       },
-      providesTags: ["Roles"],
+      invalidatesTags: ["Roles"],
     }),
   }),
 });
@@ -39,5 +38,5 @@ export const roleApiSlice = apiSlice.injectEndpoints({
 export const {
   useCreateRoleMutation,
   useGetAllRolesQuery,
-  useGetRoleUsersQuery,
+  useUpdateRoleMutation,
 } = roleApiSlice;
