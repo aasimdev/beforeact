@@ -19,6 +19,7 @@ import OverlayLoader from "../../components/Spinner/OverlayLoader";
 import ToastAlert from "../../components/ToastAlert";
 import DotLoader from "../../components/Spinner/dotLoader";
 import Title from "../../components/Title";
+import DeleteRoleModal from "./components/DeleteRoleModal";
 
 interface RolesDT {
   name: string;
@@ -36,6 +37,8 @@ const Roles = () => {
     manageRoles: false,
     manageTenants: false,
   });
+  const [selectedRole, setSelectedRole] = useState<RolesDT | null>(null);
+  const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
 
   // GET ALL ROLES
   const { data, isLoading } = useGetAllRolesQuery({});
@@ -127,8 +130,8 @@ const Roles = () => {
       label="Delete"
       text
       onClick={() => {
-        // setSelectedUser(data);
-        // setConfirmPopup(true);
+        setSelectedRole(data);
+        setConfirmPopup(true);
       }}
     />
   );
@@ -336,6 +339,13 @@ const Roles = () => {
             </div>
           </div>
         </div>
+        {/* Delete User Modal */}
+        <DeleteRoleModal
+          confirmPopup={confirmPopup}
+          setConfirmPopup={setConfirmPopup}
+          selectedRole={selectedRole}
+          setSelectedRole={setSelectedRole}
+        />
       </div>
     </>
   );

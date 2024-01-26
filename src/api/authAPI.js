@@ -104,7 +104,7 @@ const updateRole = async (id, name) => {
     name,
   });
 };
-
+// waitin
 const addUserToRole = async (id, name) => {
   return await instance.post("/admin/add-user-to-role", {
     id,
@@ -126,6 +126,7 @@ const removeClaimFromRole = async (id, name) => {
   });
 };
 
+// waiting
 const removeUserFromRole = async (roleId, userId) => {
   return await instance.post("/admin/remove-user-from-role", {
     roleId,
