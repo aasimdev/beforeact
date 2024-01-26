@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
+  useAddClientToRoleMutation,
   useAddUserToRoleMutation,
   useGetRoleByIdQuery,
 } from "../../../redux/api/roleApiSlice";
@@ -32,6 +33,7 @@ const EditRole = () => {
   const [dropDownUser, setDropDownUser] = useState<any>("");
   const [selectedUser, setSelectedUser] = useState<any>({});
   const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
+  const [selectedPermissions, setSelectedPermissions] = useState<any>({});
 
   // GET ALL ROLES
   const { data, isLoading } = useGetRoleByIdQuery(id);
@@ -71,6 +73,46 @@ const EditRole = () => {
     } catch (error) {
       console.error("Creating User Error:", error);
       ToastAlert("Something went wrong", "error");
+    }
+  };
+
+  const handleCheckboxChange = (permission: any) => {
+    setSelectedPermissions((prevPermissions: any) => ({
+      ...prevPermissions,
+      [permission]: !prevPermissions[permission],
+    }));
+
+    // Data Send to API
+    handlePermissionStatus(permission, !selectedPermissions[permission]);
+  };
+
+  // CLAIM ROLE API BIND
+  const [claimRole, { isLoading: claimRoleLoading }] =
+    useAddClientToRoleMutation();
+
+  const handlePermissionStatus = async (permission: any, status: any) => {
+    const payload = {
+      id,
+      name: permission,
+    };
+
+    if (status) {
+      try {
+        const role: any = await claimRole(payload);
+
+        if (role?.data === null) {
+          ToastAlert("Role Claim Successfully", "success");
+        }
+        if (role?.error) {
+          ToastAlert(role?.error?.data?.title, "error");
+        }
+      } catch (error) {
+        console.error("Role Claim Error:", error);
+        ToastAlert("Something went wrong", "error");
+      }
+    }
+    if (!status) {
+      alert("unclaim");
     }
   };
 
@@ -194,28 +236,22 @@ const EditRole = () => {
               <Divider type="solid" />
 
               {data?.permissions?.map((permission: any) => (
-                <>
+                <div key={permission}>
                   <div className="pl-4 flex items-center gap-24">
                     <div className="text-gray w-36 text-[18px] font-medium">
                       {permission}
                     </div>
                     <div className="mt-2 text-gray text-[14px]">
                       <Checkbox
-                        inputId="manageUsers"
-                        checked={true}
-                        onChange={() => {}}
-                        // inputId="manageUsers"
-                        // checked={newUserCheckBox.manageUsers}
-                        // onChange={() =>
-                        //   setNewUserCheckBox((prev) => ({
-                        //     ...prev,
-                        //     manageUsers: !prev.manageUsers,
-                        //   }))
+                        inputId={permission}
+                        checked={selectedPermissions[permission]}
+                        onChange={() => handleCheckboxChange(permission)}
+                        disabled={claimRoleLoading}
                       />
                     </div>
                   </div>
                   <Divider type="solid" />
-                </>
+                </div>
               ))}
             </div>
           </div>
