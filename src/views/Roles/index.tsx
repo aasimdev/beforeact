@@ -1,11 +1,11 @@
 // React Imports
 import { useEffect, useState } from "react";
-import Title from "../../components/Title";
 // Prime React Imports
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
 import { Checkbox } from "primereact/checkbox";
+import { InputText } from "primereact/inputtext";
 // Redux
 import {
   useCreateRoleMutation,
@@ -16,9 +16,9 @@ import {
 import Header from "../../components/Header";
 import Sidebar from "../../components/Sidebar";
 import OverlayLoader from "../../components/Spinner/OverlayLoader";
-import { InputText } from "primereact/inputtext";
 import ToastAlert from "../../components/ToastAlert";
 import DotLoader from "../../components/Spinner/dotLoader";
+import Title from "../../components/Title";
 
 interface RolesDT {
   name: string;
@@ -122,6 +122,17 @@ const Roles = () => {
     }
   };
 
+  const DeleteColumn = (data: RolesDT) => (
+    <Button
+      label="Delete"
+      text
+      onClick={() => {
+        // setSelectedUser(data);
+        // setConfirmPopup(true);
+      }}
+    />
+  );
+
   const handleCheckboxChange = (clickedRole: RolesDT, field: any) => {
     setRoles((prevRoles) =>
       prevRoles.map((role: any) =>
@@ -145,6 +156,9 @@ const Roles = () => {
     return (
       <InputText
         type={type}
+        style={{
+          width: type === "number" ? "100px" : "auto",
+        }}
         value={options.value}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           options.editorCallback!(e.target.value)
@@ -209,6 +223,10 @@ const Roles = () => {
                 body={checkboxTemplate("manageTenants")}
               ></Column>
               <Column rowEditor></Column>
+              <Column
+                field="Delete"
+                body={(data) => DeleteColumn(data)}
+              ></Column>
             </DataTable>
 
             {/* NEW Role ADD */}
