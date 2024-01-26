@@ -93,6 +93,7 @@ const createRole = async (name) => {
   });
 };
 
+// TODO: Salman Done
 const getRole = async (id) => {
   return await instance.get("/admin/get-role?id=" + id);
 };
@@ -104,7 +105,8 @@ const updateRole = async (id, name) => {
     name,
   });
 };
-// waitin
+
+// TODO: Salman Done
 const addUserToRole = async (id, name) => {
   return await instance.post("/admin/add-user-to-role", {
     id,

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import { useGetRoleByIdQuery } from "../../../redux/api/roleApiSlice";
+import {
+  useAddUserToRoleMutation,
+  useGetRoleByIdQuery,
+} from "../../../redux/api/roleApiSlice";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
@@ -15,6 +18,8 @@ import { Divider } from "primereact/divider";
 import { Checkbox } from "primereact/checkbox";
 import { Dropdown } from "primereact/dropdown";
 import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
+import ToastAlert from "../../../components/ToastAlert";
+import DotLoader from "../../../components/Spinner/dotLoader";
 
 const EditRole = () => {
   const location = useLocation();
@@ -23,7 +28,7 @@ const EditRole = () => {
 
   const [activeUsers, setActiveUsers] = useState<any[]>([]);
   const [newUser, setNewUser] = useState(false);
-  const [selectUser, setSelectUser] = useState("");
+  const [selectUser, setSelectUser] = useState<any>("");
 
   // GET ALL ROLES
   const { data, isLoading } = useGetRoleByIdQuery(id);
@@ -39,7 +44,32 @@ const EditRole = () => {
     }
   }, [usersData]);
 
-  // console.log("selectUser", selectUser);
+  // ADD USER TO ROLE API BIND
+  const [addUserToRole, { isLoading: createUserLoading }] =
+    useAddUserToRoleMutation();
+
+  const addUserToRoleHandler = async () => {
+    const payload = {
+      id,
+      name: selectUser?.userName,
+    };
+
+    try {
+      const user: any = await addUserToRole(payload);
+
+      if (user?.data === null) {
+        setNewUser(false);
+        setSelectUser("");
+        ToastAlert("User Created Successfully", "success");
+      }
+      if (user?.error) {
+        ToastAlert(user?.error?.data?.title, "error");
+      }
+    } catch (error) {
+      console.error("Creating User Error:", error);
+      ToastAlert("Something went wrong", "error");
+    }
+  };
 
   const DeleteColumn = (data: any) => (
     <Button
@@ -108,17 +138,32 @@ const EditRole = () => {
                     className="theme-input shadow-btn w-60"
                   />
 
-                  <Button
-                    type="submit"
-                    label="Create"
-                    className="theme-btn leading-none"
-                    // disabled={createUserLoading}
-                  />
+                  {createUserLoading ? (
+                    <div
+                      className="theme-btn leading-none"
+                      style={{
+                        height: "45px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <DotLoader color="#fff" size={12} />
+                    </div>
+                  ) : (
+                    <Button
+                      onClick={addUserToRoleHandler}
+                      label="Create"
+                      className="theme-btn leading-none"
+                      disabled={createUserLoading}
+                    />
+                  )}
+
                   <Button
                     type="button"
                     label="Cancel"
                     className="theme-btn-default leading-none"
-                    // disabled={createUserLoading}
+                    disabled={createUserLoading}
                     onClick={() => {
                       setNewUser(false);
                       setSelectUser("");

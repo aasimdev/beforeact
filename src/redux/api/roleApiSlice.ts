@@ -41,6 +41,16 @@ export const roleApiSlice = apiSlice.injectEndpoints({
       },
       providesTags: ["Roles"],
     }),
+    addUserToRole: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/admin/add-user-to-role",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["Roles"],
+    }),
   }),
 });
 
@@ -49,4 +59,5 @@ export const {
   useGetAllRolesQuery,
   useUpdateRoleMutation,
   useGetRoleByIdQuery,
+  useAddUserToRoleMutation,
 } = roleApiSlice;
