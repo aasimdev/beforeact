@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useGetRoleByIdQuery } from "../../../redux/api/roleApiSlice";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
@@ -13,14 +13,33 @@ import { formatDate } from "../../../utils";
 import { Button } from "primereact/button";
 import { Divider } from "primereact/divider";
 import { Checkbox } from "primereact/checkbox";
+import { Dropdown } from "primereact/dropdown";
+import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
 
 const EditRole = () => {
   const location = useLocation();
 
   const id = location.pathname.split("/")[2];
 
+  const [activeUsers, setActiveUsers] = useState<any[]>([]);
+  const [newUser, setNewUser] = useState(false);
+  const [selectUser, setSelectUser] = useState("");
+
   // GET ALL ROLES
   const { data, isLoading } = useGetRoleByIdQuery(id);
+
+  // GET ALL USERS
+  const { data: usersData, isLoading: dataLoading } = useGetAllUsersQuery({});
+
+  useEffect(() => {
+    if (usersData?.users) {
+      // Find all users who are not deleted
+      const users = usersData?.users?.filter((user: any) => !user.deleted);
+      setActiveUsers(users);
+    }
+  }, [usersData]);
+
+  // console.log("selectUser", selectUser);
 
   const DeleteColumn = (data: any) => (
     <Button
@@ -36,7 +55,7 @@ const EditRole = () => {
 
   return (
     <>
-      {isLoading && <OverlayLoader />}
+      {(isLoading || dataLoading) && <OverlayLoader />}
 
       <div className="flex">
         <Sidebar />
@@ -77,6 +96,46 @@ const EditRole = () => {
                   body={(data) => DeleteColumn(data)}
                 ></Column>
               </DataTable>
+
+              {newUser && (
+                <div className="py-1 px-6 flex gap-8 border-b-gray-300 border-b">
+                  <Dropdown
+                    value={selectUser}
+                    onChange={(e) => setSelectUser(e.value)}
+                    options={activeUsers}
+                    optionLabel="userName"
+                    placeholder="Select a user"
+                    className="theme-input shadow-btn w-60"
+                  />
+
+                  <Button
+                    type="submit"
+                    label="Create"
+                    className="theme-btn leading-none"
+                    // disabled={createUserLoading}
+                  />
+                  <Button
+                    type="button"
+                    label="Cancel"
+                    className="theme-btn-default leading-none"
+                    // disabled={createUserLoading}
+                    onClick={() => {
+                      setNewUser(false);
+                      setSelectUser("");
+                    }}
+                  />
+                </div>
+              )}
+
+              <div className="py-4 px-6 border-b-gray-300 border-b transition-all duration-300 hover:bg-blue-200">
+                <Button
+                  label="New User"
+                  icon="bx bx-plus"
+                  text
+                  className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
+                  onClick={() => setNewUser(true)}
+                />
+              </div>
             </div>
           </div>
 
