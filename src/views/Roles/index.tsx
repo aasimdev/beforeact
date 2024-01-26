@@ -10,7 +10,6 @@ import { InputText } from "primereact/inputtext";
 import {
   useCreateRoleMutation,
   useGetAllRolesQuery,
-  useUpdateRoleMutation,
 } from "../../redux/api/roleApiSlice";
 // Custom
 import Header from "../../components/Header";
@@ -20,6 +19,7 @@ import ToastAlert from "../../components/ToastAlert";
 import DotLoader from "../../components/Spinner/dotLoader";
 import Title from "../../components/Title";
 import DeleteRoleModal from "./components/DeleteRoleModal";
+import { useNavigate } from "react-router-dom";
 
 interface RolesDT {
   name: string;
@@ -30,6 +30,8 @@ interface RolesDT {
 }
 
 const Roles = () => {
+  const navigate = useNavigate();
+
   const [roles, setRoles] = useState<RolesDT[]>([]);
   const [newRole, setNewRole] = useState(false);
   const [newUserCheckBox, setNewUserCheckBox] = useState({
@@ -52,6 +54,7 @@ const Roles = () => {
         manageRoles: true,
         manageTenants: false,
       }));
+
       setRoles(roles);
     }
   }, [data]);
@@ -93,42 +96,45 @@ const Roles = () => {
   };
 
   // UPDATE ROLE API BIND
-  const [updateRole] = useUpdateRoleMutation();
+  // const [updateRole] = useUpdateRoleMutation();
 
-  const onRowEditComplete = async (event: any) => {
-    let _products = [...roles];
-    let { newData, index } = event;
+  // const onRowEditComplete = async (event: any) => {
+  //   let _products = [...roles];
+  //   let { newData, index } = event;
 
-    _products[index] = newData as RolesDT;
+  //   _products[index] = newData as RolesDT;
 
-    const payload = {
-      id: newData.id,
-      name: newData.name,
-      users: newData.users,
-      manageUsers: newData.manageUsers,
-      manageRoles: newData.manageRoles,
-      manageTenants: newData.manageTenants,
-    };
+  //   const payload = {
+  //     id: newData.id,
+  //     name: newData.name,
+  //     users: newData.users,
+  //     manageUsers: newData.manageUsers,
+  //     manageRoles: newData.manageRoles,
+  //     manageTenants: newData.manageTenants,
+  //   };
 
-    try {
-      const role: any = await updateRole(payload);
+  //   try {
+  //     const role: any = await updateRole(payload);
 
-      if (role?.data === null) {
-        ToastAlert("Role Updated Successfully", "success");
-      }
-      if (role?.error) {
-        ToastAlert(role?.error?.data?.title, "error");
-      }
-    } catch (error) {
-      console.error("Update Role Error:", error);
-      ToastAlert("Something went wrong", "error");
-    }
-  };
+  //     if (role?.data === null) {
+  //       ToastAlert("Role Updated Successfully", "success");
+  //     }
+  //     if (role?.error) {
+  //       ToastAlert(role?.error?.data?.title, "error");
+  //     }
+  //   } catch (error) {
+  //     console.error("Update Role Error:", error);
+  //     ToastAlert("Something went wrong", "error");
+  //   }
+  // };
 
   const DeleteColumn = (data: RolesDT) => (
     <Button
       label="Delete"
       text
+      style={{
+        width: "5rem",
+      }}
       onClick={() => {
         setSelectedRole(data);
         setConfirmPopup(true);
@@ -155,21 +161,6 @@ const Roles = () => {
     );
   };
 
-  const textEditor = (options: any, type: string) => {
-    return (
-      <InputText
-        type={type}
-        style={{
-          width: type === "number" ? "100px" : "auto",
-        }}
-        value={options.value}
-        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-          options.editorCallback!(e.target.value)
-        }
-      />
-    );
-  };
-
   return (
     <>
       {isLoading && <OverlayLoader />}
@@ -181,35 +172,9 @@ const Roles = () => {
           <Header />
           <Title brand={false} title="Roles" />
           <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
-            <DataTable
-              value={roles}
-              editMode="row"
-              dataKey="name"
-              onRowEditComplete={onRowEditComplete}
-              className="theme-table"
-              rowEditorInitIcon={
-                <button
-                  style={{
-                    color: "#696cff",
-                    fontSize: "18px",
-                    lineHeight: "28px",
-                    fontWeight: 500,
-                  }}
-                >
-                  Edit
-                </button>
-              }
-            >
-              <Column
-                field="name"
-                header="NAME"
-                editor={(options) => textEditor(options, "text")}
-              ></Column>
-              <Column
-                field="users"
-                header="USERS"
-                editor={(options) => textEditor(options, "number")}
-              ></Column>
+            <DataTable value={roles} className="theme-table">
+              <Column field="name" header="NAME"></Column>
+              <Column field="users" header="USERS"></Column>
               <Column
                 field="manageUsers"
                 header="MANAGE USERS"
@@ -225,7 +190,21 @@ const Roles = () => {
                 header="MANAGE TENANTS"
                 body={checkboxTemplate("manageTenants")}
               ></Column>
-              <Column rowEditor></Column>
+              <Column
+                field="Edit"
+                body={(data) => (
+                  <Button
+                    label="Edit"
+                    text
+                    style={{
+                      width: "5rem",
+                    }}
+                    onClick={() => {
+                      navigate(`/roles/${data.id}`);
+                    }}
+                  />
+                )}
+              ></Column>
               <Column
                 field="Delete"
                 body={(data) => DeleteColumn(data)}

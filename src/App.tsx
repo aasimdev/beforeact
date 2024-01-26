@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Brands from "./views/Brands";
-import Dashboard from "./views/Dahboard";
+import Dashboard from "./views/Dashboard";
 import Users from "./views/Users";
 import Roles from "./views/Roles";
 import EditBrand from "./views/Brands/components/EditBrand";
 import Login from "./views/Login";
 import PublicRoutes from "./routes/PublicRoutes";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
+import EditRole from "./views/Roles/components/EditRole";
 
 function App() {
   return (
@@ -68,7 +69,7 @@ function App() {
           path="/roles/:id"
           element={
             <ProtectedRoutes>
-              <Roles />
+              <EditRole />
             </ProtectedRoutes>
           }
         />
