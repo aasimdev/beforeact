@@ -4,6 +4,7 @@ import {
   useAddClientToRoleMutation,
   useAddUserToRoleMutation,
   useGetRoleByIdQuery,
+  useRemoveClaimFromRoleMutation,
 } from "../../../redux/api/roleApiSlice";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import Sidebar from "../../../components/Sidebar";
@@ -90,6 +91,10 @@ const EditRole = () => {
   const [claimRole, { isLoading: claimRoleLoading }] =
     useAddClientToRoleMutation();
 
+  // REMOVE CLAIM ROLE API BIND
+  const [removeClaimRole, { isLoading: removeClaimRoleLoading }] =
+    useRemoveClaimFromRoleMutation();
+
   const handlePermissionStatus = async (permission: any, status: any) => {
     const payload = {
       id,
@@ -112,7 +117,19 @@ const EditRole = () => {
       }
     }
     if (!status) {
-      alert("unclaim");
+      try {
+        const role: any = await removeClaimRole(payload);
+
+        if (role?.data === null) {
+          ToastAlert("Remove Role Successfully", "success");
+        }
+        if (role?.error) {
+          ToastAlert(role?.error?.data?.title, "error");
+        }
+      } catch (error) {
+        console.error("Removing Role Error:", error);
+        ToastAlert("Something went wrong", "error");
+      }
     }
   };
 
@@ -246,7 +263,7 @@ const EditRole = () => {
                         inputId={permission}
                         checked={selectedPermissions[permission]}
                         onChange={() => handleCheckboxChange(permission)}
-                        disabled={claimRoleLoading}
+                        disabled={claimRoleLoading || removeClaimRoleLoading}
                       />
                     </div>
                   </div>

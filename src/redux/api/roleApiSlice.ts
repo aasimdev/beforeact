@@ -71,6 +71,16 @@ export const roleApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Roles"],
     }),
+    removeClaimFromRole: builder.mutation({
+      query: (data) => {
+        return {
+          url: "/admin/remove-claim-from-role",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["Roles"],
+    }),
   }),
 });
 
@@ -82,4 +92,5 @@ export const {
   useAddUserToRoleMutation,
   useRemoveUserFromRoleMutation,
   useAddClientToRoleMutation,
+  useRemoveClaimFromRoleMutation,
 } = roleApiSlice;

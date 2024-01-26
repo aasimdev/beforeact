@@ -122,6 +122,7 @@ const removeUserFromRole = async (roleId, userId) => {
   });
 };
 
+// TODO: Salman Done
 const addClaimToRole = async (id, name) => {
   return await instance.post("/admin/add-claim-to-role", {
     id,
@@ -129,6 +130,7 @@ const addClaimToRole = async (id, name) => {
   });
 };
 
+// TODO: Salman Done
 const removeClaimFromRole = async (id, name) => {
   return await instance.post("/admin/remove-claim-from-role", {
     id,
