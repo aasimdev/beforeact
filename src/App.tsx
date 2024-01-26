@@ -64,6 +64,14 @@ function App() {
             </ProtectedRoutes>
           }
         />
+        <Route
+          path="/roles/:id"
+          element={
+            <ProtectedRoutes>
+              <Roles />
+            </ProtectedRoutes>
+          }
+        />
       </Routes>
     </Router>
   );
