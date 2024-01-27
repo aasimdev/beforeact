@@ -1,28 +1,35 @@
+// React Imports
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+// Prime React Imports
+import { InputText } from "primereact/inputtext";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import { Button } from "primereact/button";
+import { Divider } from "primereact/divider";
+import { Checkbox } from "primereact/checkbox";
+import { Dropdown } from "primereact/dropdown";
+// Redux
 import {
   useAddClientToRoleMutation,
   useAddUserToRoleMutation,
   useGetRoleByIdQuery,
   useRemoveClaimFromRoleMutation,
 } from "../../../redux/api/roleApiSlice";
+import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
+// Utils
+import { formatDate } from "../../../utils";
+// Custom
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import Sidebar from "../../../components/Sidebar";
 import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
-import { InputText } from "primereact/inputtext";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
-import { formatDate } from "../../../utils";
-import { Button } from "primereact/button";
-import { Divider } from "primereact/divider";
-import { Checkbox } from "primereact/checkbox";
-import { Dropdown } from "primereact/dropdown";
-import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
 import ToastAlert from "../../../components/ToastAlert";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import DeleteUserFromRole from "./DeleteUserFromRole";
+// Assets
+import RolesImage from "../../../assets/images/roles_logo.svg";
 
 const EditRole = () => {
   const location = useLocation();
@@ -153,7 +160,7 @@ const EditRole = () => {
 
         <div className="p-8 w-full flex-1 lg:ml-80">
           <Header />
-          <Title brand={false} title={data?.role?.name} />
+          <Title brand={false} title={data?.role?.name} image={RolesImage} />
           <Breadcrumb mainLabel="Edit Roles" label="Roles" url="/roles" />
 
           <div>
