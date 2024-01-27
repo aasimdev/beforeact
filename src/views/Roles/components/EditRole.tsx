@@ -41,9 +41,11 @@ const EditRole = () => {
   const [dropDownUser, setDropDownUser] = useState<any>("");
   const [selectedUser, setSelectedUser] = useState<any>({});
   const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
-  const [selectedPermissions, setSelectedPermissions] = useState<any>({});
+  const [selectedPermissions, setSelectedPermissions] = useState<{
+    [key: string]: boolean;
+  }>({});
 
-  // GET ALL ROLES
+  // GET ROLE
   const { data, isLoading } = useGetRoleByIdQuery(id);
 
   // GET ALL USERS
@@ -259,24 +261,32 @@ const EditRole = () => {
               </h3>
               <Divider type="solid" />
 
-              {data?.permissions?.map((permission: any) => (
-                <div key={permission}>
-                  <div className="pl-4 flex items-center gap-24">
-                    <div className="text-gray w-36 text-[18px] font-medium">
-                      {permission}
+              {data?.permissions?.map((permission: any) => {
+                const isClaimed = data?.claims?.some(
+                  (claim: any) => claim.value === permission
+                );
+
+                return (
+                  <div key={permission}>
+                    <div className="pl-4 flex items-center gap-24">
+                      <div className="text-gray w-36 text-[18px] font-medium">
+                        {permission}
+                      </div>
+                      <div className="mt-2 text-gray text-[14px]">
+                        <Checkbox
+                          inputId={permission}
+                          checked={
+                            isClaimed ? true : selectedPermissions[permission]
+                          }
+                          onChange={() => handleCheckboxChange(permission)}
+                          disabled={claimRoleLoading || removeClaimRoleLoading}
+                        />
+                      </div>
                     </div>
-                    <div className="mt-2 text-gray text-[14px]">
-                      <Checkbox
-                        inputId={permission}
-                        checked={selectedPermissions[permission]}
-                        onChange={() => handleCheckboxChange(permission)}
-                        disabled={claimRoleLoading || removeClaimRoleLoading}
-                      />
-                    </div>
+                    <Divider type="solid" />
                   </div>
-                  <Divider type="solid" />
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
         </div>
