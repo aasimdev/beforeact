@@ -1,5 +1,6 @@
 // React Imports
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 // Prime React Imports
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
@@ -19,7 +20,8 @@ import ToastAlert from "../../components/ToastAlert";
 import DotLoader from "../../components/Spinner/dotLoader";
 import Title from "../../components/Title";
 import DeleteRoleModal from "./components/DeleteRoleModal";
-import { useNavigate } from "react-router-dom";
+// Assets
+import RoundImage from "../../assets/images/roles_logo.svg";
 
 interface RolesDT {
   name: string;
@@ -95,39 +97,6 @@ const Roles = () => {
     }
   };
 
-  // UPDATE ROLE API BIND
-  // const [updateRole] = useUpdateRoleMutation();
-
-  // const onRowEditComplete = async (event: any) => {
-  //   let _products = [...roles];
-  //   let { newData, index } = event;
-
-  //   _products[index] = newData as RolesDT;
-
-  //   const payload = {
-  //     id: newData.id,
-  //     name: newData.name,
-  //     users: newData.users,
-  //     manageUsers: newData.manageUsers,
-  //     manageRoles: newData.manageRoles,
-  //     manageTenants: newData.manageTenants,
-  //   };
-
-  //   try {
-  //     const role: any = await updateRole(payload);
-
-  //     if (role?.data === null) {
-  //       ToastAlert("Role Updated Successfully", "success");
-  //     }
-  //     if (role?.error) {
-  //       ToastAlert(role?.error?.data?.title, "error");
-  //     }
-  //   } catch (error) {
-  //     console.error("Update Role Error:", error);
-  //     ToastAlert("Something went wrong", "error");
-  //   }
-  // };
-
   const DeleteColumn = (data: RolesDT) => (
     <Button
       label="Delete"
@@ -170,7 +139,7 @@ const Roles = () => {
 
         <div className="p-8 w-full flex-1 lg:ml-80">
           <Header />
-          <Title brand={false} title="Roles" />
+          <Title brand={false} title="Roles" image={RoundImage} />
           <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
             <DataTable value={roles} className="theme-table">
               <Column field="name" header="NAME"></Column>

@@ -1,6 +1,6 @@
 import { Image } from "primereact/image";
 import React, { useState } from "react";
-import cubeImg from "../../assets/images/fractal_cube.svg";
+import cubeImg from "../../assets/images/brands_logo.svg";
 import { Button } from "primereact/button";
 import BrandLogoModal from "../../views/Brands/components/BrandLogoModal";
 import { generateColor } from "../../utils";
@@ -8,9 +8,12 @@ import { generateColor } from "../../utils";
 interface TitleProps {
   title: string;
   brand: any;
+  image?: string;
 }
 
-const Title: React.FC<TitleProps> = ({ title, brand }) => {
+const Title: React.FC<TitleProps> = (props) => {
+  const { title, brand, image } = props;
+
   const [visibleLogo, setVisibleLogo] = useState(false);
   const [brandImage, setBrandImage] = useState<any>("");
 
@@ -64,7 +67,7 @@ const Title: React.FC<TitleProps> = ({ title, brand }) => {
               />
             </div>
           ) : (
-            <Image src={cubeImg} alt="Cube" />
+            <Image src={image || cubeImg} alt="Cube" />
           )}
 
           <span className="text-white text-5xl font-extrabold">{title}</span>

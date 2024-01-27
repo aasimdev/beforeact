@@ -23,6 +23,8 @@ import OverlayLoader from "../../components/Spinner/OverlayLoader";
 import ToastAlert from "../../components/ToastAlert";
 import DotLoader from "../../components/Spinner/dotLoader";
 import DeleteUserModal from "./components/DeleteUserModal";
+// Assets
+import RoundImage from "../../assets/images/users_logo.svg";
 
 interface UserDT {
   userName: any;
@@ -170,7 +172,7 @@ const Users = () => {
 
         <div className="p-8 w-full flex-1 lg:ml-80">
           <Header />
-          <Title brand={false} title="Users" />
+          <Title brand={false} title="Users" image={RoundImage} />
 
           {/* Active Users Table */}
           <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
