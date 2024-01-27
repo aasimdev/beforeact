@@ -19,6 +19,7 @@ const createTenant = async (name, filterId, website) => {
   });
 };
 
+// TODO: Salman Done
 const addUserToTenant = async (userName, tenantId) => {
   return await instance.post("/tenant/add-user", {
     userName,

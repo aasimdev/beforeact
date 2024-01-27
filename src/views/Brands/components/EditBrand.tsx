@@ -9,10 +9,16 @@ import { Dropdown } from "primereact/dropdown";
 import BrandLogoImg from "../../../assets/images/banana.png";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import Sidebar from "../../../components/Sidebar";
-import { useGetTenantUsersQuery } from "../../../redux/api/brandApiSlice";
+import {
+  useAddUsersToTenantMutation,
+  useGetTenantUsersQuery,
+} from "../../../redux/api/brandApiSlice";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import { capitalizeFirstLetter, formatDate } from "../../../utils";
 import DeleteUserFromBrand from "./DeleteUserFromBrand";
+import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
+import ToastAlert from "../../../components/ToastAlert";
+import DotLoader from "../../../components/Spinner/dotLoader";
 
 interface UserDT {
   userName: any;
@@ -27,24 +33,13 @@ const EditBrand = () => {
   const { id } = useParams<{ id: string }>();
 
   // states
-  const [users, setUsers] = useState<UserDT[]>([]);
+  const [tenantUsers, setTenantUsers] = useState<UserDT[]>([]);
   const [title, setTitle] = useState("");
-  const [selectUser, setSelectUser] = useState("");
+  const [dropDownUser, setDropDownUser] = useState<any>("");
   const [newUser, setNewUser] = useState(false);
   const [visible, setVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserDT | null>(null);
-
-  // GET TENANT USERS
-  const { data, isLoading } = useGetTenantUsersQuery(id);
-
-  useEffect(() => {
-    if (data) {
-      // Find all users who are not deleted
-      const allUsers: UserDT[] = data.users;
-      const activeUsers: UserDT[] = allUsers.filter((user) => !user.deleted);
-      setUsers(activeUsers);
-    }
-  }, [data]);
+  const [activeUsers, setActiveUsers] = useState<any[]>([]);
 
   useEffect(() => {
     const lastSegment = pathname.split("/").pop();
@@ -54,16 +49,58 @@ const EditBrand = () => {
     setTitle(capitalizedLastSegment);
   }, [pathname]);
 
-  const sUsers = [
-    { name: "Option A", code: "1" },
-    { name: "Option B", code: "2" },
-    { name: "Option C", code: "3" },
-  ];
+  // GET TENANT USERS
+  const { data, isLoading } = useGetTenantUsersQuery(id);
+
+  useEffect(() => {
+    if (data) {
+      // Find all users who are not deleted
+      const allUsers: UserDT[] = data?.users;
+      const activeUsers: UserDT[] = allUsers.filter((user) => !user.deleted);
+      setTenantUsers(activeUsers);
+    }
+  }, [data]);
+
+  // GET ALL USERS
+  const { data: usersData, isLoading: dataLoading } = useGetAllUsersQuery({});
+
+  useEffect(() => {
+    if (usersData?.users) {
+      // Find all users who are not deleted
+      const users = usersData?.users?.filter((user: any) => !user.deleted);
+      setActiveUsers(users);
+    }
+  }, [usersData]);
+
+  // ADD USER TO ROLE API BIND
+  const [addUserToBrand, { isLoading: createUserLoading }] =
+    useAddUsersToTenantMutation();
+
+  const addUserToRoleHandler = async () => {
+    const payload = {
+      tenantId: id,
+      userName: dropDownUser?.userName,
+    };
+
+    try {
+      const user: any = await addUserToBrand(payload);
+
+      if (user?.data === null) {
+        setNewUser(false);
+        setDropDownUser("");
+        ToastAlert("User Created Successfully", "success");
+      }
+      if (user?.error) {
+        ToastAlert(user?.error?.data?.title, "error");
+      }
+    } catch (error) {
+      console.error("Creating User Error:", error);
+      ToastAlert("Something went wrong", "error");
+    }
+  };
 
   // Table body templates
   const actionBodyTemplate = (data: UserDT) => {
-    // console.log(data);
-
     return <Button label="Delete" text onClick={() => deleteUser(data)} />;
   };
 
@@ -75,7 +112,7 @@ const EditBrand = () => {
 
   return (
     <>
-      {isLoading && <OverlayLoader />}
+      {(isLoading || dataLoading) && <OverlayLoader />}
       <div className="flex">
         <Sidebar />
 
@@ -88,7 +125,7 @@ const EditBrand = () => {
               Users in Brand
             </h3>
 
-            <DataTable value={users} className="theme-table">
+            <DataTable value={tenantUsers} className="theme-table">
               <Column field="userName" header="USER NAME"></Column>
               <Column
                 field="email"
@@ -107,14 +144,46 @@ const EditBrand = () => {
             </DataTable>
 
             {newUser && (
-              <div className="py-1 px-6 border-b-gray-300 border-b">
+              <div className="py-1 px-6 flex gap-8 border-b-gray-300 border-b">
                 <Dropdown
-                  value={selectUser}
-                  onChange={(e) => setSelectUser(e.value)}
-                  options={sUsers}
-                  optionLabel="name"
+                  value={dropDownUser}
+                  onChange={(e) => setDropDownUser(e.value)}
+                  options={activeUsers}
+                  optionLabel="userName"
                   placeholder="Select a user"
                   className="theme-input shadow-btn w-60"
+                />
+
+                {createUserLoading ? (
+                  <div
+                    className="theme-btn leading-none"
+                    style={{
+                      height: "45px",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <DotLoader color="#fff" size={12} />
+                  </div>
+                ) : (
+                  <Button
+                    onClick={addUserToRoleHandler}
+                    label="Create"
+                    className="theme-btn leading-none"
+                    disabled={createUserLoading}
+                  />
+                )}
+
+                <Button
+                  type="button"
+                  label="Cancel"
+                  className="theme-btn-default leading-none"
+                  disabled={createUserLoading}
+                  onClick={() => {
+                    setNewUser(false);
+                    setDropDownUser("");
+                  }}
                 />
               </div>
             )}

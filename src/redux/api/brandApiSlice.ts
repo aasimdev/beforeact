@@ -41,6 +41,16 @@ export const brandApiSlice = apiSlice.injectEndpoints({
       },
       invalidatesTags: ["Brands"],
     }),
+    addUsersToTenant: builder.mutation({
+      query: (data) => {
+        return {
+          url: "tenant/add-user",
+          method: "POST",
+          body: data,
+        };
+      },
+      invalidatesTags: ["Brands"],
+    }),
   }),
 });
 
@@ -49,4 +59,5 @@ export const {
   useGetAllTenantsQuery,
   useGetTenantUsersQuery,
   useRemoveUserFromTenantMutation,
+  useAddUsersToTenantMutation,
 } = brandApiSlice;
