@@ -5,7 +5,7 @@ import { useState } from "react";
 import BrandList from "./components/BrandList";
 import AddBrandModal from "./components/AddBrandModal";
 import Sidebar from "../../components/Sidebar";
-import MobileVersionBrand from "./components/MobileVersionBrand";
+import MobileAddBrand from "./components/mobile/MobileAddBrand";
 import BrandImage from "../../assets/images/brands_logo.svg";
 
 const Brands = () => {
@@ -36,7 +36,7 @@ const Brands = () => {
 
       {/* Mobile Version of Brands */}
       <div className="p-8 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
-        <MobileVersionBrand />
+        <MobileAddBrand />
       </div>
 
       {/* Modal */}

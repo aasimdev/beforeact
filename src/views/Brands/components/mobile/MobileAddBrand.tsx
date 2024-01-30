@@ -1,14 +1,20 @@
-import React, { useState } from "react";
-import Header from "../../../components/Header";
-import Title from "../../../components/Title";
+// React Imports
+import { useState } from "react";
+// Prime React Imports
 import { Button } from "primereact/button";
-import BrandImage from "../../../assets/images/brands_logo.svg";
 import { InputText } from "primereact/inputtext";
-import { useCreateTenantMutation } from "../../../redux/api/brandApiSlice";
-import DotLoader from "../../../components/Spinner/dotLoader";
-import ToastAlert from "../../../components/ToastAlert";
+// Redux
+import { useCreateTenantMutation } from "../../../../redux/api/brandApiSlice";
+// Custom
+import Header from "../../../../components/Header";
+import Title from "../../../../components/Title";
+import DotLoader from "../../../../components/Spinner/dotLoader";
+import ToastAlert from "../../../../components/ToastAlert";
+// Assets
+import BrandImage from "../../../../assets/images/brands_logo.svg";
+import MobileBrandList from "./MobileBrandList";
 
-const MobileVersionBrand = () => {
+const MobileAddBrand = () => {
   const [openCard, setOpenCard] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -66,7 +72,7 @@ const MobileVersionBrand = () => {
               <div className="flex justify-between items-center">
                 <div className="flex-1">
                   <form className="" onSubmit={createBrand}>
-                    <div className="mb-8">
+                    <div className="mb-4">
                       <InputText
                         id="name"
                         placeholder="Brand Name"
@@ -83,7 +89,7 @@ const MobileVersionBrand = () => {
                         }}
                       />
                     </div>
-                    <div className="mb-8">
+                    <div className="mb-4">
                       <InputText
                         id="brandId"
                         placeholder="Brand ID"
@@ -103,7 +109,7 @@ const MobileVersionBrand = () => {
                     <div className="mb-2">
                       <InputText
                         id="website"
-                        placeholder="brandcasino.com"
+                        placeholder="Website"
                         className="theme-input"
                         style={{
                           width: "100%",
@@ -161,9 +167,12 @@ const MobileVersionBrand = () => {
             </Button>
           )}
         </div>
+        <div>
+          <MobileBrandList />
+        </div>
       </div>
     </>
   );
 };
 
-export default MobileVersionBrand;
+export default MobileAddBrand;
