@@ -18,7 +18,7 @@ const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
 
   const [formData, setFormData] = useState({
     name: "",
-    filterId: "",
+    brandId: "",
     website: "",
   });
   const [visibleLogo, setVisibleLogo] = useState(false);
@@ -40,7 +40,7 @@ const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
 
     const payload = {
       name: formData.name,
-      filterId: formData.filterId,
+      filterId: formData.brandId,
       website: formData.website,
     };
 
@@ -52,7 +52,7 @@ const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
         ToastAlert("Brand created successfully", "success");
         setFormData({
           name: "",
-          filterId: "",
+          brandId: "",
           website: "",
         });
       }
@@ -72,7 +72,7 @@ const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
     setFormData({
       ...formData,
       name: "",
-      filterId: "",
+      brandId: "",
       website: "",
     });
   };
@@ -143,16 +143,16 @@ const AddBrandModal: React.FC<AddBrandDataType> = (props) => {
             </div>
             <div className="flex flex-col gap-3 mb-8">
               <label
-                htmlFor="filterId"
+                htmlFor="brandId"
                 className="text-lg text-gray-200 font-semibold"
               >
                 ID
               </label>
               <InputText
-                id="filterId"
+                id="brandId"
                 placeholder="brand"
                 className="theme-input"
-                value={formData.filterId}
+                value={formData.brandId}
                 onChange={handleChange}
               />
             </div>
