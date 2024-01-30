@@ -67,8 +67,8 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
         >
           <div className="text-center">
             <h2
-              className={`mb-6 text-${
-                mobile ? "3xl" : "4xl"
+              className={`mb-6 ${
+                mobile ? "text-3xl" : "text-4xl"
               } text-gray-200 font-semibold`}
             >
               Are you sure?
@@ -96,15 +96,18 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
                 label="Cancel"
                 onClick={() => setVisible(false)}
                 disabled={removeUserLoading}
+                style={{
+                  fontSize: mobile ? "14px" : "22px",
+                }}
               />
 
               {removeUserLoading ? (
                 <div
-                  className={`theme-btn leading-none ${
-                    mobile ? "text-[14px]" : ""
-                  }`}
+                  className="theme-btn leading-none"
                   style={{
                     height: mobile ? "45px" : "55px",
+                    fontSize: mobile ? "14px" : "22px",
+
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -115,9 +118,12 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
               ) : (
                 <Button
                   type="button"
-                  className={`theme-btn ${mobile ? "text-[14px]" : ""}`}
+                  className="theme-btn"
                   label={mobile ? "Yes" : "Yes, delete this user"}
                   onClick={() => removeUser(selectedUser)}
+                  style={{
+                    fontSize: mobile ? "14px" : "22px",
+                  }}
                 />
               )}
             </div>
