@@ -19,6 +19,7 @@ import DeleteUserFromBrand from "./DeleteUserFromBrand";
 import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
 import ToastAlert from "../../../components/ToastAlert";
 import DotLoader from "../../../components/Spinner/dotLoader";
+import MobileEditBrand from "./mobile/MobileEditBrand";
 
 interface UserDT {
   userName: any;
@@ -116,7 +117,8 @@ const EditBrand = () => {
       <div className="flex">
         <Sidebar />
 
-        <div className="p-8 w-full flex-1 lg:ml-80">
+        {/* Below 640px hidden */}
+        <div className="p-8 w-full flex-1 lg:ml-80 lg:block md:block sm:block  hidden">
           <Header />
           <Title brand={BrandLogoImg} title={title} />
           <Breadcrumb mainLabel="Manage Brands" label="Brands" url="/brands" />
@@ -198,7 +200,6 @@ const EditBrand = () => {
               />
             </div>
           </div>
-
           {/* Delete User Modal */}
           <DeleteUserFromBrand
             visible={visible}
@@ -207,6 +208,11 @@ const EditBrand = () => {
             title={title}
             id={id}
           />
+        </div>
+
+        {/* Mobile Version of Edit Brands */}
+        <div className="px-4 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
+          <MobileEditBrand />
         </div>
       </div>
     </>
