@@ -245,6 +245,7 @@ const MobileEditBrand = () => {
         selectedUser={selectedUser}
         title={title}
         id={id}
+        mobile={true}
       />
     </>
   );

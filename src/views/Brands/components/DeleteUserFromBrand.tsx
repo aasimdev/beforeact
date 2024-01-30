@@ -13,10 +13,11 @@ interface DeleteUserFromBrandProps {
   selectedUser: any;
   title: string;
   id: any;
+  mobile?: boolean;
 }
 
 const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
-  const { visible, setVisible, selectedUser, title, id } = props;
+  const { visible, setVisible, selectedUser, title, id, mobile } = props;
 
   // Close Popup Icon
   const closeIconTemplate = <Image src={closeIcon} alt="close icon" />;
@@ -59,12 +60,24 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
         closeIcon={closeIconTemplate}
         contentClassName="p-0"
       >
-        <div className="px-[104px] py-16">
+        <div
+          className={`${mobile ? "px-[30px]" : "px-[104px]"} ${
+            mobile ? "py-4" : "py-16"
+          }`}
+        >
           <div className="text-center">
-            <h2 className="mb-6 text-4xl text-gray-200 font-semibold">
+            <h2
+              className={`mb-6 text-${
+                mobile ? "3xl" : "4xl"
+              } text-gray-200 font-semibold`}
+            >
               Are you sure?
             </h2>
-            <p className="text-[22px] text-gray-200">
+            <p
+              className={`${
+                mobile ? "text-[14px]" : "text-[22px]"
+              } text-gray-200`}
+            >
               You are about to delete the user:{" "}
               <span className="text-blue font-semibold">
                 {selectedUser?.userName}
@@ -76,7 +89,7 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
           </div>
 
           <div>
-            <div className="flex items-center justify-end gap-6 mt-10">
+            <div className="flex items-center justify-center gap-6 mt-10">
               <Button
                 type="button"
                 className="theme-btn-default"
@@ -87,9 +100,11 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
 
               {removeUserLoading ? (
                 <div
-                  className="theme-btn leading-none"
+                  className={`theme-btn leading-none ${
+                    mobile ? "text-[14px]" : ""
+                  }`}
                   style={{
-                    height: "55px",
+                    height: mobile ? "45px" : "55px",
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
@@ -100,8 +115,8 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
               ) : (
                 <Button
                   type="button"
-                  className="theme-btn"
-                  label="Yes, delete this user"
+                  className={`theme-btn ${mobile ? "text-[14px]" : ""}`}
+                  label={mobile ? "Yes" : "Yes, delete this user"}
                   onClick={() => removeUser(selectedUser)}
                 />
               )}
