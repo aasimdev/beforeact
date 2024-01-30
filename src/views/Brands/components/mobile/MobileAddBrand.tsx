@@ -61,7 +61,7 @@ const MobileAddBrand = () => {
       <Header />
 
       <Title brand={false} title="Brands" image={BrandImage} />
-      <div className="my-6">
+      <div className={`${openCard ? "mt-6" : "my-0"}`}>
         <div
           className={` ${openCard ? "p-4" : "pt-4 pb-4"} ${
             openCard ? "bg-white" : "bg-transparent"
