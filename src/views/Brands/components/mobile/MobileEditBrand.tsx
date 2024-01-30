@@ -231,7 +231,7 @@ const MobileEditBrand = () => {
                     backgroundColor: randomColor.background,
                     color: randomColor.color,
                   }}
-                  onClick={() => deleteUser(data)}
+                  onClick={() => deleteUser(user)}
                 />
               </div>
             );
