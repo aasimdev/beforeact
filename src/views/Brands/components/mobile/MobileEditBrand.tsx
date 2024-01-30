@@ -19,6 +19,7 @@ import { Button } from "primereact/button";
 import DotLoader from "../../../../components/Spinner/dotLoader";
 import { Dropdown } from "primereact/dropdown";
 import ToastAlert from "../../../../components/ToastAlert";
+import DeleteUserFromBrand from "../DeleteUserFromBrand";
 
 interface UserDT {
   userName: any;
@@ -38,6 +39,8 @@ const MobileEditBrand = () => {
   const [dropDownUser, setDropDownUser] = useState<any>("");
   const [activeUsers, setActiveUsers] = useState<any[]>([]);
   const [openCard, setOpenCard] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<UserDT | null>(null);
 
   useEffect(() => {
     const lastSegment = pathname.split("/").pop();
@@ -95,6 +98,11 @@ const MobileEditBrand = () => {
       console.error("Creating User Error:", error);
       ToastAlert("Something went wrong", "error");
     }
+  };
+
+  const deleteUser = (data: UserDT) => {
+    setSelectedUser(data);
+    setVisible(true);
   };
 
   return (
@@ -223,13 +231,21 @@ const MobileEditBrand = () => {
                     backgroundColor: randomColor.background,
                     color: randomColor.color,
                   }}
-                  // onClick={() => deleteUser(data)}
+                  onClick={() => deleteUser(data)}
                 />
               </div>
             );
           })
         )}
       </div>
+      {/* Delete User Modal */}
+      <DeleteUserFromBrand
+        visible={visible}
+        setVisible={setVisible}
+        selectedUser={selectedUser}
+        title={title}
+        id={id}
+      />
     </>
   );
 };
