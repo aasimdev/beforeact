@@ -65,7 +65,7 @@ const MobileAddBrand = () => {
         <div
           className={` ${openCard ? "p-4" : "pt-4 pb-4"} ${
             openCard ? "bg-white" : "bg-transparent"
-          } rounded-lg`}
+          } rounded-lg  ${openCard ? "mb-6" : ""}`}
         >
           {openCard && (
             <>
