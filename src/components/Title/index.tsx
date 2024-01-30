@@ -9,10 +9,11 @@ interface TitleProps {
   title: string;
   brand: any;
   image?: string;
+  mobile?: boolean;
 }
 
 const Title: React.FC<TitleProps> = (props) => {
-  const { title, brand, image } = props;
+  const { title, brand, image, mobile } = props;
 
   const [visibleLogo, setVisibleLogo] = useState(false);
   const [brandImage, setBrandImage] = useState<any>("");
@@ -81,6 +82,7 @@ const Title: React.FC<TitleProps> = (props) => {
         setVisibleLogo={setVisibleLogo}
         brandImage={brandImage}
         setBrandImage={setBrandImage}
+        mobile={mobile}
       />
     </>
   );

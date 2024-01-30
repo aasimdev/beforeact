@@ -11,6 +11,7 @@ interface BrandLogoModalProps {
   visibleLogo?: boolean;
   brandImage?: any;
   setBrandImage?: any;
+  mobile?: boolean;
 }
 
 const dummyImage =
@@ -21,6 +22,7 @@ const BrandLogoModal: React.FC<BrandLogoModalProps> = ({
   setVisibleLogo,
   brandImage,
   setBrandImage,
+  mobile,
 }) => {
   const fileRef = useRef<HTMLInputElement | null | any>(null);
   // states
@@ -56,14 +58,21 @@ const BrandLogoModal: React.FC<BrandLogoModalProps> = ({
     <Dialog
       visible={visibleLogo}
       onHide={handleClose}
-      style={{ width: "50vw" }}
+      style={{ width: "50vw", fontSize: "10px" }}
       breakpoints={{ "960px": "75vw", "641px": "100vw" }}
       header="Upload Logo"
       contentClassName="p-0 theme-popup"
       draggable={false}
       resizable={false}
+      headerStyle={{
+        fontSize: "16px",
+      }}
     >
-      <div className="px-[104px] py-16">
+      <div
+        className={`${mobile ? "px-[30px]" : "px-[104px]"} ${
+          mobile ? "py-4" : "py-16"
+        }`}
+      >
         <div className="max-w-[305px] mx-auto">
           <div className="flex justify-center items-center">
             <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-100 flex justify-center items-center">
@@ -88,19 +97,31 @@ const BrandLogoModal: React.FC<BrandLogoModalProps> = ({
             id=""
           />
 
-          <Button
-            type="button"
-            className="mt-8 brand-upload"
-            label="Upload new photo"
-            onClick={() => fileRef.current.click()}
-          />
+          <div className="flex justify-center items-center">
+            <Button
+              type="button"
+              className="mt-8 brand-upload"
+              label="Upload new photo"
+              onClick={() => fileRef.current.click()}
+              style={{
+                fontSize: mobile ? "16px" : "22px",
+              }}
+            />
+          </div>
 
-          <div className="flex items-center justify-center gap-6 mt-14">
+          <div
+            className={`flex items-center justify-center gap-6 ${
+              mobile ? "mt-10" : "mt-14"
+            } ${mobile ? "mb-3" : ""} `}
+          >
             <Button
               type="button"
               className="theme-btn-default"
               label="Cancel"
               onClick={handleClose}
+              style={{
+                fontSize: mobile ? "14px" : "22px",
+              }}
             />
             <Button
               type="button"
@@ -109,6 +130,9 @@ const BrandLogoModal: React.FC<BrandLogoModalProps> = ({
               }}
               className="theme-btn"
               label="Save"
+              style={{
+                fontSize: mobile ? "14px" : "22px",
+              }}
             />
           </div>
         </div>

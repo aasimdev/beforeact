@@ -110,7 +110,7 @@ const MobileEditBrand = () => {
       {(isLoading || dataLoading) && <OverlayLoader />}
 
       <div className="w-full flex-1">
-        <Title brand={BrandImage} title={title} />
+        <Title brand={BrandImage} title={title} mobile={true} />
         <Breadcrumb mainLabel="Manage Brands" label="Brands" url="/brands" />
         <div className="bg-white p-3 rounded-lg shadow-sidebar mt-6">
           <h3 className="text-[24px] text-blue font-medium">Users in Brand</h3>
