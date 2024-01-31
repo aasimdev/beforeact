@@ -25,6 +25,7 @@ import DotLoader from "../../components/Spinner/dotLoader";
 import DeleteUserModal from "./components/DeleteUserModal";
 // Assets
 import RoundImage from "../../assets/images/users_logo.svg";
+import MobileUsers from "./mobile/MobileUsers";
 
 interface UserDT {
   userName: any;
@@ -170,10 +171,9 @@ const Users = () => {
       <div className="flex">
         <Sidebar />
 
-        <div className="p-8 w-full flex-1 lg:ml-80">
+        <div className="p-8 w-full flex-1 lg:ml-80 lg:block md:block sm:block  hidden">
           <Header />
           <Title brand={false} title="Users" image={RoundImage} />
-
           {/* Active Users Table */}
           <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
             <DataTable
@@ -280,13 +280,11 @@ const Users = () => {
               />
             </div>
           </div>
-
           {/* Deleted Users List */}
           <DeletedUsers
             actionDeletedBodyTemplate={actionDeletedBodyTemplate}
             users={deletedUsers}
           />
-
           {/* Delete User Modal */}
           <DeleteUserModal
             confirmPopup={confirmPopup}
@@ -294,7 +292,6 @@ const Users = () => {
             selectedUser={selectedUser}
             setSelectedUser={setSelectedUser}
           />
-
           {/* View User Modal */}
           <ViewUserModal
             visible={visible}
@@ -302,6 +299,11 @@ const Users = () => {
             selectedUser={selectedUser}
           />
         </div>
+      </div>
+
+      {/* Mobile Version of Dashboard */}
+      <div className="p-8 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
+        <MobileUsers />
       </div>
     </>
   );

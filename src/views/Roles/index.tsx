@@ -22,6 +22,7 @@ import Title from "../../components/Title";
 import DeleteRoleModal from "./components/DeleteRoleModal";
 // Assets
 import RoundImage from "../../assets/images/roles_logo.svg";
+import MobileRoles from "./mobile/MobileRoles";
 
 interface RolesDT {
   name: string;
@@ -137,7 +138,7 @@ const Roles = () => {
       <div className="flex">
         <Sidebar />
 
-        <div className="p-8 w-full flex-1 lg:ml-80">
+        <div className="p-8 w-full flex-1 lg:ml-80 lg:block md:block sm:block  hidden">
           <Header />
           <Title brand={false} title="Roles" image={RoundImage} />
           <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
@@ -294,6 +295,11 @@ const Roles = () => {
           selectedRole={selectedRole}
           setSelectedRole={setSelectedRole}
         />
+      </div>
+
+      {/* Mobile Version of Roles */}
+      <div className="p-8 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
+        <MobileRoles />
       </div>
     </>
   );
