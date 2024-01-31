@@ -8,16 +8,17 @@ import {
   useCreateUserMutation,
   useGetAllUsersQuery,
 } from "../../../redux/api/userApiSlice";
+// Assets
+import RoundImage from "../../../assets/images/users_logo.svg";
 // Custom
 import MobileSideBar from "../../../components/MobileSideBar";
 import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import ToastAlert from "../../../components/ToastAlert";
-// Assets
-import RoundImage from "../../../assets/images/users_logo.svg";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import MobileDeletedUsers from "./MobileDeletedUsers";
+import MobileUserList from "./MobileUserList";
 
 const MobileUsers = () => {
   const [openCard, setOpenCard] = useState(false);
@@ -208,7 +209,9 @@ const MobileUsers = () => {
 
         <div className="my-4">
           {toggleValue === "users" ? (
-            "USERS LIST"
+            <>
+              <MobileUserList activeUsers={activeUsers} />
+            </>
           ) : (
             <>
               <MobileDeletedUsers deletedUsers={deletedUsers} />

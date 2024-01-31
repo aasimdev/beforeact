@@ -21,9 +21,15 @@ const MobileDeletedUsers: React.FC<Props> = (props) => {
           </h3>
         </div>
       ) : (
-        deletedUsers?.map((user: any) => {
+        deletedUsers?.map((user: any, index: number) => {
+          const lastIndex = deletedUsers?.length - 1;
           return (
-            <div className="bg-white py-2 px-3 rounded-lg mt-4" key={user?.id}>
+            <div
+              className={`bg-white py-2 px-3 rounded-lg mt-4  ${
+                lastIndex === index ? "mb-12" : ""
+              }`}
+              key={user?.id}
+            >
               <div className="flex items-center gap-3">
                 <div className="rounded-lg p-3 bg-body-2 text-gray">
                   <FiUser />
