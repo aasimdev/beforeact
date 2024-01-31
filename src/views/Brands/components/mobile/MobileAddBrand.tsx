@@ -13,6 +13,7 @@ import ToastAlert from "../../../../components/ToastAlert";
 // Assets
 import BrandImage from "../../../../assets/images/brands_logo.svg";
 import MobileBrandList from "./MobileBrandList";
+import MobileSideBar from "../../../../components/MobileSideBar";
 
 const MobileAddBrand = () => {
   const [openCard, setOpenCard] = useState(false);
@@ -58,6 +59,7 @@ const MobileAddBrand = () => {
 
   return (
     <>
+      <MobileSideBar />
       <Header />
 
       <Title brand={false} title="Brands" image={BrandImage} />
