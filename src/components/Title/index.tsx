@@ -28,7 +28,7 @@ const Title: React.FC<TitleProps> = (props) => {
             <div className="relative">
               {brandImage ? (
                 <>
-                  <div className="w-20 h-20 rounded-full overflow-hidden bg-gray-100 flex justify-center items-center">
+                  <div className="w-20 h-20 ml-4 rounded-full overflow-hidden bg-gray-100 flex justify-center items-center">
                     <img
                       src={brandImage}
                       alt="Brand"
@@ -42,7 +42,7 @@ const Title: React.FC<TitleProps> = (props) => {
                 </>
               ) : (
                 <div
-                  className="w-20 h-20 flex justify-center items-center rounded-full  mx-auto"
+                  className="w-20 h-20 ml-4 flex justify-center items-center rounded-full  mx-auto"
                   style={{
                     background: randomColor.background,
                   }}
