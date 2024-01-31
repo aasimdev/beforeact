@@ -149,7 +149,7 @@ const MobileAddBrand = () => {
                       <Button
                         type="submit"
                         disabled={isLoading}
-                        className="theme-btn w-full"
+                        className="theme-btn w-full p-2"
                         label="Create"
                       />
                     )}
@@ -160,7 +160,7 @@ const MobileAddBrand = () => {
           )}
           {!openCard && (
             <Button
-              className="theme-btn w-full text-center flex justify-center"
+              className="theme-btn w-full p-2 text-center flex justify-center"
               onClick={() => {
                 setOpenCard(true);
               }}

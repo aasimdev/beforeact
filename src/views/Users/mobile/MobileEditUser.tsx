@@ -115,10 +115,10 @@ const MobileEditUser: React.FC<Props> = (props) => {
                 </div>
               ) : (
                 <Button
-                  className="shadow-none border-0 font-medium bg-blue w-full flex items-center justify-center"
+                  className="shadow-none border-0 text-[20px] p-2 font-medium bg-blue w-full flex items-center justify-center"
                   onClick={updateUserHandler}
                 >
-                  Save
+                  Update
                 </Button>
               )}
             </div>

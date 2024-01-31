@@ -23,11 +23,17 @@ const MobileBrandList = () => {
     <>
       {isLoading && <OverlayLoader />}
 
-      {brands?.map((brand: any) => {
+      {brands?.map((brand: any, index: number) => {
         const randomColor = generateColor(data?.name);
+        const lastIndex = brands.length - 1;
 
         return (
-          <div className="bg-white p-4 mb-4 rounded-lg" key={brand?.name}>
+          <div
+            className={`bg-white p-4 ${
+              lastIndex === index ? "mb-12" : "mb-4"
+            }  rounded-lg`}
+            key={brand?.name}
+          >
             <div className="flex items-center">
               <div
                 className={`grow-0 shrink-0 basis-auto w-9 h-9 rounded-full text-white flex items-center justify-center`}

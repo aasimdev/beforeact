@@ -125,7 +125,7 @@ const MobileEditBrand = () => {
         <div className="bg-white p-3 rounded-lg shadow-sidebar mt-6">
           <h3 className="text-[24px] text-blue font-medium">Users in Brand</h3>
         </div>
-        <div className={`${openCard ? "my-6" : "mb-6"}`}>
+        <div className={`${openCard ? "my-6" : "mb-0"}`}>
           <div
             className={` ${openCard ? "p-4" : "pt-4 pb-4"} ${
               openCard ? "bg-white" : "bg-transparent"
@@ -169,7 +169,7 @@ const MobileEditBrand = () => {
                     <Button
                       onClick={addUserToRoleHandler}
                       disabled={createUserLoading}
-                      className="theme-btn w-full"
+                      className="theme-btn w-full p-2"
                       label="Create"
                     />
                   )}
@@ -181,7 +181,7 @@ const MobileEditBrand = () => {
               <Button
                 type="button"
                 label="+ New User"
-                className="theme-btn w-full text-center flex justify-center"
+                className="theme-btn w-full text-center flex justify-center p-2"
                 disabled={createUserLoading}
                 onClick={() => {
                   setOpenCard(true);
@@ -198,11 +198,18 @@ const MobileEditBrand = () => {
             </h3>
           </div>
         ) : (
-          tenantUsers?.map((user) => {
+          tenantUsers?.map((user, index: number) => {
             const randomColor = generateColor(data?.userName);
+            const lastIndex = tenantUsers.length - 1;
+            const firstIndex = tenantUsers.length - tenantUsers.length;
 
             return (
-              <div className="bg-white p-2 rounded-lg mt-4" key={user?.id}>
+              <div
+                className={`bg-white p-2 rounded-lg ${
+                  firstIndex === index ? "mt-0" : "mt-4"
+                } ${lastIndex === index ? "mb-20" : "mb-0"}`}
+                key={user?.id}
+              >
                 <div className="flex items-center gap-3 my-2">
                   <div
                     className="rounded-lg p-3"
