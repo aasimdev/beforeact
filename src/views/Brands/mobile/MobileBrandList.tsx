@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useGetAllTenantsQuery } from "../../../../redux/api/brandApiSlice";
-import OverlayLoader from "../../../../components/Spinner/OverlayLoader";
-import { generateColor } from "../../../../utils";
+import { useGetAllTenantsQuery } from "../../../redux/api/brandApiSlice";
+import OverlayLoader from "../../../components/Spinner/OverlayLoader";
+import { generateColor } from "../../../utils";
 import { Button } from "primereact/button";
 
 const MobileBrandList = () => {

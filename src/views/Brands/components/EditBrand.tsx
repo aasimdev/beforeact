@@ -19,7 +19,7 @@ import DeleteUserFromBrand from "./DeleteUserFromBrand";
 import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
 import ToastAlert from "../../../components/ToastAlert";
 import DotLoader from "../../../components/Spinner/dotLoader";
-import MobileEditBrand from "./mobile/MobileEditBrand";
+import MobileEditBrand from "../mobile/MobileEditBrand";
 
 interface UserDT {
   userName: any;

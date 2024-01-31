@@ -5,7 +5,7 @@ import { useState } from "react";
 import BrandList from "./components/BrandList";
 import AddBrandModal from "./components/AddBrandModal";
 import Sidebar from "../../components/Sidebar";
-import MobileAddBrand from "./components/mobile/MobileAddBrand";
+import MobileAddBrand from "./mobile/MobileAddBrand";
 import BrandImage from "../../assets/images/brands_logo.svg";
 
 const Brands = () => {

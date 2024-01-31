@@ -1,25 +1,33 @@
+// React Imports
 import { useEffect, useState } from "react";
-import BrandImage from "../../../../assets/images/brands_logo.svg";
-import Title from "../../../../components/Title";
+import { useLocation, useParams } from "react-router-dom";
+// Prime React Imports
+import { Button } from "primereact/button";
+import { Dropdown } from "primereact/dropdown";
+// Assets
+import BrandImage from "../../../assets/images/brands_logo.svg";
+// Utils
 import {
   capitalizeFirstLetter,
   formatDate,
   generateColor,
-} from "../../../../utils";
-import { useLocation, useParams } from "react-router-dom";
-import Breadcrumb from "../../../../components/Breadcrumb/Index";
+} from "../../../utils";
+// Redux
 import {
   useAddUsersToTenantMutation,
   useGetTenantUsersQuery,
-} from "../../../../redux/api/brandApiSlice";
-import OverlayLoader from "../../../../components/Spinner/OverlayLoader";
+} from "../../../redux/api/brandApiSlice";
+import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
+// React Icons
 import { FiUser } from "react-icons/fi";
-import { useGetAllUsersQuery } from "../../../../redux/api/userApiSlice";
-import { Button } from "primereact/button";
-import DotLoader from "../../../../components/Spinner/dotLoader";
-import { Dropdown } from "primereact/dropdown";
-import ToastAlert from "../../../../components/ToastAlert";
-import DeleteUserFromBrand from "../DeleteUserFromBrand";
+// Custom
+import Title from "../../../components/Title";
+import Breadcrumb from "../../../components/Breadcrumb/Index";
+import OverlayLoader from "../../../components/Spinner/OverlayLoader";
+import DotLoader from "../../../components/Spinner/dotLoader";
+import ToastAlert from "../../../components/ToastAlert";
+import DeleteUserFromBrand from "../components/DeleteUserFromBrand";
+import MobileSideBar from "../../../components/MobileSideBar";
 
 interface UserDT {
   userName: any;
@@ -108,6 +116,8 @@ const MobileEditBrand = () => {
   return (
     <>
       {(isLoading || dataLoading) && <OverlayLoader />}
+
+      <MobileSideBar />
 
       <div className="w-full flex-1">
         <Title brand={BrandImage} title={title} mobile={true} />

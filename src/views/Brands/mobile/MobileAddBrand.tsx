@@ -4,16 +4,16 @@ import { useState } from "react";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 // Redux
-import { useCreateTenantMutation } from "../../../../redux/api/brandApiSlice";
-// Custom
-import Header from "../../../../components/Header";
-import Title from "../../../../components/Title";
-import DotLoader from "../../../../components/Spinner/dotLoader";
-import ToastAlert from "../../../../components/ToastAlert";
+import { useCreateTenantMutation } from "../../../redux/api/brandApiSlice";
 // Assets
-import BrandImage from "../../../../assets/images/brands_logo.svg";
+import BrandImage from "../../../assets/images/brands_logo.svg";
+// Custom
+import Header from "../../../components/Header";
+import Title from "../../../components/Title";
+import DotLoader from "../../../components/Spinner/dotLoader";
+import ToastAlert from "../../../components/ToastAlert";
 import MobileBrandList from "./MobileBrandList";
-import MobileSideBar from "../../../../components/MobileSideBar";
+import MobileSideBar from "../../../components/MobileSideBar";
 
 const MobileAddBrand = () => {
   const [openCard, setOpenCard] = useState(false);
