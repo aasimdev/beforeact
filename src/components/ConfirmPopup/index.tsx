@@ -10,10 +10,11 @@ interface ConfirmPopupProps {
   confirmPopup: boolean;
   setConfirmPopup: React.Dispatch<React.SetStateAction<boolean>>;
   children: ReactNode;
+  mobile?: boolean;
 }
 
 const ConfirmPopup: React.FC<ConfirmPopupProps> = (props) => {
-  const { confirmPopup, setConfirmPopup, children } = props;
+  const { confirmPopup, setConfirmPopup, children, mobile } = props;
 
   // Close Popup Icon
   const closeIconTemplate = <Image src={closeIcon} alt="close icon" />;
@@ -28,7 +29,13 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = (props) => {
       closeIcon={closeIconTemplate}
       contentClassName="p-0"
     >
-      <div className="px-[104px] py-16">{children}</div>
+      <div
+        className={`${mobile ? "px-[30px]" : "px-[104px]"} ${
+          mobile ? "py-4" : "py-16"
+        }`}
+      >
+        {children}
+      </div>
     </Dialog>
   );
 };

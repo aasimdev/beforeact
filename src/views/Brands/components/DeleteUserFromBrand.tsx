@@ -107,7 +107,6 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
                   style={{
                     height: mobile ? "45px" : "55px",
                     fontSize: mobile ? "14px" : "22px",
-
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",

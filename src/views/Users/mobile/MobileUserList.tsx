@@ -4,6 +4,8 @@ import { FiUser } from "react-icons/fi";
 import { formatDate } from "../../../utils";
 import { FaEye } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
+import { Button } from "primereact/button";
+import DeleteUserModal from "../components/DeleteUserModal";
 
 interface Props {
   activeUsers: any;
@@ -13,6 +15,8 @@ const MobileUserList: React.FC<Props> = (props) => {
   const { activeUsers } = props;
 
   const [openCard, setOpenCard] = useState<any>(false);
+  const [selectedUser, setSelectedUser] = useState<any>(null);
+  const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
 
   const handleCardToggle = (id: number) => {
     setOpenCard(openCard === id ? null : id);
@@ -29,10 +33,12 @@ const MobileUserList: React.FC<Props> = (props) => {
                   !openCard ? "items-center" : ""
                 }`}
               >
-                <div>
+                <div className="w-full">
                   {!openCard || openCard !== user.id ? (
                     <div onClick={() => handleCardToggle(user.id)}>
-                      {user?.userName}
+                      <div className="text-gray font-normal">
+                        {user?.userName}
+                      </div>
                     </div>
                   ) : (
                     <>
@@ -50,8 +56,49 @@ const MobileUserList: React.FC<Props> = (props) => {
                             </div>
                           </div>
                         </div>
-                        <div className="text-gray-200 text-[18px] font-medium">
+                        <div className="text-gray-200 my-1 text-[18px] font-medium">
                           {user?.email}
+                        </div>
+
+                        <div
+                          className="bg-body-2 rounded-lg my-2 py-2 px-3 w-full flex flex-col text-center"
+                          style={{
+                            width: "100%",
+                          }}
+                        >
+                          <div className="text-gray w-full font-black">
+                            Admin'
+                            <span className="font-medium">s Brands</span>
+                          </div>
+                          <div className="my-2">No Brands Yet!</div>
+                        </div>
+
+                        <div className="mt-4 mb-1 flex items-center gap-3">
+                          <Button
+                            type="button"
+                            label="Delete"
+                            className="theme-btn-default leading-none"
+                            style={{
+                              padding: "12px 24px",
+                              fontSize: "16px",
+                            }}
+                            onClick={() => {
+                              setSelectedUser(user);
+                              setConfirmPopup(true);
+                            }}
+                          />
+                          <Button
+                            className="theme-btn"
+                            style={{
+                              padding: "7px 24px",
+                              fontSize: "16px",
+                              background: "#03C3EC",
+                            }}
+                            label="Edit"
+                            // onClick={() => {
+                            //   navigate(`/brands/${brand?.filterId}`);
+                            // }}
+                          />
                         </div>
                       </div>
                     </>
@@ -61,8 +108,23 @@ const MobileUserList: React.FC<Props> = (props) => {
                   <div className="flex justify-end">
                     <div onClick={() => handleCardToggle(user.id)}>
                       {openCard === user.id ? (
-                        <div className="text-gray pointer">
-                          <IoCloseSharp />
+                        <div
+                          className="text-gray"
+                          style={{
+                            position:
+                              openCard === user.id ? "relative" : "static",
+                            top: openCard === user.id ? "5px" : "0",
+                          }}
+                        >
+                          <div
+                            style={{
+                              position: "absolute",
+                              right: "0",
+                              top: "0",
+                            }}
+                          >
+                            <IoCloseSharp />
+                          </div>
                         </div>
                       ) : (
                         <div className="text-blue pointer">
@@ -79,6 +141,14 @@ const MobileUserList: React.FC<Props> = (props) => {
           );
         })}
       </div>
+      {/* Delete User Modal */}
+      <DeleteUserModal
+        confirmPopup={confirmPopup}
+        setConfirmPopup={setConfirmPopup}
+        selectedUser={selectedUser}
+        setSelectedUser={setSelectedUser}
+        mobile={true}
+      />
     </>
   );
 };
