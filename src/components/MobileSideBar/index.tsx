@@ -1,9 +1,16 @@
-import { Image } from "primereact/image";
+// React Imports
 import { useState } from "react";
-import LogoImg from "../../assets/images/logo.svg";
-import MenuItem from "../../components/MenuItem";
+// PrimeReact Imports
+import { Image } from "primereact/image";
+// React Icons
 import { IoMenu } from "react-icons/io5";
 import { FaChevronLeft } from "react-icons/fa";
+import { CiSearch } from "react-icons/ci";
+import { CgProfile } from "react-icons/cg";
+// Custom
+import MenuItem from "../../components/MenuItem";
+// Assets
+import LogoImg from "../../assets/images/logo.svg";
 
 interface NavItem {
   icon: string;
@@ -18,20 +25,22 @@ const BottomBar = ({ onMenuClick }: { onMenuClick: () => void }) => (
       bottom: 0,
       left: 0,
       right: 0,
-      height: "60px",
       backgroundColor: "#fff",
       boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
       zIndex: 1,
     }}
   >
-    <span
-      onClick={onMenuClick}
-      style={{ cursor: "pointer", marginRight: "20px" }}
-    >
-      <IoMenu />
-    </span>
-    <span>Search Icon</span>
-    <span>Profile Icon</span>
+    <div className="flex justify-between items-center p-4 text-[20px] text-gray-100">
+      <span onClick={onMenuClick}>
+        <IoMenu />
+      </span>
+      <span>
+        <CiSearch />
+      </span>
+      <span>
+        <CgProfile />
+      </span>
+    </div>
   </div>
 );
 
@@ -67,10 +76,10 @@ const MobileSideBar = () => {
         >
           <div className="relative">
             <div
-              className="absolute bg-white w-10 h-10 flex items-center justify-center text-white text-sm font-bold"
+              className="absolute bg-white w-8 h-8 flex items-center justify-center text-white text-sm font-bold"
               style={{
                 top: "20px",
-                left: "250px",
+                left: "255px",
                 borderRadius: "50%",
                 boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
               }}
@@ -79,7 +88,7 @@ const MobileSideBar = () => {
                 onClick={toggleSidebar}
                 className="bg-blue pointer"
                 style={{
-                  padding: "6px",
+                  padding: "5px",
                   borderRadius: "50%",
                 }}
               >
