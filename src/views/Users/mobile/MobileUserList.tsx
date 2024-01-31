@@ -6,6 +6,7 @@ import { FaEye } from "react-icons/fa";
 import { IoCloseSharp } from "react-icons/io5";
 import { Button } from "primereact/button";
 import DeleteUserModal from "../components/DeleteUserModal";
+import MobileEditUser from "./MobileEditUser";
 
 interface Props {
   activeUsers: any;
@@ -17,6 +18,7 @@ const MobileUserList: React.FC<Props> = (props) => {
   const [openCard, setOpenCard] = useState<any>(false);
   const [selectedUser, setSelectedUser] = useState<any>(null);
   const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
+  const [viewUser, setViewUser] = useState<boolean>(false);
 
   const handleCardToggle = (id: number) => {
     setOpenCard(openCard === id ? null : id);
@@ -95,9 +97,10 @@ const MobileUserList: React.FC<Props> = (props) => {
                               background: "#03C3EC",
                             }}
                             label="Edit"
-                            // onClick={() => {
-                            //   navigate(`/brands/${brand?.filterId}`);
-                            // }}
+                            onClick={() => {
+                              setSelectedUser(user);
+                              setViewUser(true);
+                            }}
                           />
                         </div>
                       </div>
@@ -141,6 +144,13 @@ const MobileUserList: React.FC<Props> = (props) => {
           );
         })}
       </div>
+      {/* Edit User Modal */}
+      <MobileEditUser
+        confirmPopup={viewUser}
+        setConfirmPopup={setViewUser}
+        selectedUser={selectedUser}
+        setSelectedUser={setSelectedUser}
+      />
       {/* Delete User Modal */}
       <DeleteUserModal
         confirmPopup={confirmPopup}

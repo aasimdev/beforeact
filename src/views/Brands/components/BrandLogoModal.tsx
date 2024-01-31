@@ -58,15 +58,12 @@ const BrandLogoModal: React.FC<BrandLogoModalProps> = ({
     <Dialog
       visible={visibleLogo}
       onHide={handleClose}
-      style={{ width: "50vw", fontSize: "10px" }}
+      style={{ width: "50vw" }}
       breakpoints={{ "960px": "75vw", "641px": "100vw" }}
       header="Upload Logo"
       contentClassName="p-0 theme-popup"
       draggable={false}
       resizable={false}
-      headerStyle={{
-        fontSize: "16px",
-      }}
     >
       <div
         className={`${mobile ? "px-[30px]" : "px-[104px]"} ${
