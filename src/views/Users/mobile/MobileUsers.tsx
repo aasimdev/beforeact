@@ -1,10 +1,13 @@
 // React Imports
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // Prime React Imports
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 // Redux
-import { useCreateUserMutation } from "../../../redux/api/userApiSlice";
+import {
+  useCreateUserMutation,
+  useGetAllUsersQuery,
+} from "../../../redux/api/userApiSlice";
 // Custom
 import MobileSideBar from "../../../components/MobileSideBar";
 import Header from "../../../components/Header";
@@ -13,6 +16,8 @@ import DotLoader from "../../../components/Spinner/dotLoader";
 import ToastAlert from "../../../components/ToastAlert";
 // Assets
 import RoundImage from "../../../assets/images/users_logo.svg";
+import OverlayLoader from "../../../components/Spinner/OverlayLoader";
+import MobileDeletedUsers from "./MobileDeletedUsers";
 
 const MobileUsers = () => {
   const [openCard, setOpenCard] = useState(false);
@@ -20,6 +25,24 @@ const MobileUsers = () => {
     userName: "",
     email: "",
   });
+  const [toggleValue, setToggleValue] = useState("users");
+  const [activeUsers, setActiveUsers] = useState<any>([]);
+  const [deletedUsers, setDeletedUsers] = useState<any>([]);
+
+  // GET ALL USERS
+  const { data, isLoading: usersLoading } = useGetAllUsersQuery({});
+
+  useEffect(() => {
+    if (data) {
+      // ACTIVE USERS
+      const activeUsers = data?.users?.filter((user: any) => !user.deleted);
+      setActiveUsers(activeUsers);
+
+      // DELETED USERS
+      const deletedUsers = data?.users?.filter((user: any) => user.deleted);
+      setDeletedUsers(deletedUsers);
+    }
+  }, [data]);
 
   // CREATE USER API BIND
   const [createNewUser, { isLoading }] = useCreateUserMutation();
@@ -52,7 +75,9 @@ const MobileUsers = () => {
   };
 
   return (
-    <div>
+    <>
+      {usersLoading && <OverlayLoader />}
+
       <MobileSideBar />
       <Header />
 
@@ -151,12 +176,47 @@ const MobileUsers = () => {
               </Button>
             )}
           </div>
-          {/* <div>
-            <MobileBrandList />
-          </div> */}
+        </div>
+        <div className="flex justify-between items-center">
+          <Button
+            className="shadow-none border-0 font-medium"
+            style={{
+              backgroundColor:
+                toggleValue === "users" ? "#696CFF" : "transparent",
+              color: toggleValue === "users" ? "#fff" : "#697A8D",
+            }}
+            onClick={() => {
+              setToggleValue("users");
+            }}
+          >
+            Users
+          </Button>
+          <Button
+            onClick={() => {
+              setToggleValue("deletedUsers");
+            }}
+            className="shadow-none border-0 font-medium"
+            style={{
+              backgroundColor:
+                toggleValue === "deletedUsers" ? "#696CFF" : "transparent",
+              color: toggleValue === "deletedUsers" ? "#fff" : "#697A8D",
+            }}
+          >
+            Deleted Users
+          </Button>
+        </div>
+
+        <div className="my-4">
+          {toggleValue === "users" ? (
+            "USERS LIST"
+          ) : (
+            <>
+              <MobileDeletedUsers deletedUsers={deletedUsers} />
+            </>
+          )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
