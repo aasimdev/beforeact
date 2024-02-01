@@ -24,6 +24,7 @@ import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import ToastAlert from "../../../components/ToastAlert";
 import DeleteUserFromRole from "../components/DeleteUserFromRole";
+import MobileEditPermission from "./MobileEditPermission";
 
 const MobileEditRole = () => {
   const location = useLocation();
@@ -222,7 +223,13 @@ const MobileEditRole = () => {
             </div>
           </>
         ) : (
-          <>Permissions</>
+          <>
+            <MobileEditPermission
+              permissions={data?.permissions}
+              claims={data?.claims}
+              id={id}
+            />
+          </>
         )}
       </div>
 
