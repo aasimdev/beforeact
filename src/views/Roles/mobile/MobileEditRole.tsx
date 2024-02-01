@@ -157,7 +157,7 @@ const MobileEditRole = () => {
         )}
       </div>
 
-      <div className="flex items-center">
+      <div className="flex items-center justify-between">
         <Button
           className="shadow-none border-0 font-medium"
           style={{
