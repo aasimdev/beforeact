@@ -22,8 +22,11 @@ import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import ToastAlert from "../../../components/ToastAlert";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import DeleteRoleModal from "../components/DeleteRoleModal";
+import { useNavigate } from "react-router-dom";
 
 const MobileRoles = () => {
+  const navigate = useNavigate();
+
   const [roles, setRoles] = useState<any>([]);
   const [openCard, setOpenCard] = useState(false);
   const [formData, setFormData] = useState({
@@ -172,7 +175,12 @@ const MobileRoles = () => {
               <div className="p-2 flex items-center justify-between">
                 <div className="pl-2">{role?.name}</div>
                 <div className="flex items-center gap-8 pr-2">
-                  <div className="text-blue text-lg">
+                  <div
+                    className="text-blue text-lg"
+                    onClick={() => {
+                      navigate(`/roles/${role?.id}`);
+                    }}
+                  >
                     <CiEdit />
                   </div>
                   <div

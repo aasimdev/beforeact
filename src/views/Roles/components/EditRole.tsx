@@ -30,6 +30,7 @@ import DotLoader from "../../../components/Spinner/dotLoader";
 import DeleteUserFromRole from "./DeleteUserFromRole";
 // Assets
 import RolesImage from "../../../assets/images/roles_logo.svg";
+import MobileEditRole from "../mobile/MobileEditRole";
 
 const EditRole = () => {
   const location = useLocation();
@@ -160,11 +161,10 @@ const EditRole = () => {
       <div className="flex">
         <Sidebar />
 
-        <div className="p-8 w-full flex-1 lg:ml-80">
+        <div className="p-8 w-full flex-1 lg:ml-80 lg:block md:block sm:block  hidden">
           <Header />
           <Title brand={false} title={data?.role?.name} image={RolesImage} />
           <Breadcrumb mainLabel="Edit Roles" label="Roles" url="/roles" />
-
           <div>
             <div className="mt-4 text-gray text-[18px] font-bold">NAME</div>
             <div className="mt-2 text-gray text-[14px]">
@@ -253,7 +253,6 @@ const EditRole = () => {
               </div>
             </div>
           </div>
-
           <div>
             <div className="bg-white p-4 rounded-lg shadow-sidebar mt-6">
               <h3 className="pl-4 text-[22px] text-blue font-normal">
@@ -297,6 +296,10 @@ const EditRole = () => {
           setSelectedUser={setSelectedUser}
           roleId={id}
         />
+      </div>
+      {/* Mobile Version of Edit Role */}
+      <div className="p-8 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
+        <MobileEditRole />
       </div>
     </>
   );
