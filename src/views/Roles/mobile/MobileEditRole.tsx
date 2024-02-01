@@ -1,11 +1,16 @@
 // React Imports
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 // Prime React Imports
 import { Button } from "primereact/button";
 import { Divider } from "primereact/divider";
+import { Dropdown } from "primereact/dropdown";
 // Redux
-import { useGetRoleByIdQuery } from "../../../redux/api/roleApiSlice";
+import {
+  useAddUserToRoleMutation,
+  useGetRoleByIdQuery,
+} from "../../../redux/api/roleApiSlice";
+import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
 // React Icons
 import { RiDeleteBinLine } from "react-icons/ri";
 // Assets
@@ -16,6 +21,8 @@ import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
+import DotLoader from "../../../components/Spinner/dotLoader";
+import ToastAlert from "../../../components/ToastAlert";
 
 const MobileEditRole = () => {
   const location = useLocation();
@@ -23,13 +30,55 @@ const MobileEditRole = () => {
   const id = location.pathname.split("/")[2];
 
   const [toggleValue, setToggleValue] = useState("users");
+  const [openCard, setOpenCard] = useState(false);
+  const [dropDownUser, setDropDownUser] = useState<any>("");
+  const [activeUsers, setActiveUsers] = useState<any[]>([]);
 
   // GET ROLE
   const { data, isLoading } = useGetRoleByIdQuery(id);
 
+  // GET ALL USERS
+  const { data: usersData, isLoading: dataLoading } = useGetAllUsersQuery({});
+
+  useEffect(() => {
+    if (usersData?.users) {
+      // Find all users who are not deleted
+      const users = usersData?.users?.filter((user: any) => !user.deleted);
+      setActiveUsers(users);
+    }
+  }, [usersData]);
+
+  // ADD USER TO ROLE API BIND
+  const [addUserToRole, { isLoading: createUserLoading }] =
+    useAddUserToRoleMutation();
+
+  const addUserToRoleHandler = async (e: any) => {
+    e.preventDefault();
+
+    const payload = {
+      id,
+      name: dropDownUser?.userName,
+    };
+
+    try {
+      const user: any = await addUserToRole(payload);
+
+      if (user?.data === null) {
+        setOpenCard(false);
+        setDropDownUser("");
+        ToastAlert("User Created Successfully", "success");
+      }
+      if (user?.error) {
+        ToastAlert(user?.error?.data?.title, "error");
+      }
+    } catch (error) {
+      console.error("Creating User Error:", error);
+      ToastAlert("Something went wrong", "error");
+    }
+  };
   return (
     <>
-      {isLoading && <OverlayLoader />}
+      {(isLoading || dataLoading) && <OverlayLoader />}
 
       <MobileSideBar />
       <Header />
@@ -67,9 +116,75 @@ const MobileEditRole = () => {
         </Button>
       </div>
 
-      <div className="my-4">
+      <div className="my-4 mb-10">
         {toggleValue === "users" ? (
           <>
+            <div
+              className={` ${openCard ? "p-4" : "pb-4"} ${
+                openCard ? "bg-white" : "bg-transparent"
+              } rounded-lg  ${openCard ? "mb-6" : ""}`}
+            >
+              {openCard && (
+                <>
+                  <div className="flex justify-between items-center">
+                    <div className="flex-1">
+                      <form className="" onSubmit={addUserToRoleHandler}>
+                        <div className="mb-2">
+                          <Dropdown
+                            value={dropDownUser}
+                            onChange={(e) => setDropDownUser(e.value)}
+                            options={activeUsers}
+                            optionLabel="userName"
+                            placeholder="Select a user"
+                            className="theme-input shadow-btn w-full"
+                          />
+                        </div>
+                        <Button
+                          type="button"
+                          label="Cancel"
+                          className="theme-btn-default leading-none w-full my-4"
+                          onClick={() => {
+                            setOpenCard(false);
+                            setDropDownUser("");
+                          }}
+                        />
+                        {createUserLoading ? (
+                          <div
+                            className="theme-btn"
+                            style={{
+                              height: "55px",
+                              display: "flex",
+                              alignItems: "center",
+                              justifyContent: "center",
+                            }}
+                          >
+                            <DotLoader color="#fff" size={12} />
+                          </div>
+                        ) : (
+                          <Button
+                            type="submit"
+                            disabled={createUserLoading}
+                            className="theme-btn w-full p-2"
+                            label="Create"
+                          />
+                        )}
+                      </form>
+                    </div>
+                  </div>
+                </>
+              )}
+              {!openCard && (
+                <Button
+                  className="theme-btn w-full p-2 text-center flex justify-center"
+                  onClick={() => {
+                    setOpenCard(true);
+                  }}
+                >
+                  + New User
+                </Button>
+              )}
+            </div>
+            {/* All User Show */}
             <div className="bg-white rounded-lg py-2 px-3">
               <h3 className="text-[28px] text-blue px-2 pb-2 font-medium">
                 Users in Role
