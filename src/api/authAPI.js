@@ -7,7 +7,7 @@ const register = async (username, password) => {
   });
 };
 
-// TODO: Salman Done
+
 const login = async (username, password) => {
   return await instance.post("/user/login", {
     username,
@@ -48,12 +48,12 @@ const getSessions = async () => {
   return await instance.get("/user/get-sessions");
 };
 
-// TODO: Salman Done
+
 const getUsers = async () => {
   return await instance.get("/admin/get-users");
 };
 
-// TODO: Salman Done
+
 const createUser = async (userName, email) => {
   return await instance.post("/admin/create-user", {
     userName,
@@ -61,12 +61,12 @@ const createUser = async (userName, email) => {
   });
 };
 
-// TODO: Salman Done
+
 const getUser = async (id) => {
   return await instance.get("/admin/get-user?id=" + id);
 };
 
-// TODO: Salman Done
+
 const updateUser = async (id, email) => {
   return await instance.post("/admin/update-user", {
     id,
@@ -74,31 +74,30 @@ const updateUser = async (id, email) => {
   });
 };
 
-// TODO: Salman Done
+
 const deleteUser = async (id) => {
   return await instance.post("/admin/delete-user", {
     id,
   });
 };
 
-// TODO: ROLES API STARTS HERE (Salman Done)
 const getRoles = async () => {
   return await instance.get("/admin/get-roles");
 };
 
-// TODO: Salman Done
+
 const createRole = async (name) => {
   return await instance.post("/admin/create-role", {
     name,
   });
 };
 
-// TODO: Salman Done
+
 const getRole = async (id) => {
   return await instance.get("/admin/get-role?id=" + id);
 };
 
-// TODO: Salman Done
+
 const updateRole = async (id, name) => {
   return await instance.post("/admin/update-role", {
     id,
@@ -106,7 +105,7 @@ const updateRole = async (id, name) => {
   });
 };
 
-// TODO: Salman Done
+
 const addUserToRole = async (id, name) => {
   return await instance.post("/admin/add-user-to-role", {
     id,
@@ -114,7 +113,7 @@ const addUserToRole = async (id, name) => {
   });
 };
 
-// TODO: Salman Done
+
 const removeUserFromRole = async (roleId, userId) => {
   return await instance.post("/admin/remove-user-from-role", {
     roleId,
@@ -122,7 +121,7 @@ const removeUserFromRole = async (roleId, userId) => {
   });
 };
 
-// TODO: Salman Done
+
 const addClaimToRole = async (id, name) => {
   return await instance.post("/admin/add-claim-to-role", {
     id,
@@ -130,7 +129,7 @@ const addClaimToRole = async (id, name) => {
   });
 };
 
-// TODO: Salman Done
+
 const removeClaimFromRole = async (id, name) => {
   return await instance.post("/admin/remove-claim-from-role", {
     id,

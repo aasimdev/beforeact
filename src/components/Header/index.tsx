@@ -41,7 +41,7 @@ const Header: React.FC = () => {
     navigate("/login");
   }
   return (
-    <div className="shadow-sidebar pr-28 pl-4 relative bg-white rounded-lg">
+    <div className="shadow-sidebar pr-28 pl-4 relative bg-white rounded-lg hidden sm:block">
       <div className="absolute right-6 top-1/2 -translate-y-1/2 z-10 flex items-center gap-4">
         <Button
           icon="bx bx-bell text-2xl"

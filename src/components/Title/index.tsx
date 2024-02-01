@@ -22,7 +22,7 @@ const Title: React.FC<TitleProps> = (props) => {
 
   return (
     <>
-      <div className="mt-6 bg-title rounded-[10px] px-12 h-[120px] bg-no-repeat bg-cover bg-center min-[320px]:px-1 max-[480px]:px-1">
+      <div className="sm:mt-6 bg-title rounded-[10px] px-12 h-[120px] bg-no-repeat bg-cover bg-center min-[320px]:px-1 max-[480px]:px-1">
         <div className="flex items-center gap-12 h-full min-[320px]:gap-4 max-[480px]:gap-4">
           {brand ? (
             <div className="relative">

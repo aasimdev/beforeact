@@ -29,7 +29,7 @@ const MobileBrandList = () => {
 
         return (
           <div
-            className={`bg-white p-4 ${
+            className={`bg-white p-6 ${
               lastIndex === index ? "mb-12" : "mb-4"
             }  rounded-lg`}
             key={brand?.name}

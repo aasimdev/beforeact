@@ -54,14 +54,12 @@ export function formatTime(inputDateString: string) {
   return formattedDateTime;
 }
 
-// Salman Muazam => SM
 export function getNameInitials(name: string) {
   const words = name?.split(" ");
   const initials = words?.map((word) => word.charAt(0).toUpperCase());
   return initials?.join("");
 }
 
-// salman => Salman
 export const capitalizeFirstLetter = (str: string) => {
   return str.replace(/\b\w/g, (match) => match.toUpperCase());
 };

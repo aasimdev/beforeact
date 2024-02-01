@@ -30,14 +30,14 @@ const BottomBar = ({ onMenuClick }: { onMenuClick: () => void }) => (
       zIndex: 1,
     }}
   >
-    <div className="flex justify-between items-center p-4 text-[20px] text-gray-100">
-      <span onClick={onMenuClick}>
+    <div className="flex justify-between items-center px-8 py-6 text-[20px] text-gray-100">
+      <span onClick={onMenuClick} className="text-3xl">
         <IoMenu />
       </span>
-      <span>
+      <span className="text-3xl">
         <CiSearch />
       </span>
-      <span>
+      <span className="text-3xl">
         <CgProfile />
       </span>
     </div>

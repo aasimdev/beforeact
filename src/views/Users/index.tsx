@@ -302,7 +302,7 @@ const Users = () => {
       </div>
 
       {/* Mobile Version of Dashboard */}
-      <div className="p-8 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
+      <div className="px-4 pt-4 pb-10 sm:p-8 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
         <MobileUsers />
       </div>
     </>

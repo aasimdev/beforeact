@@ -211,7 +211,7 @@ const EditBrand = () => {
         </div>
 
         {/* Mobile Version of Edit Brands */}
-        <div className="px-4 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
+        <div className="pt-4 px-4 pb-10 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
           <MobileEditBrand />
         </div>
       </div>
