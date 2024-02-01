@@ -11,6 +11,7 @@ interface ConfirmPopupProps {
   selectedUser?: any;
   setSelectedUser?: any;
   roleId?: string;
+  mobile?: boolean;
 }
 
 const DeleteUserFromRole: React.FC<ConfirmPopupProps> = (props) => {
@@ -20,6 +21,7 @@ const DeleteUserFromRole: React.FC<ConfirmPopupProps> = (props) => {
     selectedUser,
     setSelectedUser,
     roleId,
+    mobile,
   } = props;
 
   // DELETE USER API BIND
@@ -53,31 +55,43 @@ const DeleteUserFromRole: React.FC<ConfirmPopupProps> = (props) => {
       <ConfirmPopup
         confirmPopup={confirmPopup}
         setConfirmPopup={setConfirmPopup}
+        mobile={mobile}
       >
         <div className="text-center">
-          <h2 className="mb-6 text-4xl text-gray-200 font-semibold">
+          <h2
+            className={`mb-6 ${
+              mobile ? "text-3xl" : "text-4xl"
+            } text-gray-200 font-semibold`}
+          >
             Are you sure?
           </h2>
-          <p className="text-[22px] text-gray-200">
+          <p
+            className={`${
+              mobile ? "text-[14px]" : "text-[22px]"
+            } text-gray-200`}
+          >
             You are about to delete the user:{" "}
             <span className="text-blue font-semibold">
               {selectedUser?.userName}
             </span>
           </p>
         </div>
-        <div className="flex items-center justify-end gap-6 mt-10">
+        <div className="flex items-center justify-center gap-6 mt-10">
           <Button
             type="button"
             className="theme-btn-default"
             label="Cancel"
             onClick={() => setConfirmPopup(false)}
             disabled={isLoading}
+            style={{
+              fontSize: mobile ? "14px" : "22px",
+            }}
           />
           {isLoading ? (
             <div
               className="theme-btn leading-none"
               style={{
-                height: "55px",
+                height: "45px",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -89,8 +103,11 @@ const DeleteUserFromRole: React.FC<ConfirmPopupProps> = (props) => {
             <Button
               type="button"
               className="theme-btn"
-              label="Yes, delete this user"
+              label={mobile ? "Yes" : "Yes, delete this user"}
               onClick={handleDelete}
+              style={{
+                fontSize: mobile ? "14px" : "22px",
+              }}
             />
           )}
         </div>

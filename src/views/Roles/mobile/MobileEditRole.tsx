@@ -23,6 +23,7 @@ import Breadcrumb from "../../../components/Breadcrumb/Index";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import ToastAlert from "../../../components/ToastAlert";
+import DeleteUserFromRole from "../components/DeleteUserFromRole";
 
 const MobileEditRole = () => {
   const location = useLocation();
@@ -33,6 +34,8 @@ const MobileEditRole = () => {
   const [openCard, setOpenCard] = useState(false);
   const [dropDownUser, setDropDownUser] = useState<any>("");
   const [activeUsers, setActiveUsers] = useState<any[]>([]);
+  const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
+  const [selectedUser, setSelectedUser] = useState<any>({});
 
   // GET ROLE
   const { data, isLoading } = useGetRoleByIdQuery(id);
@@ -204,8 +207,8 @@ const MobileEditRole = () => {
                         <div
                           className="text-blue text-lg"
                           onClick={() => {
-                            //   setSelectedRole(role);
-                            //   setConfirmPopup(true);
+                            setSelectedUser(user);
+                            setConfirmPopup(true);
                           }}
                         >
                           <RiDeleteBinLine />
@@ -222,6 +225,15 @@ const MobileEditRole = () => {
           <>Permissions</>
         )}
       </div>
+
+      <DeleteUserFromRole
+        confirmPopup={confirmPopup}
+        setConfirmPopup={setConfirmPopup}
+        selectedUser={selectedUser}
+        setSelectedUser={setSelectedUser}
+        roleId={id}
+        mobile={true}
+      />
     </>
   );
 };
