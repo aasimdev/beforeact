@@ -21,6 +21,7 @@ import Title from "../../../components/Title";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import ToastAlert from "../../../components/ToastAlert";
 import DotLoader from "../../../components/Spinner/dotLoader";
+import DeleteRoleModal from "../components/DeleteRoleModal";
 
 const MobileRoles = () => {
   const [roles, setRoles] = useState<any>([]);
@@ -28,6 +29,8 @@ const MobileRoles = () => {
   const [formData, setFormData] = useState({
     name: "",
   });
+  const [selectedRole, setSelectedRole] = useState(null);
+  const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
 
   // GET ALL ROLES
   const { data, isLoading } = useGetAllRolesQuery({});
@@ -172,7 +175,13 @@ const MobileRoles = () => {
                   <div className="text-blue text-lg">
                     <CiEdit />
                   </div>
-                  <div className="text-blue text-lg">
+                  <div
+                    className="text-blue text-lg"
+                    onClick={() => {
+                      setSelectedRole(role);
+                      setConfirmPopup(true);
+                    }}
+                  >
                     <RiDeleteBinLine />
                   </div>
                 </div>
@@ -184,6 +193,14 @@ const MobileRoles = () => {
           );
         })}
       </div>
+      {/* Delete User Modal */}
+      <DeleteRoleModal
+        confirmPopup={confirmPopup}
+        setConfirmPopup={setConfirmPopup}
+        selectedRole={selectedRole}
+        setSelectedRole={setSelectedRole}
+        mobile={true}
+      />
     </>
   );
 };

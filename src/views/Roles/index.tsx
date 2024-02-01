@@ -288,7 +288,7 @@ const Roles = () => {
             </div>
           </div>
         </div>
-        {/* Delete User Modal */}
+        {/* Delete Role Modal */}
         <DeleteRoleModal
           confirmPopup={confirmPopup}
           setConfirmPopup={setConfirmPopup}
