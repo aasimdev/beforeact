@@ -86,9 +86,9 @@ const MobileUsers = () => {
         <Title brand={false} title="Users" image={RoundImage} />
         <div className={`${openCard ? "mt-6" : "my-0"}`}>
           <div
-            className={` ${openCard ? "p-4" : "pt-4 pb-4"} ${
-              openCard ? "bg-white" : "bg-transparent"
-            } rounded-lg  ${openCard ? "mb-6" : ""}`}
+            className={`${
+              openCard ? "p-4 bg-white mb-6" : "py-4 bg-transparent"
+            } rounded-lg`}
           >
             {openCard && (
               <>

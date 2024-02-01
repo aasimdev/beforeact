@@ -1,16 +1,33 @@
-import MobileSideBar from "../../../components/MobileSideBar";
-import Header from "../../../components/Header";
-import RolesImage from "../../../assets/images/roles_logo.svg";
-import Title from "../../../components/Title";
+// React Imports
 import { useEffect, useState } from "react";
-import { useGetAllRolesQuery } from "../../../redux/api/roleApiSlice";
-import OverlayLoader from "../../../components/Spinner/OverlayLoader";
+// Prime React Imports
 import { Divider } from "primereact/divider";
+import { Button } from "primereact/button";
+import { InputText } from "primereact/inputtext";
+// React Icons
 import { CiEdit } from "react-icons/ci";
 import { RiDeleteBinLine } from "react-icons/ri";
+// Assets
+import RolesImage from "../../../assets/images/roles_logo.svg";
+// Redux
+import {
+  useCreateRoleMutation,
+  useGetAllRolesQuery,
+} from "../../../redux/api/roleApiSlice";
+// Custom
+import MobileSideBar from "../../../components/MobileSideBar";
+import Header from "../../../components/Header";
+import Title from "../../../components/Title";
+import OverlayLoader from "../../../components/Spinner/OverlayLoader";
+import ToastAlert from "../../../components/ToastAlert";
+import DotLoader from "../../../components/Spinner/dotLoader";
 
 const MobileRoles = () => {
   const [roles, setRoles] = useState<any>([]);
+  const [openCard, setOpenCard] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+  });
 
   // GET ALL ROLES
   const { data, isLoading } = useGetAllRolesQuery({});
@@ -22,6 +39,37 @@ const MobileRoles = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
+  // CREATE NEW ROLE API BIND
+  const [createNewRole, { isLoading: createRoleLoading }] =
+    useCreateRoleMutation();
+
+  const CreateRoleHandler = async (e: any) => {
+    e.preventDefault();
+
+    const payload = {
+      name: formData.name,
+    };
+
+    try {
+      const role: any = await createNewRole(payload);
+
+      if (role?.data === null) {
+        setOpenCard(false);
+        setFormData({
+          name: "",
+        });
+
+        ToastAlert("Role Created Successfully", "success");
+      }
+      if (role?.error) {
+        ToastAlert(role?.error?.data?.title, "error");
+      }
+    } catch (error) {
+      console.error("Creating New Role Error:", error);
+      ToastAlert("Something went wrong", "error");
+    }
+  };
+
   return (
     <>
       {isLoading && <OverlayLoader />}
@@ -31,12 +79,88 @@ const MobileRoles = () => {
       <div className="my-2">
         <Title brand={false} title="Roles" image={RolesImage} />
       </div>
+
+      <div
+        className={`rounded-lg mt-4 ${openCard ? "bg-white py-4 px-3" : ""}`}
+      >
+        {openCard && (
+          <>
+            <div className="flex justify-between items-center">
+              <div className="flex-1">
+                <form className="" onSubmit={CreateRoleHandler}>
+                  <div className="mb-4">
+                    <InputText
+                      id="name"
+                      placeholder="Role Name"
+                      className="theme-input"
+                      style={{
+                        width: "100%",
+                      }}
+                      value={formData.name}
+                      onChange={(e) => {
+                        setFormData({
+                          ...formData,
+                          name: e.target.value,
+                        });
+                      }}
+                    />
+                  </div>
+
+                  <Button
+                    type="button"
+                    label="Cancel"
+                    className="theme-btn-default leading-none w-full mb-3 mt-2"
+                    onClick={() => {
+                      setOpenCard(false);
+                      setFormData({
+                        name: "",
+                      });
+                    }}
+                  />
+                  {createRoleLoading ? (
+                    <div
+                      className="theme-btn"
+                      style={{
+                        height: "45px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <DotLoader color="#fff" size={12} />
+                    </div>
+                  ) : (
+                    <Button
+                      type="submit"
+                      disabled={createRoleLoading}
+                      className="theme-btn w-full p-2"
+                      label="Create"
+                    />
+                  )}
+                </form>
+              </div>
+            </div>
+          </>
+        )}
+        {!openCard && (
+          <Button
+            className="theme-btn w-full text-center flex justify-center p-2"
+            onClick={() => {
+              setOpenCard(true);
+            }}
+          >
+            + New Role
+          </Button>
+        )}
+      </div>
+
+      {/* Table Show */}
       <div className="my-4 bg-white rounded-lg p-2 mb-12">
         <div className="m-2 rounded-lg bg-body-2 py-2 px-3">
           <div className="flex items-center justify-between">
-            <div>Name</div>
+            <div className="text-gray font-semibold text-[18px]">Name</div>
 
-            <div>Actions</div>
+            <div className="text-gray font-semibold text-[18px]">Actions</div>
           </div>
         </div>
         {roles?.map((role: any) => {
