@@ -91,6 +91,72 @@ const MobileEditRole = () => {
         <Title brand={false} title={data?.role?.name} image={RolesImage} />
         <Breadcrumb mainLabel="Edit Roles" label="Roles" url="/roles" />
       </div>
+      <div
+        className={` ${openCard ? "p-4" : "pb-4"} ${
+          openCard ? "bg-white" : "bg-transparent"
+        } rounded-lg  ${openCard ? "mb-6" : ""}`}
+      >
+        {openCard && (
+          <>
+            <div className="flex justify-between items-center">
+              <div className="flex-1">
+                <form className="" onSubmit={addUserToRoleHandler}>
+                  <div className="mb-2">
+                    <Dropdown
+                      value={dropDownUser}
+                      onChange={(e) => setDropDownUser(e.value)}
+                      options={activeUsers}
+                      optionLabel="userName"
+                      placeholder="Select a user"
+                      className="theme-input shadow-btn w-full"
+                    />
+                  </div>
+                  <Button
+                    type="button"
+                    label="Cancel"
+                    className="theme-btn-default leading-none w-full my-4"
+                    onClick={() => {
+                      setOpenCard(false);
+                      setDropDownUser("");
+                    }}
+                  />
+                  {createUserLoading ? (
+                    <div
+                      className="theme-btn"
+                      style={{
+                        height: "55px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <DotLoader color="#fff" size={12} />
+                    </div>
+                  ) : (
+                    <Button
+                      type="submit"
+                      disabled={createUserLoading}
+                      className="theme-btn w-full p-2"
+                      label="Create"
+                    />
+                  )}
+                </form>
+              </div>
+            </div>
+          </>
+        )}
+        {!openCard && (
+          <Button
+            className="theme-btn w-full p-2 text-center flex justify-center"
+            onClick={() => {
+              setOpenCard(true);
+            }}
+          >
+            + New User
+          </Button>
+        )}
+      </div>
+
       <div className="flex items-center">
         <Button
           className="shadow-none border-0 font-medium"
@@ -123,71 +189,6 @@ const MobileEditRole = () => {
       <div className="my-4 mb-10">
         {toggleValue === "users" ? (
           <>
-            <div
-              className={` ${openCard ? "p-4" : "pb-4"} ${
-                openCard ? "bg-white" : "bg-transparent"
-              } rounded-lg  ${openCard ? "mb-6" : ""}`}
-            >
-              {openCard && (
-                <>
-                  <div className="flex justify-between items-center">
-                    <div className="flex-1">
-                      <form className="" onSubmit={addUserToRoleHandler}>
-                        <div className="mb-2">
-                          <Dropdown
-                            value={dropDownUser}
-                            onChange={(e) => setDropDownUser(e.value)}
-                            options={activeUsers}
-                            optionLabel="userName"
-                            placeholder="Select a user"
-                            className="theme-input shadow-btn w-full"
-                          />
-                        </div>
-                        <Button
-                          type="button"
-                          label="Cancel"
-                          className="theme-btn-default leading-none w-full my-4"
-                          onClick={() => {
-                            setOpenCard(false);
-                            setDropDownUser("");
-                          }}
-                        />
-                        {createUserLoading ? (
-                          <div
-                            className="theme-btn"
-                            style={{
-                              height: "55px",
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "center",
-                            }}
-                          >
-                            <DotLoader color="#fff" size={12} />
-                          </div>
-                        ) : (
-                          <Button
-                            type="submit"
-                            disabled={createUserLoading}
-                            className="theme-btn w-full p-2"
-                            label="Create"
-                          />
-                        )}
-                      </form>
-                    </div>
-                  </div>
-                </>
-              )}
-              {!openCard && (
-                <Button
-                  className="theme-btn w-full p-2 text-center flex justify-center"
-                  onClick={() => {
-                    setOpenCard(true);
-                  }}
-                >
-                  + New User
-                </Button>
-              )}
-            </div>
             {/* All User Show */}
             <div className="bg-white rounded-lg py-2 px-3">
               <h3 className="text-[28px] text-blue px-2 pb-2 font-medium">
