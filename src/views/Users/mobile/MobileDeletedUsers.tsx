@@ -1,7 +1,5 @@
 // React Imports
 import React from "react";
-// Prime React Imports
-import { FiUser } from "react-icons/fi";
 // Utils
 import { formatDate } from "../../../utils";
 
@@ -15,9 +13,9 @@ const MobileDeletedUsers: React.FC<Props> = (props) => {
   return (
     <>
       {deletedUsers?.length === 0 ? (
-        <div className="bg-white py-2 rounded-lg shadow-sidebar mt-6">
-          <h3 className="text-[24px] text-blue font-medium">
-            No deleted users
+        <div className="bg-white p-4 rounded-lg shadow-sidebar my-6">
+          <h3 className="text-[27px] text-blue font-medium">
+            No Deleted Users
           </h3>
         </div>
       ) : (
@@ -25,20 +23,27 @@ const MobileDeletedUsers: React.FC<Props> = (props) => {
           const lastIndex = deletedUsers?.length - 1;
           return (
             <div
-              className={`bg-white py-2 px-3 rounded-lg mt-4  ${
-                lastIndex === index ? "mb-12" : ""
+              className={`bg-white p-6 mt-6 rounded-lg ${
+                lastIndex === index ? "mb-16" : "mb-0"
               }`}
               key={user?.id}
             >
               <div className="flex items-center gap-3">
-                <div className="rounded-lg p-3 bg-body-2 text-gray">
-                  <FiUser />
+                <div className="rounded-lg w-[48px] h-[48px] flex items-center justify-center text-gray bg-body-2">
+                  <div className="flex items-center justify-center">
+                    <i
+                      style={{
+                        fontSize: "24px",
+                      }}
+                      className="bx bx-user"
+                    ></i>
+                  </div>
                 </div>
                 <div>
-                  <div className="text-gray text-[16px] font-semibold m-0 p-0">
+                  <div className="text-gray text-[22px] font-semibold">
                     {user?.userName}
                   </div>
-                  <div className="text-[16px] text-gray-100 m-0 p-0">
+                  <div className="text-[14px] text-gray-100">
                     {formatDate(user?.dateJoined)}
                   </div>
                 </div>
