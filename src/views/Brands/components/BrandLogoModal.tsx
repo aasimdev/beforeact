@@ -58,82 +58,123 @@ const BrandLogoModal: React.FC<BrandLogoModalProps> = ({
     <Dialog
       visible={visibleLogo}
       onHide={handleClose}
-      style={{ width: "50vw" }}
+      style={{
+        width: "50vw",
+        margin: mobile ? "16px" : "",
+      }}
       breakpoints={{ "960px": "75vw", "641px": "100vw" }}
       header="Upload Logo"
       contentClassName="p-0 theme-popup"
       draggable={false}
       resizable={false}
     >
-      <div
-        className={`${mobile ? "px-[30px]" : "px-[104px]"} ${
-          mobile ? "py-4" : "py-16"
-        }`}
-      >
-        <div className="max-w-[305px] mx-auto">
-          <div className="flex justify-center items-center">
-            <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-100 flex justify-center items-center">
-              <img
-                src={brandImage || dummyImage}
-                alt="Brand"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
+      {!mobile ? (
+        <>
+          <div className="px-[104px] py-16">
+            <div className="max-w-[305px] mx-auto">
+              <div className="flex justify-center items-center">
+                <div className="w-32 h-32 rounded-full overflow-hidden bg-gray-100 flex justify-center items-center">
+                  <img
+                    src={brandImage || dummyImage}
+                    alt="Brand"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                </div>
+              </div>
+              <input
+                onChange={handleImage}
+                hidden
+                ref={fileRef}
+                type="file"
+                accept="brandImage/*"
+                name=""
+                id=""
               />
+
+              <div className="flex justify-center items-center">
+                <Button
+                  type="button"
+                  className="mt-8 brand-upload"
+                  label="Upload new photo"
+                  onClick={() => fileRef.current.click()}
+                />
+              </div>
+
+              <div className="flex items-center justify-center gap-6 mt-14">
+                <Button
+                  type="button"
+                  className="theme-btn-default"
+                  label="Cancel"
+                  onClick={handleClose}
+                />
+                <Button
+                  type="button"
+                  onClick={() => {
+                    setVisibleLogo(false);
+                  }}
+                  className="theme-btn"
+                  label="Save"
+                />
+              </div>
             </div>
           </div>
-          <input
-            onChange={handleImage}
-            hidden
-            ref={fileRef}
-            type="file"
-            accept="brandImage/*"
-            name=""
-            id=""
-          />
-
+        </>
+      ) : (
+        <div className="p-6">
+          <div>
+            <div className="flex justify-center items-center">
+              <div className="w-40 h-40 rounded-full overflow-hidden bg-gray-100 flex justify-center items-center mt-6">
+                <img
+                  src={brandImage || dummyImage}
+                  alt="Brand"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                  }}
+                />
+              </div>
+            </div>
+            <input
+              onChange={handleImage}
+              hidden
+              ref={fileRef}
+              type="file"
+              accept="brandImage/*"
+              name=""
+              id=""
+            />
+          </div>
           <div className="flex justify-center items-center">
             <Button
               type="button"
               className="mt-8 brand-upload"
               label="Upload new photo"
               onClick={() => fileRef.current.click()}
-              style={{
-                fontSize: mobile ? "16px" : "22px",
-              }}
             />
           </div>
-
-          <div
-            className={`flex items-center justify-center gap-6 ${
-              mobile ? "mt-10" : "mt-14"
-            } ${mobile ? "mb-3" : ""} `}
-          >
+          <div className="flex items-center flex-col justify-center gap-6 mt-10">
             <Button
               type="button"
-              className="theme-btn-default"
+              className="theme-btn-default w-full"
               label="Cancel"
               onClick={handleClose}
-              style={{
-                fontSize: mobile ? "14px" : "22px",
-              }}
             />
             <Button
               type="button"
               onClick={() => {
                 setVisibleLogo(false);
               }}
-              className="theme-btn"
+              className="theme-btn w-full mb-4"
               label="Save"
-              style={{
-                fontSize: mobile ? "14px" : "22px",
-              }}
             />
           </div>
         </div>
-      </div>
+      )}
     </Dialog>
   );
 };

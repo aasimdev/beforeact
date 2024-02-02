@@ -99,7 +99,7 @@ body {
 
 .p-dialog-title {
   @media screen and (max-width: 639px) {
-    font-size: 28px;
+    font-size: 35px;
   }
 }
 
