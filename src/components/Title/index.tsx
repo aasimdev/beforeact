@@ -68,10 +68,12 @@ const Title: React.FC<TitleProps> = (props) => {
               />
             </div>
           ) : (
-            <Image src={image || cubeImg} alt="Cube" />
+            <div className="pl-6 pr-2">
+              <Image src={image || cubeImg} alt="Cube" />
+            </div>
           )}
 
-          <span className="text-white text-5xl font-extrabold min-[320px]:text-4xl max-[480px]:text-4xl">
+          <span className="text-white text-5xl font-extrabold min-[320px]:text-[40px] max-[480px]:text-[40px]">
             {title}
           </span>
         </div>

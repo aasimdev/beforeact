@@ -65,9 +65,9 @@ const MobileAddBrand = () => {
       <Title brand={false} title="Brands" image={BrandImage} />
       <div className={`${openCard ? "mt-6" : "my-0"}`}>
         <div
-          className={` ${openCard ? "p-4" : "pt-4 pb-4"} ${
-            openCard ? "bg-white" : "bg-transparent"
-          } rounded-lg  ${openCard ? "mb-6" : ""}`}
+          className={`p-4 rounded-lg ${
+            openCard ? "bg-white mb-6" : "pt-[24px] pb-[24px] bg-transparent"
+          }`}
         >
           {openCard && (
             <>
@@ -108,7 +108,7 @@ const MobileAddBrand = () => {
                         }}
                       />
                     </div>
-                    <div className="mb-2">
+                    <div className="mb-[32px]">
                       <InputText
                         id="website"
                         placeholder="Website"
@@ -128,28 +128,20 @@ const MobileAddBrand = () => {
                     <Button
                       type="button"
                       label="Cancel"
-                      className="theme-btn-default leading-none w-full my-4"
+                      className="theme-btn-default leading-none w-full mb-4 text-gray-100 h-[48px] font-normal text-[22px] rounded-lg"
                       onClick={() => {
                         setOpenCard(false);
                       }}
                     />
                     {isLoading ? (
-                      <div
-                        className="theme-btn"
-                        style={{
-                          height: "55px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
+                      <div className="theme-btn h-[55px] flex items-center justify-center">
                         <DotLoader color="#fff" size={12} />
                       </div>
                     ) : (
                       <Button
                         type="submit"
                         disabled={isLoading}
-                        className="theme-btn w-full p-2"
+                        className="theme-btn w-full h-[48px]"
                         label="Create"
                       />
                     )}
@@ -160,7 +152,7 @@ const MobileAddBrand = () => {
           )}
           {!openCard && (
             <Button
-              className="theme-btn w-full p-2 text-center flex justify-center"
+              className="theme-btn w-full text-center flex justify-center"
               onClick={() => {
                 setOpenCard(true);
               }}
