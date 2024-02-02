@@ -118,6 +118,7 @@ const MobileUsers = () => {
           {toggleValue === "users" ? (
             <>
               <MobileUserList activeUsers={activeUsers} />
+
               <div className={`${openCard ? "mt-6" : "my-0"}`}>
                 <div
                   className={`${
