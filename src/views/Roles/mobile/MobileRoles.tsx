@@ -99,7 +99,7 @@ const MobileRoles = () => {
         {roles?.map((role: any) => {
           return (
             <div key={role?.id}>
-              <div className="p-4 flex items-center justify-between">
+              <div className="px-4 py-3 flex items-center justify-between">
                 <div className="pl-2 text-[18px] font-normal text-gray">
                   {role?.name}
                 </div>
@@ -128,7 +128,7 @@ const MobileRoles = () => {
           );
         })}
 
-        <div className="mt-6 mb-2">
+        <div className="mt-5 mb-2">
           <div className={`rounded-lg ${openCard ? "bg-white pt-4 px-3" : ""}`}>
             {openCard && (
               <>
@@ -183,7 +183,7 @@ const MobileRoles = () => {
               </>
             )}
             {!openCard && (
-              <div className="pb-6 pl-4 border-b-gray-300 border-b transition-all duration-300 hover:bg-blue-200">
+              <div className="pb-5 pt-1 pl-4 border-b-gray-300 border-b transition-all duration-300 hover:bg-blue-200">
                 <Button
                   label="New Role"
                   icon="bx bx-plus"
