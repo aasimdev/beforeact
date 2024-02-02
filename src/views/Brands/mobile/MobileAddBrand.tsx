@@ -65,8 +65,10 @@ const MobileAddBrand = () => {
       <Title brand={false} title="Brands" image={BrandImage} />
       <div className={`${openCard ? "mt-6" : "my-0"}`}>
         <div
-          className={`p-4 rounded-lg ${
-            openCard ? "bg-white mb-6" : "pt-[24px] pb-[24px] bg-transparent"
+          className={`py-4 rounded-lg ${
+            openCard
+              ? "bg-white mb-6 p-4"
+              : "pt-[24px] pb-[24px] bg-transparent"
           }`}
         >
           {openCard && (
@@ -134,7 +136,7 @@ const MobileAddBrand = () => {
                       }}
                     />
                     {isLoading ? (
-                      <div className="theme-btn h-[55px] flex items-center justify-center">
+                      <div className="theme-btn h-[48px] flex items-center justify-center">
                         <DotLoader color="#fff" size={12} />
                       </div>
                     ) : (

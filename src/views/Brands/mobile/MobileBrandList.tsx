@@ -30,7 +30,7 @@ const MobileBrandList = () => {
         return (
           <div
             className={`bg-white p-6 ${
-              lastIndex === index ? "mb-12" : "mb-[24px]"
+              lastIndex === index ? "mb-16" : "mb-[24px]"
             }  rounded-lg`}
             key={brand?.name}
           >
@@ -58,15 +58,17 @@ const MobileBrandList = () => {
               <Button
                 type="button"
                 label="View"
-                className="theme-btn-default leading-none rounded-lg font-normal text-[16px]"
+                className="theme-btn-default leading-none rounded-lg font-normal"
                 style={{
                   padding: "12px 24px",
+                  fontSize: "16px",
                 }}
               />
               <Button
-                className="theme-btn text-[16px] font-normal rounded-lg"
+                className="theme-btn font-normal rounded-lg"
                 style={{
                   padding: "7px 24px",
+                  fontSize: "16px",
                 }}
                 label="Manage"
                 onClick={() => {

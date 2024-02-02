@@ -42,7 +42,7 @@ const Title: React.FC<TitleProps> = (props) => {
                 </>
               ) : (
                 <div
-                  className="w-20 h-20 ml-4 flex justify-center items-center rounded-full  mx-auto"
+                  className="w-20 h-20 mx-[24px] flex justify-center items-center rounded-full"
                   style={{
                     background: randomColor.background,
                   }}

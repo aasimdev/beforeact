@@ -28,7 +28,7 @@ const Breadcrumb: React.FC<BreadcrumbProps> = (props) => {
     <BreadCrumb
       model={items}
       home={home}
-      className="p-0 pb-1 bg-transparent mt-6 border-0 text-lg text-gray-100"
+      className="p-0 bg-transparent my-6 border-0 text-lg text-gray-100"
     />
   );
 };
