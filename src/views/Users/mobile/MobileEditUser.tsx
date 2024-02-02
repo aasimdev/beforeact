@@ -52,17 +52,23 @@ const MobileEditUser: React.FC<Props> = (props) => {
       <Dialog
         visible={confirmPopup}
         onHide={() => setConfirmPopup(false)}
-        style={{ width: "50vw" }}
+        style={{
+          width: "50vw",
+          margin: "16px",
+        }}
         breakpoints={{ "960px": "75vw", "641px": "100vw" }}
         header="Edit User"
         contentClassName="p-0 theme-popup"
         draggable={false}
         resizable={false}
       >
-        <div className="m-4">
-          <div className="flex items-center justify-center flex-col gap-3">
-            <div className="flex flex-col">
-              <label htmlFor="name" className="mb-1">
+        <div className="m-6">
+          <div className="flex items-center justify-center flex-col">
+            <div className="flex flex-col mt-4">
+              <label
+                htmlFor="name"
+                className="mb-3 font-semibold text-[18px] text-gray-200"
+              >
                 Name
               </label>
               <InputText
@@ -80,8 +86,11 @@ const MobileEditUser: React.FC<Props> = (props) => {
                 style={{ width: "100%" }}
               />
             </div>
-            <div className="flex flex-col">
-              <label htmlFor="email" className="mb-1">
+            <div className="flex flex-col mt-10">
+              <label
+                htmlFor="email"
+                className="mb-3 font-semibold text-[18px] text-gray-200"
+              >
                 Email Address
               </label>
               <InputText
@@ -100,7 +109,7 @@ const MobileEditUser: React.FC<Props> = (props) => {
               />
             </div>
 
-            <div className="mt-5 mb-3 w-full">
+            <div className="mt-10 mb-4 w-full">
               {isLoading ? (
                 <div
                   className="theme-btn leading-none"
