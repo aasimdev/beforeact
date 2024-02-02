@@ -6,7 +6,7 @@ import { InputText } from "primereact/inputtext";
 // Redux
 import { useCreateTenantMutation } from "../../../redux/api/brandApiSlice";
 // Assets
-import BrandImage from "../../../assets/images/brands_logo.svg";
+import BrandImage from "../../../assets/images/mobile_brand.svg";
 // Custom
 import Header from "../../../components/Header";
 import Title from "../../../components/Title";

@@ -143,7 +143,7 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
                 </div>
                 <div className="flex justify-center items-center">
                   <div>You are about to delete: </div>
-                  <div className="text-blue font-semibold">{title}</div>
+                  <div className="text-blue font-semibold ml-1">{title}</div>
                 </div>
               </div>
               <div>

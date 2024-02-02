@@ -9,7 +9,7 @@ import {
   useGetAllUsersQuery,
 } from "../../../redux/api/userApiSlice";
 // Assets
-import RoundImage from "../../../assets/images/users_logo.svg";
+import RoundImage from "../../../assets/images/mobile_user.svg";
 // Custom
 import MobileSideBar from "../../../components/MobileSideBar";
 import Header from "../../../components/Header";
@@ -82,105 +82,12 @@ const MobileUsers = () => {
       <MobileSideBar />
       <Header />
 
-      <div className="my-2">
+      <div>
         <Title brand={false} title="Users" image={RoundImage} />
-        <div className={`${openCard ? "mt-6" : "my-0"}`}>
-          <div
-            className={`${
-              openCard ? "p-4 bg-white mb-6" : "py-4 bg-transparent"
-            } rounded-lg`}
-          >
-            {openCard && (
-              <>
-                <div className="flex justify-between items-center">
-                  <div className="flex-1">
-                    <form className="" onSubmit={CreateUser}>
-                      <div className="mb-4">
-                        <InputText
-                          id="brandId"
-                          placeholder="User Name"
-                          className="theme-input"
-                          style={{
-                            width: "100%",
-                          }}
-                          value={formData.userName}
-                          onChange={(e) => {
-                            setFormData({
-                              ...formData,
-                              userName: e.target.value,
-                            });
-                          }}
-                        />
-                      </div>
-                      <div className="mb-2">
-                        <InputText
-                          id="website"
-                          placeholder="Email Address"
-                          className="theme-input"
-                          style={{
-                            width: "100%",
-                          }}
-                          value={formData.email}
-                          onChange={(e) => {
-                            setFormData({
-                              ...formData,
-                              email: e.target.value,
-                            });
-                          }}
-                        />
-                      </div>
-                      <Button
-                        type="button"
-                        label="Cancel"
-                        className="theme-btn-default leading-none w-full my-4"
-                        onClick={() => {
-                          setOpenCard(false);
-                          setFormData({
-                            userName: "",
-                            email: "",
-                          });
-                        }}
-                      />
-                      {isLoading ? (
-                        <div
-                          className="theme-btn"
-                          style={{
-                            height: "55px",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <DotLoader color="#fff" size={12} />
-                        </div>
-                      ) : (
-                        <Button
-                          type="submit"
-                          disabled={isLoading}
-                          className="theme-btn w-full p-2"
-                          label="Create"
-                        />
-                      )}
-                    </form>
-                  </div>
-                </div>
-              </>
-            )}
-            {!openCard && (
-              <Button
-                className="theme-btn w-full text-center flex justify-center p-2"
-                onClick={() => {
-                  setOpenCard(true);
-                }}
-              >
-                + New User
-              </Button>
-            )}
-          </div>
-        </div>
-        <div className="flex justify-between items-center">
+
+        <div className="flex items-center my-6">
           <Button
-            className="shadow-none border-0 font-medium"
+            className="shadow-none border-0 text-[16px] font-normal rounded-lg"
             style={{
               backgroundColor:
                 toggleValue === "users" ? "#696CFF" : "transparent",
@@ -196,7 +103,7 @@ const MobileUsers = () => {
             onClick={() => {
               setToggleValue("deletedUsers");
             }}
-            className="shadow-none border-0 font-medium"
+            className="shadow-none border-0 text-[16px] font-normal rounded-lg"
             style={{
               backgroundColor:
                 toggleValue === "deletedUsers" ? "#696CFF" : "transparent",
@@ -211,6 +118,94 @@ const MobileUsers = () => {
           {toggleValue === "users" ? (
             <>
               <MobileUserList activeUsers={activeUsers} />
+              <div className={`${openCard ? "mt-6" : "my-0"}`}>
+                <div
+                  className={`${
+                    openCard
+                      ? "p-4 bg-white mb-12"
+                      : "pt-6 pb-12 bg-transparent"
+                  } rounded-lg`}
+                >
+                  {openCard && (
+                    <>
+                      <div className="flex justify-between items-center">
+                        <div className="flex-1">
+                          <form className="" onSubmit={CreateUser}>
+                            <div className="mb-4">
+                              <InputText
+                                id="brandId"
+                                placeholder="User Name"
+                                className="theme-input"
+                                style={{
+                                  width: "100%",
+                                }}
+                                value={formData.userName}
+                                onChange={(e) => {
+                                  setFormData({
+                                    ...formData,
+                                    userName: e.target.value,
+                                  });
+                                }}
+                              />
+                            </div>
+                            <div className="mb-6">
+                              <InputText
+                                id="website"
+                                placeholder="Email Address"
+                                className="theme-input"
+                                style={{
+                                  width: "100%",
+                                }}
+                                value={formData.email}
+                                onChange={(e) => {
+                                  setFormData({
+                                    ...formData,
+                                    email: e.target.value,
+                                  });
+                                }}
+                              />
+                            </div>
+                            <Button
+                              type="button"
+                              label="Cancel"
+                              className="theme-btn-default leading-none w-full mb-4 text-gray-100 h-[48px] font-normal text-[22px] rounded-lg"
+                              onClick={() => {
+                                setOpenCard(false);
+                                setFormData({
+                                  userName: "",
+                                  email: "",
+                                });
+                              }}
+                            />
+                            {isLoading ? (
+                              <div className="theme-btn h-[48px] flex items-center justify-center">
+                                <DotLoader color="#fff" size={12} />
+                              </div>
+                            ) : (
+                              <Button
+                                type="submit"
+                                disabled={isLoading}
+                                className="theme-btn w-full h-[48px]"
+                                label="Create"
+                              />
+                            )}
+                          </form>
+                        </div>
+                      </div>
+                    </>
+                  )}
+                  {!openCard && (
+                    <Button
+                      className="theme-btn w-full text-center flex justify-center"
+                      onClick={() => {
+                        setOpenCard(true);
+                      }}
+                    >
+                      + New User
+                    </Button>
+                  )}
+                </div>
+              </div>
             </>
           ) : (
             <>
