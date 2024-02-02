@@ -82,8 +82,8 @@ const MobileEditPermission: React.FC<MobileEditPermissionProps> = (props) => {
 
   return (
     <>
-      <div className="bg-white rounded-lg py-2 px-3">
-        <h3 className="text-[28px] text-blue px-2 pb-2 font-medium">
+      <div className="bg-white rounded-lg pt-2 pb-6 px-3">
+        <h3 className="text-[27px] text-blue py-2 px-3 font-medium">
           Permissions
         </h3>
         <Divider className="my-1" />
@@ -96,11 +96,12 @@ const MobileEditPermission: React.FC<MobileEditPermissionProps> = (props) => {
             return (
               <div key={permission}>
                 <div className="flex items-center justify-between my-3 px-2">
-                  <div className="text-gray w-36 text-[18px] font-medium">
+                  <div className="text-gray w-36 p-2 text-[18px] font-medium">
                     {permission}
                   </div>
-                  <div className="text-gray text-[14px]">
+                  <div className="text-blue text-[14px] p-2">
                     <Checkbox
+                      className="text-blue bg-blue"
                       inputId={permission}
                       checked={
                         isClaimed ? true : selectedPermissions[permission]

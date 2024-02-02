@@ -6,6 +6,14 @@
   scroll-behavior: smooth;
 }
 
+.p-checkbox .p-checkbox-box.p-highlight {
+  background-color: #696cff;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+  color: white;
+}
+
 @layer tailwind-base {
   @tailwind base;
 }

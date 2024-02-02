@@ -135,9 +135,7 @@ const MobileEditRole = () => {
               </h3>
               <Divider className="my-1" />
               {data?.users?.length === 0 ? (
-                <h3 className="text-[27px] text-blue py-4 px-2 font-medium">
-                  No Users in Role
-                </h3>
+                <></>
               ) : (
                 data?.users?.map((user: any) => {
                   return (
