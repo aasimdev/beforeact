@@ -25,9 +25,9 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = (props) => {
       onHide={() => setConfirmPopup(false)}
       style={{ width: "50vw" }}
       breakpoints={{ "960px": "75vw", "641px": "100vw" }}
-      headerStyle={{ padding: 0 }}
+      headerStyle={{ padding: 0, display: mobile ? "none" : "block" }}
       closeIcon={closeIconTemplate}
-      contentClassName="p-0"
+      contentClassName={mobile ? "m-4 p-0 rounded-lg" : "p-0"}
     >
       <div
         className={`${mobile ? "px-[30px]" : "px-[104px]"} ${
