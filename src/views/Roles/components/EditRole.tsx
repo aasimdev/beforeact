@@ -298,7 +298,7 @@ const EditRole = () => {
         />
       </div>
       {/* Mobile Version of Edit Role */}
-      <div className="p-8 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
+      <div className="p-4 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
         <MobileEditRole />
       </div>
     </>

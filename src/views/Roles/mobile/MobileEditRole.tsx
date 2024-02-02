@@ -14,7 +14,7 @@ import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
 // React Icons
 import { RiDeleteBinLine } from "react-icons/ri";
 // Assets
-import RolesImage from "../../../assets/images/roles_logo.svg";
+import RolesImage from "../../../assets/images/mobile_roles.svg";
 // Custom
 import MobileSideBar from "../../../components/MobileSideBar";
 import Header from "../../../components/Header";
@@ -87,79 +87,14 @@ const MobileEditRole = () => {
       <MobileSideBar />
       <Header />
 
-      <div className="my-2">
+      <div>
         <Title brand={false} title={data?.role?.name} image={RolesImage} />
         <Breadcrumb mainLabel="Edit Roles" label="Roles" url="/roles" />
       </div>
-      <div
-        className={` ${openCard ? "p-4" : "pb-4"} ${
-          openCard ? "bg-white" : "bg-transparent"
-        } rounded-lg  ${openCard ? "mb-6" : ""}`}
-      >
-        {openCard && (
-          <>
-            <div className="flex justify-between items-center">
-              <div className="flex-1">
-                <form className="" onSubmit={addUserToRoleHandler}>
-                  <div className="mb-2">
-                    <Dropdown
-                      value={dropDownUser}
-                      onChange={(e) => setDropDownUser(e.value)}
-                      options={activeUsers}
-                      optionLabel="userName"
-                      placeholder="Select a user"
-                      className="theme-input shadow-btn w-full"
-                    />
-                  </div>
-                  <Button
-                    type="button"
-                    label="Cancel"
-                    className="theme-btn-default leading-none w-full my-4"
-                    onClick={() => {
-                      setOpenCard(false);
-                      setDropDownUser("");
-                    }}
-                  />
-                  {createUserLoading ? (
-                    <div
-                      className="theme-btn"
-                      style={{
-                        height: "55px",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <DotLoader color="#fff" size={12} />
-                    </div>
-                  ) : (
-                    <Button
-                      type="submit"
-                      disabled={createUserLoading}
-                      className="theme-btn w-full p-2"
-                      label="Create"
-                    />
-                  )}
-                </form>
-              </div>
-            </div>
-          </>
-        )}
-        {!openCard && (
-          <Button
-            className="theme-btn w-full p-2 text-center flex justify-center"
-            onClick={() => {
-              setOpenCard(true);
-            }}
-          >
-            + New User
-          </Button>
-        )}
-      </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex items-center my-6">
         <Button
-          className="shadow-none border-0 font-medium"
+          className="shadow-none border-0 text-[16px] font-normal rounded-lg"
           style={{
             backgroundColor:
               toggleValue === "users" ? "#696CFF" : "transparent",
@@ -175,7 +110,7 @@ const MobileEditRole = () => {
           onClick={() => {
             setToggleValue("permissions");
           }}
-          className="shadow-none border-0 font-medium"
+          className="shadow-none border-0 text-[16px] font-normal rounded-lg"
           style={{
             backgroundColor:
               toggleValue === "permissions" ? "#696CFF" : "transparent",
@@ -186,26 +121,31 @@ const MobileEditRole = () => {
         </Button>
       </div>
 
-      <div className="my-4 mb-10">
+      <div className="mb-20">
         {toggleValue === "users" ? (
           <>
             {/* All User Show */}
-            <div className="bg-white rounded-lg py-2 px-3">
-              <h3 className="text-[28px] text-blue px-2 pb-2 font-medium">
+            <div
+              className={`bg-white rounded-lg pt-4 px-4 ${
+                openCard ? "" : "pb-4"
+              }`}
+            >
+              <h3 className="text-[27px] text-blue p-2 font-medium">
                 Users in Role
               </h3>
               <Divider className="my-1" />
-
               {data?.users?.length === 0 ? (
-                <h3 className="text-[16px] flex text-gray-200 justify-center items-center py-2">
+                <h3 className="text-[27px] text-blue py-4 px-2 font-medium">
                   No Users in Role
                 </h3>
               ) : (
                 data?.users?.map((user: any) => {
                   return (
                     <div className="mt-4" key={user?.id}>
-                      <div className="flex items-center justify-between my-2 px-2">
-                        <div>{user?.userName}</div>
+                      <div className="flex items-center justify-between my-4 px-2">
+                        <div className="text-[18px] font-normal text-gray">
+                          {user?.userName}
+                        </div>
                         <div
                           className="text-blue text-lg"
                           onClick={() => {
@@ -216,11 +156,70 @@ const MobileEditRole = () => {
                           <RiDeleteBinLine />
                         </div>
                       </div>
-                      <Divider className="mt-1" />
+                      <Divider className="my-1" />
                     </div>
                   );
                 })
               )}
+              <div
+                className={` ${openCard ? "" : "pb-4"} ${
+                  openCard ? "bg-white" : "bg-transparent"
+                } rounded-lg  ${openCard ? "mb-12 mt-6" : ""}`}
+              >
+                {openCard && (
+                  <>
+                    <div className="flex justify-between items-center">
+                      <div className="flex-1">
+                        <form className="" onSubmit={addUserToRoleHandler}>
+                          <div className="mb-6">
+                            <Dropdown
+                              value={dropDownUser}
+                              onChange={(e) => setDropDownUser(e.value)}
+                              options={activeUsers}
+                              optionLabel="userName"
+                              placeholder="Select a user"
+                              className="theme-input shadow-btn w-full"
+                            />
+                          </div>
+                          <Button
+                            type="button"
+                            label="Cancel"
+                            className="theme-btn-default leading-none w-full mb-4 text-gray-100 h-[48px] font-normal text-[22px] rounded-lg"
+                            onClick={() => {
+                              setOpenCard(false);
+                              setDropDownUser("");
+                            }}
+                          />
+                          {createUserLoading ? (
+                            <div className="theme-btn h-[48px] flex items-center justify-center">
+                              <DotLoader color="#fff" size={12} />
+                            </div>
+                          ) : (
+                            <Button
+                              type="submit"
+                              disabled={createUserLoading}
+                              className="theme-btn w-full h-[48px]"
+                              label="Create"
+                            />
+                          )}
+                        </form>
+                        <Divider className="my-6" />
+                      </div>
+                    </div>
+                  </>
+                )}
+                {!openCard && (
+                  <div className="py-4 pl-4 border-b-gray-300 border-b transition-all duration-300 hover:bg-blue-200">
+                    <Button
+                      label="New User"
+                      icon="bx bx-plus"
+                      text
+                      className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
+                      onClick={() => setOpenCard(true)}
+                    />
+                  </div>
+                )}
+              </div>
             </div>
           </>
         ) : (
