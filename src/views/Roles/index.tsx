@@ -138,7 +138,7 @@ const Roles = () => {
       <div className="flex">
         <Sidebar />
 
-        <div className="p-8 w-full flex-1 lg:ml-80 lg:block md:block sm:block  hidden">
+        <div className="p-8 w-full flex-1 ml-80 lg:block md:block sm:block  hidden">
           <Header />
           <Title brand={false} title="Roles" image={RoundImage} />
           <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">

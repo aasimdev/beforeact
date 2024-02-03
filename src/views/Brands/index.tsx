@@ -18,7 +18,7 @@ const Brands = () => {
         <Sidebar />
 
         {/* Below 640px hidden */}
-        <div className="p-8 w-full flex-1 lg:ml-80 lg:block md:block sm:block  hidden">
+        <div className="p-8 w-full flex-1 ml-80 lg:block md:block sm:block  hidden">
           <Header />
           <Title brand={false} title="Brands" image={BrandImage} />
           <div className="my-6 text-right">

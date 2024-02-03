@@ -37,7 +37,9 @@ module.exports = {
       boxShadow: {
         'sidebar': '1px 1px 8px rgba(219, 213, 226, 0.80)',
         'btn': '3px 3px 6px rgba(105, 108, 255, 0.25)',
-        'input': "1px 1px 8px rgba(105, 108, 255, 0.20)"
+        'input': "1px 1px 8px rgba(105, 108, 255, 0.20)",
+        'mobileSidebar': '2px 0px 5px 0px rgba(0,0,0,0.1)',
+        'closeSBtn': '0px 0px 10px rgba(0, 0, 0, 0.1)'
       },
       backgroundImage: {
         'title': "url('/src/assets/images/title-bg.jpg')",

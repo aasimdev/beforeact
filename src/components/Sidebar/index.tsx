@@ -16,7 +16,7 @@ const Sidebar: React.FC = () => {
     { icon: "bx-group", label: "Roles", to: "/roles" },
   ];
   return (
-    <aside className="pt-2 w-80 bg-white shadow-sidebar h-screen z-10 fixed -translate-x-full lg:translate-x-0">
+    <aside className="pt-2 w-80 bg-white shadow-sidebar h-screen z-10 fixed hidden sm:block">
       <div className="py-2 px-8">
         {/* <a href="#"> */}
         <Image src={LogoImg} alt="Image" width="204" />

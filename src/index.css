@@ -6,13 +6,6 @@
   scroll-behavior: smooth;
 }
 
-.p-checkbox .p-checkbox-box.p-highlight {
-  background-color: #696cff;
-}
-
-.p-checkbox .p-checkbox-box.p-highlight {
-  color: white;
-}
 
 @layer tailwind-base {
   @tailwind base;
@@ -125,4 +118,12 @@ body {
 
 .brand-upload .p-button-icon {
   @apply hidden;
+}
+
+.p-checkbox-box.p-focus {
+  @apply shadow-none border-gray;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+  @apply bg-blue text-white border-blue focus:shadow-none
 }

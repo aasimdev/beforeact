@@ -99,9 +99,8 @@ const MobileEditPermission: React.FC<MobileEditPermissionProps> = (props) => {
                   <div className="text-gray w-36 p-2 text-[18px] font-medium">
                     {permission}
                   </div>
-                  <div className="text-blue text-[14px] p-2">
+                  <div className=" text-[14px] p-2">
                     <Checkbox
-                      className="text-blue bg-blue"
                       inputId={permission}
                       checked={
                         isClaimed ? true : selectedPermissions[permission]

@@ -171,7 +171,7 @@ const Users = () => {
       <div className="flex">
         <Sidebar />
 
-        <div className="p-8 w-full flex-1 lg:ml-80 lg:block md:block sm:block  hidden">
+        <div className="p-8 w-full flex-1 ml-80 lg:block md:block sm:block  hidden">
           <Header />
           <Title brand={false} title="Users" image={RoundImage} />
           {/* Active Users Table */}

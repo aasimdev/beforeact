@@ -11,6 +11,7 @@ import { CgProfile } from "react-icons/cg";
 import MenuItem from "../../components/MenuItem";
 // Assets
 import LogoImg from "../../assets/images/logo.svg";
+import { InputText } from "primereact/inputtext";
 
 interface NavItem {
   icon: string;
@@ -18,23 +19,24 @@ interface NavItem {
   to: string;
 }
 
-const BottomBar = ({ onMenuClick }: { onMenuClick: () => void }) => (
-  <div
-    style={{
-      position: "fixed",
-      bottom: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: "#fff",
-      boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-      zIndex: 1,
-    }}
-  >
+const SearchBar = ({ onSearchClick }: { onSearchClick: () => void}) => (
+  <div className="fixed bottom-3.5 left-4 right-4 z-20 shadow-input bg-white rounded-lg h-12">
+    <InputText
+      id="search"
+      placeholder="Search..."
+      className="theme-input border-0 w-full h-full text-base"
+    />
+    <button type="button" onClick={onSearchClick}><i className='bx bx-x text-gray text-2xl absolute right-3 top-1/2 -translate-y-1/2 '></i></button>
+  </div>
+)
+
+const BottomBar = ({ onMenuClick, onSearchClick }: { onMenuClick: () => void; onSearchClick: () => void}) => (
+  <div className="fixed bottom-0 left-0 right-0 bg-white shadow-closeSBtn z-10">
     <div className="flex justify-between items-center px-8 py-6 text-[20px] text-gray-100">
       <span onClick={onMenuClick} className="text-3xl">
         <IoMenu />
       </span>
-      <span className="text-3xl">
+      <span onClick={onSearchClick} className="text-3xl">
         <CiSearch />
       </span>
       <span className="text-3xl">
@@ -46,6 +48,7 @@ const BottomBar = ({ onMenuClick }: { onMenuClick: () => void }) => (
 
 const MobileSideBar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
 
   const navItems: NavItem[] = [
     { icon: "bx-home", label: "Dashboard", to: "/" },
@@ -58,59 +61,40 @@ const MobileSideBar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
 
+  const searchHandler = () => {
+    setShowSearch(!showSearch);
+  }
+
   return (
-    <div>
-      <BottomBar onMenuClick={toggleSidebar} />
-      {isSidebarOpen && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "75%",
-            height: "100%",
-            background: "#fff",
-            boxShadow: "2px 0px 5px 0px rgba(0,0,0,0.1)",
-            zIndex: 11,
-          }}
-        >
-          <div className="relative">
+    <div className="relative">
+      <BottomBar onMenuClick={toggleSidebar} onSearchClick={searchHandler}/>
+      {showSearch && <SearchBar onSearchClick={searchHandler}/>}
+      <div className={`fixed top-0 left-0 w-60 h-full bg-white z-20 shadow-mobileSidebar transition-all duration-300 ${isSidebarOpen ? "-translate-x-0" : "-translate-x-[calc(100%_+_16px)]"}`}>
+        <div className="relative">
+          <div
+            className="absolute bg-white w-8 h-8 flex items-center justify-center text-white text-sm font-bold top-5 -right-4 rounded-full shadow-closeSBtn">
             <div
-              className="absolute bg-white w-8 h-8 flex items-center justify-center text-white text-sm font-bold"
-              style={{
-                top: "20px",
-                left: "255px",
-                borderRadius: "50%",
-                boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <div
-                onClick={toggleSidebar}
-                className="bg-blue pointer"
-                style={{
-                  padding: "5px",
-                  borderRadius: "50%",
-                }}
-              >
-                <FaChevronLeft />
-              </div>
+              onClick={toggleSidebar}
+              className="bg-blue pointer p-1.5 rounded-full">
+              <FaChevronLeft />
             </div>
-          </div>
-          <div className="space-y-2 px-4">
-            <div className="my-4">
-              <Image src={LogoImg} alt="Image" width="204" />
-            </div>
-            {navItems.map((item, index) => (
-              <MenuItem
-                key={index}
-                icon={item.icon}
-                label={item.label}
-                link={item.to}
-              />
-            ))}
           </div>
         </div>
-      )}
+        <div className="space-y-2 px-4">
+          <div className="my-4">
+            <Image src={LogoImg} alt="Image" width="162" />
+          </div>
+          {navItems.map((item, index) => (
+            <MenuItem
+              key={index}
+              icon={item.icon}
+              label={item.label}
+              link={item.to}
+            />
+          ))}
+        </div>
+      </div>
+
     </div>
   );
 };
