@@ -54,7 +54,10 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
       <Dialog
         visible={visible}
         onHide={() => setVisible(false)}
-        style={{ width: "50vw" }}
+        style={{
+          width: "50vw",
+          boxShadow: mobile ? "none" : "0 1px 3px rgba(0, 0, 0, 0.3)",
+        }}
         breakpoints={{ "960px": "75vw", "641px": "100vw" }}
         headerStyle={{ padding: 0, display: mobile ? "none" : "block" }}
         closeIcon={closeIconTemplate}
