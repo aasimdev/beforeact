@@ -1,11 +1,9 @@
-import { Dialog } from "primereact/dialog";
-import { Image } from "primereact/image";
 import React from "react";
-import closeIcon from "../../../assets/images/close-icon.svg";
 import { Button } from "primereact/button";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import { useRemoveUserFromTenantMutation } from "../../../redux/api/brandApiSlice";
 import ToastAlert from "../../../components/ToastAlert";
+import ConfirmPopup from "../../../components/ConfirmPopup";
 
 interface DeleteUserFromBrandProps {
   visible: boolean;
@@ -18,9 +16,6 @@ interface DeleteUserFromBrandProps {
 
 const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
   const { visible, setVisible, selectedUser, title, id, mobile } = props;
-
-  // Close Popup Icon
-  const closeIconTemplate = <Image src={closeIcon} alt="close icon" />;
 
   // REMOVE USER API BIND
   const [removeUserApi, { isLoading: removeUserLoading }] =
@@ -51,21 +46,14 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
 
   return (
     <>
-      <Dialog
-        visible={visible}
-        onHide={() => setVisible(false)}
-        style={{
-          width: "50vw",
-          boxShadow: mobile ? "none" : "0 1px 3px rgba(0, 0, 0, 0.3)",
-        }}
-        breakpoints={{ "960px": "75vw", "641px": "100vw" }}
-        headerStyle={{ padding: 0, display: mobile ? "none" : "block" }}
-        closeIcon={closeIconTemplate}
-        contentClassName={mobile ? "m-4 p-0 rounded-lg" : "p-0"}
+      <ConfirmPopup
+        confirmPopup={visible}
+        setConfirmPopup={setVisible}
+        mobile={mobile}
       >
         {!mobile ? (
           <>
-            <div className="px-[104px] py-16">
+            <div>
               <div className="text-center">
                 <h2 className="mb-6 text-4xl text-gray-200 font-semibold">
                   Are you sure?
@@ -121,7 +109,7 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
           </>
         ) : (
           <>
-            <div className="p-6 rounded-lg bg-white">
+            <div className="rounded-lg bg-white">
               <div
                 className="flex justify-end cursor-pointer"
                 onClick={() => setVisible(false)}
@@ -179,7 +167,7 @@ const DeleteUserFromBrand: React.FC<DeleteUserFromBrandProps> = (props) => {
             </div>
           </>
         )}
-      </Dialog>
+      </ConfirmPopup>
     </>
   );
 };
