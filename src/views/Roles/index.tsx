@@ -13,8 +13,6 @@ import {
   useGetAllRolesQuery,
 } from "../../redux/api/roleApiSlice";
 // Custom
-import Header from "../../components/Header";
-import Sidebar from "../../components/Sidebar";
 import OverlayLoader from "../../components/Spinner/OverlayLoader";
 import ToastAlert from "../../components/ToastAlert";
 import DotLoader from "../../components/Spinner/dotLoader";
@@ -23,6 +21,7 @@ import DeleteRoleModal from "./components/DeleteRoleModal";
 // Assets
 import RoundImage from "../../assets/images/roles_logo.svg";
 import MobileRoles from "./mobile/MobileRoles";
+import Layout from "../../components/Layout";
 
 interface RolesDT {
   name: string;
@@ -133,159 +132,151 @@ const Roles = () => {
 
   return (
     <>
-      {isLoading && <OverlayLoader />}
+      <Layout>
+        {isLoading && <OverlayLoader />}
 
-      <div className="flex">
-        <Sidebar />
+        <Title brand={false} title="Roles" image={RoundImage} />
+        <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
+          <DataTable value={roles} className="theme-table">
+            <Column field="name" header="NAME"></Column>
+            <Column field="users" header="USERS"></Column>
+            <Column
+              field="manageUsers"
+              header="MANAGE USERS"
+              body={checkboxTemplate("manageUsers")}
+            ></Column>
+            <Column
+              field="manageRoles"
+              header="MANAGE ROLES"
+              body={checkboxTemplate("manageRoles")}
+            ></Column>
+            <Column
+              field="manageTenants"
+              header="MANAGE TENANTS"
+              body={checkboxTemplate("manageTenants")}
+            ></Column>
+            <Column
+              field="Edit"
+              body={(data) => (
+                <Button
+                  label="Edit"
+                  text
+                  style={{
+                    width: "5rem",
+                  }}
+                  onClick={() => {
+                    navigate(`/roles/${data.id}`);
+                  }}
+                />
+              )}
+            ></Column>
+            <Column field="Delete" body={(data) => DeleteColumn(data)}></Column>
+          </DataTable>
 
-        <div className="p-8 w-full flex-1 ml-80 lg:block md:block sm:block  hidden">
-          <Header />
-          <Title brand={false} title="Roles" image={RoundImage} />
-          <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
-            <DataTable value={roles} className="theme-table">
-              <Column field="name" header="NAME"></Column>
-              <Column field="users" header="USERS"></Column>
-              <Column
-                field="manageUsers"
-                header="MANAGE USERS"
-                body={checkboxTemplate("manageUsers")}
-              ></Column>
-              <Column
-                field="manageRoles"
-                header="MANAGE ROLES"
-                body={checkboxTemplate("manageRoles")}
-              ></Column>
-              <Column
-                field="manageTenants"
-                header="MANAGE TENANTS"
-                body={checkboxTemplate("manageTenants")}
-              ></Column>
-              <Column
-                field="Edit"
-                body={(data) => (
-                  <Button
-                    label="Edit"
-                    text
-                    style={{
-                      width: "5rem",
-                    }}
-                    onClick={() => {
-                      navigate(`/roles/${data.id}`);
-                    }}
-                  />
-                )}
-              ></Column>
-              <Column
-                field="Delete"
-                body={(data) => DeleteColumn(data)}
-              ></Column>
-            </DataTable>
+          {/* NEW Role ADD */}
+          {newRole && (
+            <div className="py-1 px-6 border-b-gray-300 border-b">
+              <form
+                className="flex items-center gap-5"
+                onSubmit={CreateRoleHandler}
+                autoComplete="off"
+              >
+                <InputText
+                  type="text"
+                  id="name"
+                  placeholder="Name"
+                  className="theme-input shadow-btn w-56"
+                />
+                <InputText
+                  type="number"
+                  id="users"
+                  placeholder="Users"
+                  className="theme-input shadow-btn w-32"
+                />
+                <Checkbox
+                  inputId="manageUsers"
+                  checked={newUserCheckBox.manageUsers}
+                  onChange={() =>
+                    setNewUserCheckBox((prev) => ({
+                      ...prev,
+                      manageUsers: !prev.manageUsers,
+                    }))
+                  }
+                />
+                <label htmlFor="manageUsers">Users</label>
+                <Checkbox
+                  inputId="manageRoles"
+                  checked={newUserCheckBox.manageRoles}
+                  onChange={() =>
+                    setNewUserCheckBox((prev) => ({
+                      ...prev,
+                      manageRoles: !prev.manageRoles,
+                    }))
+                  }
+                />
+                <label htmlFor="manageRoles">Roles</label>
 
-            {/* NEW Role ADD */}
-            {newRole && (
-              <div className="py-1 px-6 border-b-gray-300 border-b">
-                <form
-                  className="flex items-center gap-5"
-                  onSubmit={CreateRoleHandler}
-                  autoComplete="off"
-                >
-                  <InputText
-                    type="text"
-                    id="name"
-                    placeholder="Name"
-                    className="theme-input shadow-btn w-56"
-                  />
-                  <InputText
-                    type="number"
-                    id="users"
-                    placeholder="Users"
-                    className="theme-input shadow-btn w-32"
-                  />
-                  <Checkbox
-                    inputId="manageUsers"
-                    checked={newUserCheckBox.manageUsers}
-                    onChange={() =>
-                      setNewUserCheckBox((prev) => ({
-                        ...prev,
-                        manageUsers: !prev.manageUsers,
-                      }))
-                    }
-                  />
-                  <label htmlFor="manageUsers">Users</label>
-                  <Checkbox
-                    inputId="manageRoles"
-                    checked={newUserCheckBox.manageRoles}
-                    onChange={() =>
-                      setNewUserCheckBox((prev) => ({
-                        ...prev,
-                        manageRoles: !prev.manageRoles,
-                      }))
-                    }
-                  />
-                  <label htmlFor="manageRoles">Roles</label>
+                <Checkbox
+                  inputId="manageTenants"
+                  checked={newUserCheckBox.manageTenants}
+                  onChange={() =>
+                    setNewUserCheckBox((prev) => ({
+                      ...prev,
+                      manageTenants: !prev.manageTenants,
+                    }))
+                  }
+                />
+                <label htmlFor="manageTenants">Tenants</label>
 
-                  <Checkbox
-                    inputId="manageTenants"
-                    checked={newUserCheckBox.manageTenants}
-                    onChange={() =>
-                      setNewUserCheckBox((prev) => ({
-                        ...prev,
-                        manageTenants: !prev.manageTenants,
-                      }))
-                    }
-                  />
-                  <label htmlFor="manageTenants">Tenants</label>
-
-                  <div className="flex items-center gap-2 ml-2">
-                    {createRoleLoading ? (
-                      <div
-                        className="theme-btn leading-none"
-                        style={{
-                          height: "45px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <DotLoader color="#fff" size={12} />
-                      </div>
-                    ) : (
-                      <Button
-                        type="submit"
-                        label="Create"
-                        className="theme-btn leading-none"
-                        disabled={createRoleLoading}
-                      />
-                    )}
-
-                    <Button
-                      type="button"
-                      label="Cancel"
-                      className="theme-btn-default leading-none"
-                      disabled={createRoleLoading}
-                      onClick={() => {
-                        setNewRole(false);
-                        setNewUserCheckBox({
-                          manageUsers: false,
-                          manageRoles: false,
-                          manageTenants: false,
-                        });
+                <div className="flex items-center gap-2 ml-2">
+                  {createRoleLoading ? (
+                    <div
+                      className="theme-btn leading-none"
+                      style={{
+                        height: "45px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
                       }}
+                    >
+                      <DotLoader color="#fff" size={12} />
+                    </div>
+                  ) : (
+                    <Button
+                      type="submit"
+                      label="Create"
+                      className="theme-btn leading-none"
+                      disabled={createRoleLoading}
                     />
-                  </div>
-                </form>
-              </div>
-            )}
+                  )}
 
-            <div className="py-4 px-6 border-b-gray-300 border-b transition-all duration-300 hover:bg-blue-200">
-              <Button
-                label="New Role"
-                icon="bx bx-plus"
-                text
-                className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
-                onClick={() => setNewRole(true)}
-              />
+                  <Button
+                    type="button"
+                    label="Cancel"
+                    className="theme-btn-default leading-none"
+                    disabled={createRoleLoading}
+                    onClick={() => {
+                      setNewRole(false);
+                      setNewUserCheckBox({
+                        manageUsers: false,
+                        manageRoles: false,
+                        manageTenants: false,
+                      });
+                    }}
+                  />
+                </div>
+              </form>
             </div>
+          )}
+
+          <div className="py-4 px-6 border-b-gray-300 border-b transition-all duration-300 hover:bg-blue-200">
+            <Button
+              label="New Role"
+              icon="bx bx-plus"
+              text
+              className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
+              onClick={() => setNewRole(true)}
+            />
           </div>
         </div>
         {/* Delete Role Modal */}
@@ -295,7 +286,7 @@ const Roles = () => {
           selectedRole={selectedRole}
           setSelectedRole={setSelectedRole}
         />
-      </div>
+      </Layout>
 
       {/* Mobile Version of Roles */}
       <div className="px-4 pt-4 pb-10 sm:p-8 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">

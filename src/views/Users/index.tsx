@@ -14,11 +14,9 @@ import {
 // Utils
 import { formatDate } from "../../utils";
 // Custom
-import Header from "../../components/Header";
 import Title from "../../components/Title";
 import DeletedUsers from "./components/DeleteUser";
 import ViewUserModal from "./components/ViewUserModal";
-import Sidebar from "../../components/Sidebar";
 import OverlayLoader from "../../components/Spinner/OverlayLoader";
 import ToastAlert from "../../components/ToastAlert";
 import DotLoader from "../../components/Spinner/dotLoader";
@@ -26,6 +24,7 @@ import DeleteUserModal from "./components/DeleteUserModal";
 // Assets
 import RoundImage from "../../assets/images/users_logo.svg";
 import MobileUsers from "./mobile/MobileUsers";
+import Layout from "../../components/Layout";
 
 interface UserDT {
   userName: any;
@@ -166,140 +165,133 @@ const Users = () => {
 
   return (
     <>
-      {isLoading && <OverlayLoader />}
+      <Layout>
+        {isLoading && <OverlayLoader />}
 
-      <div className="flex">
-        <Sidebar />
+        <Title brand={false} title="Users" image={RoundImage} />
 
-        <div className="p-8 w-full flex-1 ml-80 lg:block md:block sm:block  hidden">
-          <Header />
-          <Title brand={false} title="Users" image={RoundImage} />
-          {/* Active Users Table */}
-          <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
-            <DataTable
-              value={activeUsers}
-              editMode="row"
-              dataKey="userName"
-              onRowEditComplete={onRowEditComplete}
-              className="theme-table"
-              rowEditorInitIcon={
-                <button
-                  style={{
-                    color: "#696cff",
-                    fontSize: "18px",
-                    lineHeight: "28px",
-                    fontWeight: 500,
-                  }}
-                >
-                  Edit
-                </button>
-              }
-            >
-              <Column
-                field="userName"
-                header="USER NAME"
-                editor={(options) => textEditor(options)}
-              ></Column>
-              <Column
-                field="email"
-                header="EMAIL"
-                editor={(options) => textEditor(options)}
-              ></Column>
-              <Column
-                field="dateJoined"
-                body={(data) => formatDate(data.dateJoined)}
-                header="DATE JOINED"
-              ></Column>
-              <Column field="View" body={(data) => ViewColumn(data)}></Column>
-              <Column rowEditor></Column>
-              <Column
-                field="Delete"
-                body={(data) => DeleteColumn(data)}
-              ></Column>
-            </DataTable>
+        {/* Active Users Table */}
+        <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
+          <DataTable
+            value={activeUsers}
+            editMode="row"
+            dataKey="userName"
+            onRowEditComplete={onRowEditComplete}
+            className="theme-table"
+            rowEditorInitIcon={
+              <button
+                style={{
+                  color: "#696cff",
+                  fontSize: "18px",
+                  lineHeight: "28px",
+                  fontWeight: 500,
+                }}
+              >
+                Edit
+              </button>
+            }
+          >
+            <Column
+              field="userName"
+              header="USER NAME"
+              editor={(options) => textEditor(options)}
+            ></Column>
+            <Column
+              field="email"
+              header="EMAIL"
+              editor={(options) => textEditor(options)}
+            ></Column>
+            <Column
+              field="dateJoined"
+              body={(data) => formatDate(data.dateJoined)}
+              header="DATE JOINED"
+            ></Column>
+            <Column field="View" body={(data) => ViewColumn(data)}></Column>
+            <Column rowEditor></Column>
+            <Column field="Delete" body={(data) => DeleteColumn(data)}></Column>
+          </DataTable>
 
-            {newUser && (
-              <div className="py-1 px-6 border-b-gray-300 border-b">
-                <form
-                  className="flex items-center gap-8"
-                  onSubmit={CreateUserHandler}
-                  autoComplete="off"
-                >
-                  <InputText
-                    type="text"
-                    id="userName"
-                    placeholder="User Name"
-                    className="theme-input shadow-btn w-56"
-                  />
-                  <InputText
-                    type="email"
-                    id="email"
-                    placeholder="Email Address"
-                    className="theme-input shadow-btn w-56"
-                  />
-                  <div className="flex items-center gap-2">
-                    {createUserLoading ? (
-                      <div
-                        className="theme-btn leading-none"
-                        style={{
-                          height: "45px",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                        }}
-                      >
-                        <DotLoader color="#fff" size={12} />
-                      </div>
-                    ) : (
-                      <Button
-                        type="submit"
-                        label="Create"
-                        className="theme-btn leading-none"
-                        disabled={createUserLoading}
-                      />
-                    )}
+          {newUser && (
+            <div className="py-1 px-6 border-b-gray-300 border-b">
+              <form
+                className="flex items-center gap-8"
+                onSubmit={CreateUserHandler}
+                autoComplete="off"
+              >
+                <InputText
+                  type="text"
+                  id="userName"
+                  placeholder="User Name"
+                  className="theme-input shadow-btn w-56"
+                />
+                <InputText
+                  type="email"
+                  id="email"
+                  placeholder="Email Address"
+                  className="theme-input shadow-btn w-56"
+                />
+                <div className="flex items-center gap-2">
+                  {createUserLoading ? (
+                    <div
+                      className="theme-btn leading-none"
+                      style={{
+                        height: "45px",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <DotLoader color="#fff" size={12} />
+                    </div>
+                  ) : (
                     <Button
-                      type="button"
-                      label="Cancel"
-                      className="theme-btn-default leading-none"
+                      type="submit"
+                      label="Create"
+                      className="theme-btn leading-none"
                       disabled={createUserLoading}
-                      onClick={() => setNewUser(false)}
                     />
-                  </div>
-                </form>
-              </div>
-            )}
-
-            <div className="py-4 px-6 border-b-gray-300 border-b transition-all duration-300 hover:bg-blue-200">
-              <Button
-                label="New User"
-                icon="bx bx-plus"
-                text
-                className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
-                onClick={() => setNewUser(true)}
-              />
+                  )}
+                  <Button
+                    type="button"
+                    label="Cancel"
+                    className="theme-btn-default leading-none"
+                    disabled={createUserLoading}
+                    onClick={() => setNewUser(false)}
+                  />
+                </div>
+              </form>
             </div>
+          )}
+
+          <div className="py-4 px-6 border-b-gray-300 border-b transition-all duration-300 hover:bg-blue-200">
+            <Button
+              label="New User"
+              icon="bx bx-plus"
+              text
+              className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
+              onClick={() => setNewUser(true)}
+            />
           </div>
-          {/* Deleted Users List */}
-          <DeletedUsers
-            actionDeletedBodyTemplate={actionDeletedBodyTemplate}
-            users={deletedUsers}
-          />
-          {/* Delete User Modal */}
-          <DeleteUserModal
-            confirmPopup={confirmPopup}
-            setConfirmPopup={setConfirmPopup}
-            selectedUser={selectedUser}
-            setSelectedUser={setSelectedUser}
-          />
-          {/* View User Modal */}
-          <ViewUserModal
-            visible={visible}
-            setVisible={setVisible}
-            selectedUser={selectedUser}
-          />
         </div>
-      </div>
+        {/* Deleted Users List */}
+        <DeletedUsers
+          actionDeletedBodyTemplate={actionDeletedBodyTemplate}
+          users={deletedUsers}
+        />
+        {/* Delete User Modal */}
+        <DeleteUserModal
+          confirmPopup={confirmPopup}
+          setConfirmPopup={setConfirmPopup}
+          selectedUser={selectedUser}
+          setSelectedUser={setSelectedUser}
+        />
+        {/* View User Modal */}
+        <ViewUserModal
+          visible={visible}
+          setVisible={setVisible}
+          selectedUser={selectedUser}
+        />
+      </Layout>
 
       {/* Mobile Version of Dashboard */}
       <div className="px-4 pt-4 pb-10 sm:p-8 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">

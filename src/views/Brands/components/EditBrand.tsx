@@ -1,25 +1,30 @@
+// React Imports
 import { useEffect, useState } from "react";
-import Header from "../../../components/Header";
-import Title from "../../../components/Title";
 import { useLocation, useParams } from "react-router-dom";
+// Prime Imports
 import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
 import { Button } from "primereact/button";
+import { Column } from "primereact/column";
 import { Dropdown } from "primereact/dropdown";
+// Assets
 import BrandLogoImg from "../../../assets/images/banana.png";
-import Breadcrumb from "../../../components/Breadcrumb/Index";
-import Sidebar from "../../../components/Sidebar";
+// Redux
 import {
   useAddUsersToTenantMutation,
   useGetTenantUsersQuery,
 } from "../../../redux/api/brandApiSlice";
-import OverlayLoader from "../../../components/Spinner/OverlayLoader";
+// Utils
 import { capitalizeFirstLetter, formatDate } from "../../../utils";
+// Custom
+import Title from "../../../components/Title";
+import Breadcrumb from "../../../components/Breadcrumb/Index";
+import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import DeleteUserFromBrand from "./DeleteUserFromBrand";
 import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
 import ToastAlert from "../../../components/ToastAlert";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import MobileEditBrand from "../mobile/MobileEditBrand";
+import Layout from "../../../components/Layout";
 
 interface UserDT {
   userName: any;
@@ -113,107 +118,101 @@ const EditBrand = () => {
 
   return (
     <>
-      {(isLoading || dataLoading) && <OverlayLoader />}
-      <div className="flex">
-        <Sidebar />
+      <Layout>
+        {(isLoading || dataLoading) && <OverlayLoader />}
 
-        {/* Below 640px hidden */}
-        <div className="p-8 w-full flex-1 lg:ml-80 lg:block md:block sm:block  hidden">
-          <Header />
-          <Title brand={BrandLogoImg} title={title} />
-          <Breadcrumb mainLabel="Manage Brands" label="Brands" url="/brands" />
-          <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
-            <h3 className="text-[28px] text-blue pt-2 pb-8 px-6 font-medium">
-              Users in Brand
-            </h3>
+        <Title brand={BrandLogoImg} title={title} />
+        <Breadcrumb mainLabel="Manage Brands" label="Brands" url="/brands" />
+        <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
+          <h3 className="text-[28px] text-blue pt-2 pb-8 px-6 font-medium">
+            Users in Brand
+          </h3>
 
-            <DataTable value={tenantUsers} className="theme-table">
-              <Column field="userName" header="USER NAME"></Column>
-              <Column
-                field="email"
-                header="EMAIL"
-                body={(rowData) => (rowData.email ? rowData.email : "N/A")}
-              ></Column>
-              <Column
-                field="dateJoined"
-                header="DATE JOINED"
-                body={(rowData) => formatDate(rowData.dateJoined)}
-              ></Column>
-              <Column
-                body={actionBodyTemplate}
-                style={{ minWidth: "12rem" }}
-              ></Column>
-            </DataTable>
+          <DataTable value={tenantUsers} className="theme-table">
+            <Column field="userName" header="USER NAME"></Column>
+            <Column
+              field="email"
+              header="EMAIL"
+              body={(rowData) => (rowData.email ? rowData.email : "N/A")}
+            ></Column>
+            <Column
+              field="dateJoined"
+              header="DATE JOINED"
+              body={(rowData) => formatDate(rowData.dateJoined)}
+            ></Column>
+            <Column
+              body={actionBodyTemplate}
+              style={{ minWidth: "12rem" }}
+            ></Column>
+          </DataTable>
 
-            {newUser && (
-              <div className="py-1 px-6 flex gap-8 border-b-gray-300 border-b">
-                <Dropdown
-                  value={dropDownUser}
-                  onChange={(e) => setDropDownUser(e.value)}
-                  options={activeUsers}
-                  optionLabel="userName"
-                  placeholder="Select a user"
-                  className="theme-input shadow-btn w-60"
-                />
+          {newUser && (
+            <div className="py-1 px-6 flex gap-8 border-b-gray-300 border-b">
+              <Dropdown
+                value={dropDownUser}
+                onChange={(e) => setDropDownUser(e.value)}
+                options={activeUsers}
+                optionLabel="userName"
+                placeholder="Select a user"
+                className="theme-input shadow-btn w-60"
+              />
 
-                {createUserLoading ? (
-                  <div
-                    className="theme-btn leading-none"
-                    style={{
-                      height: "45px",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <DotLoader color="#fff" size={12} />
-                  </div>
-                ) : (
-                  <Button
-                    onClick={addUserToRoleHandler}
-                    label="Create"
-                    className="theme-btn leading-none"
-                    disabled={createUserLoading}
-                  />
-                )}
-
-                <Button
-                  type="button"
-                  label="Cancel"
-                  className="theme-btn-default leading-none"
-                  disabled={createUserLoading}
-                  onClick={() => {
-                    setNewUser(false);
-                    setDropDownUser("");
+              {createUserLoading ? (
+                <div
+                  className="theme-btn leading-none"
+                  style={{
+                    height: "45px",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
+                >
+                  <DotLoader color="#fff" size={12} />
+                </div>
+              ) : (
+                <Button
+                  onClick={addUserToRoleHandler}
+                  label="Create"
+                  className="theme-btn leading-none"
+                  disabled={createUserLoading}
                 />
-              </div>
-            )}
+              )}
 
-            <div className="py-4 px-6 border-b-gray-300 border-b transition-all duration-300 hover:bg-blue-200">
               <Button
-                label="New User"
-                icon="bx bx-plus"
-                text
-                className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
-                onClick={() => setNewUser(true)}
+                type="button"
+                label="Cancel"
+                className="theme-btn-default leading-none"
+                disabled={createUserLoading}
+                onClick={() => {
+                  setNewUser(false);
+                  setDropDownUser("");
+                }}
               />
             </div>
-          </div>
-          {/* Delete User Modal */}
-          <DeleteUserFromBrand
-            visible={visible}
-            setVisible={setVisible}
-            selectedUser={selectedUser}
-            title={title}
-            id={id}
-          />
-        </div>
+          )}
 
-        {/* Mobile Version of Edit Brands */}
-        <div className="pt-4 px-4 pb-10 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
-          <MobileEditBrand />
+          <div className="py-4 px-6 border-b-gray-300 border-b transition-all duration-300 hover:bg-blue-200">
+            <Button
+              label="New User"
+              icon="bx bx-plus"
+              text
+              className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
+              onClick={() => setNewUser(true)}
+            />
+          </div>
         </div>
+        {/* Delete User Modal */}
+        <DeleteUserFromBrand
+          visible={visible}
+          setVisible={setVisible}
+          selectedUser={selectedUser}
+          title={title}
+          id={id}
+        />
+      </Layout>
+      {/* Mobile Version of Edit Brands */}
+      <div className="pt-4 px-4 pb-10 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
+        <MobileEditBrand />
       </div>
     </>
   );
