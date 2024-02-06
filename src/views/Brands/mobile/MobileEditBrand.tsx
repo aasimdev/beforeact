@@ -129,7 +129,7 @@ const MobileEditBrand = () => {
             </h3>
           </div>
         ) : (
-          tenantUsers?.map((user, index: number) => {
+          tenantUsers?.map((user,) => {
             const randomColor = generateColor(data?.userName);
 
             return (

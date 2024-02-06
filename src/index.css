@@ -6,7 +6,6 @@
   scroll-behavior: smooth;
 }
 
-
 @layer tailwind-base {
   @tailwind base;
 }
@@ -125,5 +124,5 @@ body {
 }
 
 .p-checkbox .p-checkbox-box.p-highlight {
-  @apply bg-blue text-white border-blue focus:shadow-none
+  @apply bg-blue text-white border-blue focus:shadow-none;
 }

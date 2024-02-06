@@ -10,7 +10,7 @@ interface BreadcrumbProps {
 const Breadcrumb: React.FC<BreadcrumbProps> = (props) => {
   const { mainLabel, label, url } = props;
 
-  const iconItemTemplate = (item: any, options: any) => {
+  const iconItemTemplate = (item: any) => {
     return <span className="text-gray">{item.label}</span>;
   };
 

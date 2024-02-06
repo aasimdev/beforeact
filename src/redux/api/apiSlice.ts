@@ -7,7 +7,7 @@ export const apiSlice = createApi({
   reducerPath: "api",
 
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.REACT_APP_BASE_URL,
+    baseUrl: import.meta.env.VITE_REACT_APP_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
       const token = (getState() as RootState).auth?.user?.token;
       if (token) {
@@ -17,5 +17,5 @@ export const apiSlice = createApi({
     },
   }),
   tagTypes: ["Brands", "User", "Roles"],
-  endpoints: (builder) => ({}),
+  endpoints: () => ({}),
 });
