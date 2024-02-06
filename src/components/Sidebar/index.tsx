@@ -11,6 +11,7 @@ interface NavItem {
 const Sidebar: React.FC = () => {
   const navItems: NavItem[] = [
     { icon: "bx-home", label: "Dashboard", to: "/" },
+    { icon: "bx-user", label: "Players", to: "/players" },
     { icon: "bx-planet", label: "Brands", to: "/brands" },
     { icon: "bx-user", label: "Users", to: "/users" },
     { icon: "bx-group", label: "Roles", to: "/roles" },

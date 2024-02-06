@@ -1,12 +1,15 @@
-import Header from "../../components/Header";
-import Title from "../../components/Title";
-import { Button } from "primereact/button";
+// React Imports
 import { useState } from "react";
+// Prime Imports
+import { Button } from "primereact/button";
+// Assets
+import BrandImage from "../../assets/images/brands_logo.svg";
+// Custom
+import Title from "../../components/Title";
 import BrandList from "./components/BrandList";
 import AddBrandModal from "./components/AddBrandModal";
-import Sidebar from "../../components/Sidebar";
 import MobileAddBrand from "./mobile/MobileAddBrand";
-import BrandImage from "../../assets/images/brands_logo.svg";
+import Layout from "../../components/Layout";
 
 const Brands = () => {
   // states
@@ -14,36 +17,29 @@ const Brands = () => {
 
   return (
     <>
-      <div className="flex">
-        <Sidebar />
-
-        {/* Below 640px hidden */}
-        <div className="p-8 w-full flex-1 ml-80 lg:block md:block sm:block  hidden">
-          <Header />
-          <Title brand={false} title="Brands" image={BrandImage} />
-          <div className="my-6 text-right">
-            <Button
-              className="theme-btn"
-              onClick={() => setAddBrandVisible(true)}
-            >
-              + Create Brand
-            </Button>
-          </div>
-
-          <BrandList />
+      <Layout>
+        <Title brand={false} title="Brands" image={BrandImage} />
+        <div className="my-6 text-right">
+          <Button
+            className="theme-btn"
+            onClick={() => setAddBrandVisible(true)}
+          >
+            + Create Brand
+          </Button>
         </div>
-      </div>
+
+        <BrandList />
+        {/* Modal */}
+        <AddBrandModal
+          addBrandVisible={addBrandVisible}
+          setAddBrandVisible={setAddBrandVisible}
+        />
+      </Layout>
 
       {/* Mobile Version of Brands */}
       <div className="px-4 pt-4 pb-10 sm:p-8 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
         <MobileAddBrand />
       </div>
-
-      {/* Modal */}
-      <AddBrandModal
-        addBrandVisible={addBrandVisible}
-        setAddBrandVisible={setAddBrandVisible}
-      />
     </>
   );
 };
