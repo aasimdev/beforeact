@@ -1,17 +1,48 @@
 // React Imports
 import { useState } from "react";
+// Prime Imports
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
+import { Divider } from "primereact/divider";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
 // Custom
 import Layout from "../../components/Layout";
 import BrandImage from "../../assets/images/brands_logo.svg";
 import Title from "../../components/Title";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
 
 const labelStyle = {
   fontSize: "18px",
   color: "#566A7F",
   fontWeight: 600,
 };
+
+const dummyData = [
+  {
+    id: 1,
+    signUpDate: "10-10-2021",
+    signUpCode: "123",
+    totalDeposit: "1000",
+    totalWager: "2000",
+    totalGGR: "500",
+  },
+  {
+    id: 2,
+    signUpDate: "10-10-2021",
+    signUpCode: "456",
+    totalDeposit: "2000",
+    totalWager: "3000",
+    totalGGR: "1000",
+  },
+  {
+    id: 3,
+    signUpDate: "10-10-2021",
+    signUpCode: "789",
+    totalDeposit: "3000",
+    totalWager: "4000",
+    totalGGR: "1500",
+  },
+];
 
 const Players = () => {
   const [showFilters, setShowFilters] = useState(false);
@@ -177,6 +208,27 @@ const Players = () => {
             </div>
           </div>
         )}
+
+        <div>
+          <Divider className={showFilters ? "mb-10" : "mt-3"} />
+
+          <div>
+            <DataTable
+              value={dummyData}
+              className="theme-table"
+              // scrollable
+              // scrollHeight="500px"
+              // virtualScrollerOptions={{ itemSize: 46 }}
+            >
+              <Column field="id" header="ID"></Column>
+              <Column field="signUpDate" header="SIGNUP DATE"></Column>
+              <Column field="signUpCode" header="SIGNUP CODE"></Column>
+              <Column field="totalDeposit" header="TOTAL DEPOSIT"></Column>
+              <Column field="totalWager" header="TOTAL WAGER"></Column>
+              <Column field="totalGGR" header="TOTAL GGR"></Column>
+            </DataTable>
+          </div>
+        </div>
       </div>
     </Layout>
   );
