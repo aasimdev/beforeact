@@ -223,7 +223,7 @@ const Players = () => {
           <div>
             <DataTable
               value={dummyData}
-              className="theme-table"
+              className="theme-table relative"
               sortIcon={() => {
                 return (
                   <>
@@ -233,29 +233,16 @@ const Players = () => {
               }}
               paginator
               rows={1}
-              // paginatorTemplate="PrevPageLink PageLinks NextPageLink CurrentPageReport"
-              // currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-              paginatorLeft={(options: any) => {
-                const last = Math.min(
-                  options.first + options.rows,
-                  options.totalRecords
-                );
-                return (
-                  <div className="paginator-left">
-                    <span>{`Showing ${options.first + 1} to ${last} of ${
-                      options.totalRecords
-                    } entries`}</span>
-                  </div>
-                );
-              }}
+              currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
               paginatorTemplate={{
-                layout: "PrevPageLink PageLinks NextPageLink",
+                layout: "PrevPageLink PageLinks NextPageLink CurrentPageReport",
+
                 PrevPageLink: (options) => (
                   <div className="paginator-nav-left">
                     <button
                       onClick={options.onClick}
                       disabled={options.disabled}
-                      // className={`prev-button ${options.className}`}
+                      className="mr-3"
                     >
                       Previous
                     </button>
@@ -266,12 +253,30 @@ const Players = () => {
                     <button
                       onClick={options.onClick}
                       disabled={options.disabled}
-                      // className={`next-button ${options.className}`}
+                      className="ml-3"
                     >
                       Next
                     </button>
                   </div>
                 ),
+                PageLinks: (options: any) => {
+                  const isActive = options.page === options.currentPage;
+
+                  return (
+                    <div
+                      className="p-paginator-page p-paginator-element p-link p-paginator-page-start px-1"
+                      style={{
+                        backgroundColor: isActive ? "#F5F5F5" : "white",
+                        color: isActive ? "#007BFF" : "black",
+                        borderRadius: "5px",
+                        fontWeight: 500,
+                      }}
+                      onClick={options.onClick}
+                    >
+                      {options?.page + 1}
+                    </div>
+                  );
+                },
               }}
             >
               <Column

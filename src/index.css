@@ -126,3 +126,14 @@ body {
 .p-checkbox .p-checkbox-box.p-highlight {
   @apply bg-blue text-white border-blue focus:shadow-none;
 }
+
+span.p-paginator-current {
+  display: flex;
+  position: absolute;
+  left: 0;
+}
+
+.p-paginator-bottom.p-paginator.p-component {
+  display: flex;
+  justify-content: flex-end;
+}
