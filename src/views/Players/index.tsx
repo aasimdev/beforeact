@@ -12,10 +12,6 @@ import SortIcon from "../../assets/images/sort_icon.svg";
 // Custom
 import Layout from "../../components/Layout";
 import Title from "../../components/Title";
-import {
-  Paginator,
-  PaginatorCurrentPageReportOptions,
-} from "primereact/paginator";
 
 const labelStyle = {
   fontSize: "18px",
@@ -61,8 +57,6 @@ const Players = () => {
     wager: "",
     lastDepositDate: "",
   });
-  const [first, setFirst] = useState(0);
-  const [rows, setRows] = useState(1);
 
   return (
     <Layout>
@@ -232,7 +226,7 @@ const Players = () => {
                 );
               }}
               paginator
-              rows={1}
+              rows={2}
               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
               paginatorTemplate={{
                 layout: "PrevPageLink PageLinks NextPageLink CurrentPageReport",
@@ -242,7 +236,7 @@ const Players = () => {
                     <button
                       onClick={options.onClick}
                       disabled={options.disabled}
-                      className="mr-3"
+                      className="mr-2 h-[48px] theme-btn-default"
                     >
                       Previous
                     </button>
@@ -253,7 +247,7 @@ const Players = () => {
                     <button
                       onClick={options.onClick}
                       disabled={options.disabled}
-                      className="ml-3"
+                      className="ml-2 h-[48px] theme-btn-default"
                     >
                       Next
                     </button>
@@ -264,13 +258,11 @@ const Players = () => {
 
                   return (
                     <div
-                      className="p-paginator-page p-paginator-element p-link p-paginator-page-start px-1"
-                      style={{
-                        backgroundColor: isActive ? "#F5F5F5" : "white",
-                        color: isActive ? "#007BFF" : "black",
-                        borderRadius: "5px",
-                        fontWeight: 500,
-                      }}
+                      className={`p-paginator-page p-paginator-element p-link p-paginator-page-start mx-2 ${
+                        isActive
+                          ? "bg-blue text-white shadow-btn"
+                          : "bg-gray-500 text-gray-100"
+                      } rounded-lg font-medium`}
                       onClick={options.onClick}
                     >
                       {options?.page + 1}
@@ -330,42 +322,6 @@ const Players = () => {
                 }}
               ></Column>
             </DataTable>
-            {/* <Paginator
-              first={first}
-              rows={rows}
-              totalRecords={dummyData.length}
-              onPageChange={(e) => {
-                setFirst(e.first);
-                setRows(e.rows);
-              }}
-              template={{
-                PrevPageLink: (options) => (
-                  <button
-                    onClick={options.onClick}
-                    disabled={options.disabled}
-                    className={`prev-button ${options.className}`}
-                  >
-                    {"< Prev"}
-                  </button>
-                ),
-                NextPageLink: (options) => (
-                  <button
-                    onClick={options.onClick}
-                    disabled={options.disabled}
-                    className={`next-button ${options.className}`}
-                  >
-                    {"Next >"}
-                  </button>
-                ),
-
-                CurrentPageReport: (options) => (
-                  <span className={options.className}>
-                    Showing {options.first} to {options.last} of{" "}
-                    {options.totalRecords} entries
-                  </span>
-                ),
-              }}
-            /> */}
           </div>
         </div>
       </div>
