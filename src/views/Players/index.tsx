@@ -6,9 +6,11 @@ import { Button } from "primereact/button";
 import { Divider } from "primereact/divider";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+// Assets
+import BrandImage from "../../assets/images/brands_logo.svg";
+import SortIcon from "../../assets/images/sort_icon.svg";
 // Custom
 import Layout from "../../components/Layout";
-import BrandImage from "../../assets/images/brands_logo.svg";
 import Title from "../../components/Title";
 
 const labelStyle = {
@@ -32,11 +34,11 @@ const dummyData = [
     signUpCode: "456",
     totalDeposit: "2000",
     totalWager: "3000",
-    totalGGR: "1000",
+    totalGGR: "-1000",
   },
   {
     id: 3,
-    signUpDate: "10-10-2021",
+    signUpDate: "10-10-2033",
     signUpCode: "789",
     totalDeposit: "3000",
     totalWager: "4000",
@@ -219,13 +221,64 @@ const Players = () => {
               // scrollable
               // scrollHeight="500px"
               // virtualScrollerOptions={{ itemSize: 46 }}
+              sortIcon={() => {
+                return (
+                  <>
+                    <img src={SortIcon} alt="Sort Icon" />
+                  </>
+                );
+              }}
             >
-              <Column field="id" header="ID"></Column>
-              <Column field="signUpDate" header="SIGNUP DATE"></Column>
-              <Column field="signUpCode" header="SIGNUP CODE"></Column>
-              <Column field="totalDeposit" header="TOTAL DEPOSIT"></Column>
-              <Column field="totalWager" header="TOTAL WAGER"></Column>
-              <Column field="totalGGR" header="TOTAL GGR"></Column>
+              <Column
+                field="id"
+                header="ID"
+                body={(rowData) => {
+                  return (
+                    <div className="text-blue font-medium">{rowData.id}</div>
+                  );
+                }}
+                sortable
+              ></Column>
+              <Column
+                field="signUpDate"
+                header="SIGNUP DATE"
+                className="font-normal"
+                sortable
+              ></Column>
+              <Column
+                field="signUpCode"
+                header="SIGNUP CODE"
+                className="font-normal"
+                sortable
+              ></Column>
+              <Column
+                field="totalDeposit"
+                header="TOTAL DEPOSIT"
+                className="font-normal"
+                sortable
+              ></Column>
+              <Column
+                field="totalWager"
+                header="TOTAL WAGER"
+                className="font-normal"
+                sortable
+              ></Column>
+              <Column
+                field="totalGGR"
+                header="TOTAL GGR"
+                sortable
+                body={(rowData) => {
+                  return (
+                    <div
+                      className={`font-semibold ${
+                        rowData.totalGGR > 0 ? "text-green" : "text-red"
+                      }`}
+                    >
+                      £ {rowData.totalGGR}
+                    </div>
+                  );
+                }}
+              ></Column>
             </DataTable>
           </div>
         </div>

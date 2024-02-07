@@ -29,6 +29,7 @@ export default {
       "blue-200": "#F3F3FF",
       "purple-100": "#E7E7FF",
       green: "#71DD37",
+      red: "#FF3E1D",
     },
     fontFamily: {
       sans: ["Public Sans", "sans-serif"],
