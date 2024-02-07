@@ -12,6 +12,10 @@ import SortIcon from "../../assets/images/sort_icon.svg";
 // Custom
 import Layout from "../../components/Layout";
 import Title from "../../components/Title";
+import {
+  Paginator,
+  PaginatorCurrentPageReportOptions,
+} from "primereact/paginator";
 
 const labelStyle = {
   fontSize: "18px",
@@ -57,6 +61,8 @@ const Players = () => {
     wager: "",
     lastDepositDate: "",
   });
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(1);
 
   return (
     <Layout>
@@ -218,15 +224,54 @@ const Players = () => {
             <DataTable
               value={dummyData}
               className="theme-table"
-              // scrollable
-              // scrollHeight="500px"
-              // virtualScrollerOptions={{ itemSize: 46 }}
               sortIcon={() => {
                 return (
                   <>
                     <img src={SortIcon} alt="Sort Icon" />
                   </>
                 );
+              }}
+              paginator
+              rows={1}
+              // paginatorTemplate="PrevPageLink PageLinks NextPageLink CurrentPageReport"
+              // currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+              paginatorLeft={(options: any) => {
+                const last = Math.min(
+                  options.first + options.rows,
+                  options.totalRecords
+                );
+                return (
+                  <div className="paginator-left">
+                    <span>{`Showing ${options.first + 1} to ${last} of ${
+                      options.totalRecords
+                    } entries`}</span>
+                  </div>
+                );
+              }}
+              paginatorTemplate={{
+                layout: "PrevPageLink PageLinks NextPageLink",
+                PrevPageLink: (options) => (
+                  <div className="paginator-nav-left">
+                    <button
+                      onClick={options.onClick}
+                      disabled={options.disabled}
+                      // className={`prev-button ${options.className}`}
+                    >
+                      Previous
+                    </button>
+                  </div>
+                ),
+                NextPageLink: (options) => (
+                  <div className="paginator-nav-right">
+                    <button
+                      onClick={options.onClick}
+                      disabled={options.disabled}
+                      // className={`next-button ${options.className}`}
+                    >
+                      Next
+                    </button>
+                  </div>
+                ),
               }}
             >
               <Column
@@ -280,6 +325,42 @@ const Players = () => {
                 }}
               ></Column>
             </DataTable>
+            {/* <Paginator
+              first={first}
+              rows={rows}
+              totalRecords={dummyData.length}
+              onPageChange={(e) => {
+                setFirst(e.first);
+                setRows(e.rows);
+              }}
+              template={{
+                PrevPageLink: (options) => (
+                  <button
+                    onClick={options.onClick}
+                    disabled={options.disabled}
+                    className={`prev-button ${options.className}`}
+                  >
+                    {"< Prev"}
+                  </button>
+                ),
+                NextPageLink: (options) => (
+                  <button
+                    onClick={options.onClick}
+                    disabled={options.disabled}
+                    className={`next-button ${options.className}`}
+                  >
+                    {"Next >"}
+                  </button>
+                ),
+
+                CurrentPageReport: (options) => (
+                  <span className={options.className}>
+                    Showing {options.first} to {options.last} of{" "}
+                    {options.totalRecords} entries
+                  </span>
+                ),
+              }}
+            /> */}
           </div>
         </div>
       </div>
