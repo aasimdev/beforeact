@@ -12,6 +12,7 @@ import SortIcon from "../../assets/images/sort_icon.svg";
 // Custom
 import Layout from "../../components/Layout";
 import Title from "../../components/Title";
+import { useNavigate } from "react-router-dom";
 
 const labelStyle = {
   fontSize: "18px",
@@ -47,6 +48,8 @@ const dummyData = [
 ];
 
 const Players = () => {
+  const navigate = useNavigate();
+
   const [showFilters, setShowFilters] = useState(false);
   const [filters, setFilters] = useState({
     playerId: "",
@@ -276,7 +279,14 @@ const Players = () => {
                 header="ID"
                 body={(rowData) => {
                   return (
-                    <div className="text-blue font-medium">{rowData.id}</div>
+                    <div
+                      className="text-blue font-medium cursor-pointer"
+                      onClick={() => {
+                        navigate(`/players/${rowData.id}`);
+                      }}
+                    >
+                      {rowData.id}
+                    </div>
                   );
                 }}
                 sortable

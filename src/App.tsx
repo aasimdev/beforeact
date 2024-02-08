@@ -10,6 +10,7 @@ import PublicRoutes from "./routes/PublicRoutes";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 import EditRole from "./views/Roles/components/EditRole";
 import Players from "./views/Players";
+import ViewPlayer from "./views/Players/components/ViewPlayer";
 
 function App() {
   return (
@@ -39,6 +40,14 @@ function App() {
           element={
             <ProtectedRoutes>
               <Players />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/players/:id"
+          element={
+            <ProtectedRoutes>
+              <ViewPlayer />
             </ProtectedRoutes>
           }
         />
