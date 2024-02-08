@@ -167,7 +167,7 @@ const ViewPlayer = () => {
           icon="bx bx-plus text-2xl"
         />
       </div>
-      <div className="my-6 flex flex-wrap justify-between items-center gap-8">
+      <div className="my-6 flex flex-wrap items-center gap-8">
         {cardsData?.map((card) => {
           return (
             <div className="p-6 rounded-lg bg-white w-[355px]" key={card?.id}>
