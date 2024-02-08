@@ -16,7 +16,7 @@ import BouncesImage from "../../../assets/images/bonuses.svg";
 import SignupImage from "../../../assets/images/signUpDate.svg";
 import LastBetImage from "../../../assets/images/lastBet.svg";
 import TotalBetsImage from "../../../assets/images/totalBets.svg";
-import SignUpCodeImage from "../../../assets/images/signUpCode.svg";
+import SignUpCodeImage from "../../../assets/images/SignUpCodeImage.svg";
 // Custom
 import Layout from "../../../components/Layout";
 import Title from "../../../components/Title";
