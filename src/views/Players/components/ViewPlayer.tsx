@@ -1,10 +1,10 @@
-import Layout from "../../../components/Layout";
-import Title from "../../../components/Title";
-import BrandImage from "../../../assets/images/brands_logo.svg";
-import { useLocation } from "react-router-dom";
-import Breadcrumb from "../../../components/Breadcrumb/Index";
+// React Imports
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
+// Prime React
 import { Button } from "primereact/button";
+// Assets
+import BrandImage from "../../../assets/images/brands_logo.svg";
 import BalanceImage from "../../../assets/images/balance.svg";
 import TurnOverImage from "../../../assets/images/turnover.svg";
 import TotalWagerImage from "../../../assets/images/wager.svg";
@@ -17,6 +17,10 @@ import SignupImage from "../../../assets/images/signUpDate.svg";
 import LastBetImage from "../../../assets/images/lastBet.svg";
 import TotalBetsImage from "../../../assets/images/totalBets.svg";
 import SignUpCodeImage from "../../../assets/images/signUpCode.svg";
+// Custom
+import Layout from "../../../components/Layout";
+import Title from "../../../components/Title";
+import Breadcrumb from "../../../components/Breadcrumb/Index";
 
 const cardsData = [
   {
@@ -163,10 +167,10 @@ const ViewPlayer = () => {
           icon="bx bx-plus text-2xl"
         />
       </div>
-      <div className="my-6 flex flex-wrap items-center gap-8">
+      <div className="my-6 flex flex-wrap justify-between items-center gap-8">
         {cardsData?.map((card) => {
           return (
-            <div className="p-6 rounded-lg bg-white w-[350px]" key={card?.id}>
+            <div className="p-6 rounded-lg bg-white w-[355px]" key={card?.id}>
               <div className="flex justify-between">
                 <div className="flex flex-col">
                   <h1 className="text-[22px] text-gray-100">{card?.title}</h1>
