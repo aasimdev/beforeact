@@ -170,7 +170,10 @@ const ViewPlayer = () => {
       <div className="my-6 flex flex-wrap items-center gap-8">
         {cardsData?.map((card) => {
           return (
-            <div className="p-6 rounded-lg bg-white w-[355px]" key={card?.id}>
+            <div
+              className="p-6 rounded-lg bg-white w-[355px] h-[150px]"
+              key={card?.id}
+            >
               <div className="flex justify-between">
                 <div className="flex flex-col">
                   <h1 className="text-[22px] text-gray-100">{card?.title}</h1>
