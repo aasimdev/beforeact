@@ -19,6 +19,7 @@ import OverlayLoader from "../../components/Spinner/OverlayLoader";
 import { CustomLabel } from "../../components/Typography";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { useNavigate } from "react-router-dom";
 
 const GamesData = [
   {
@@ -51,6 +52,8 @@ const GamesData = [
 ];
 
 const Games = () => {
+  const navigate = useNavigate();
+
   const [activeUsers, setActiveUsers] = useState([]);
   const [dropDownUser, setDropDownUser] = useState("");
   const [nameSearch, setNameSearch] = useState("");
@@ -74,7 +77,12 @@ const Games = () => {
 
       <Title brand={false} title="Games" image={RolesImage} />
       <div className="my-6 flex justify-end">
-        <Button label="Game List" icon="bx bx-list-ul" className="theme-btn" />
+        <Button
+          label="Game List"
+          icon="bx bx-list-ul"
+          className="theme-btn"
+          onClick={() => navigate("/games/game-list")}
+        />
       </div>
       <div className="my-6 p-6 rounded-lg bg-white">
         <div className="flex gap-6 items-center">

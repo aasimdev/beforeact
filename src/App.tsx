@@ -12,6 +12,8 @@ import EditRole from "./views/Roles/components/EditRole";
 import Players from "./views/Players";
 import ViewPlayer from "./views/Players/components/ViewPlayer";
 import Games from "./views/Games";
+import GameList from "./views/Games/components/GameList";
+import ViewSingleGame from "./views/Games/components/ViewSingleGame";
 
 function App() {
   return (
@@ -73,6 +75,22 @@ function App() {
           element={
             <ProtectedRoutes>
               <Games />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/games/game-list"
+          element={
+            <ProtectedRoutes>
+              <GameList />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/games/game-list/:id"
+          element={
+            <ProtectedRoutes>
+              <ViewSingleGame />
             </ProtectedRoutes>
           }
         />
