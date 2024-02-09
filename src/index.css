@@ -137,3 +137,10 @@ span.p-paginator-current {
   display: flex;
   justify-content: flex-end;
 }
+
+.p-paginator {
+  padding: 1.5rem 0 0.5rem 0;
+}
+.p-datatable .p-paginator-bottom {
+  border-width: 0;
+}
