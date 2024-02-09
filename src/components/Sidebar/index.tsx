@@ -1,11 +1,13 @@
 import { Image } from "primereact/image";
 import LogoImg from "../../assets/images/logo.svg";
 import MenuItem from "../../components/MenuItem";
+import { CgGames } from "react-icons/cg";
 
 interface NavItem {
-  icon: string;
   label: string;
   to: string;
+  icon?: string;
+  image?: JSX.Element;
 }
 
 const Sidebar: React.FC = () => {
@@ -13,6 +15,7 @@ const Sidebar: React.FC = () => {
     { icon: "bx-home", label: "Dashboard", to: "/" },
     { icon: "bx-user", label: "Players", to: "/players" },
     { icon: "bx-planet", label: "Brands", to: "/brands" },
+    { image: <CgGames fontSize={25} />, label: "Games", to: "/games" },
     { icon: "bx-user", label: "Users", to: "/users" },
     { icon: "bx-group", label: "Roles", to: "/roles" },
   ];
@@ -27,7 +30,8 @@ const Sidebar: React.FC = () => {
         {navItems.map((item, index) => (
           <MenuItem
             key={index}
-            icon={item.icon}
+            icon={item?.icon}
+            image={item?.image}
             label={item.label}
             link={item.to}
           />

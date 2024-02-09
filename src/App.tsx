@@ -11,6 +11,7 @@ import ProtectedRoutes from "./routes/ProtectedRoutes";
 import EditRole from "./views/Roles/components/EditRole";
 import Players from "./views/Players";
 import ViewPlayer from "./views/Players/components/ViewPlayer";
+import Games from "./views/Games";
 
 function App() {
   return (
@@ -64,6 +65,14 @@ function App() {
           element={
             <ProtectedRoutes>
               <EditBrand />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/games"
+          element={
+            <ProtectedRoutes>
+              <Games />
             </ProtectedRoutes>
           }
         />
