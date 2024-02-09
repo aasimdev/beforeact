@@ -116,7 +116,7 @@ const GameList = () => {
                     navigate(`/games/game-list/${rowData?.name}`);
                   }}
                 >
-                  View {rowData?.name}
+                  View
                 </div>
               );
             }}

@@ -1,8 +1,8 @@
 import Layout from "../../../components/Layout";
 import Title from "../../../components/Title";
-import Breadcrumb from "../../../components/Breadcrumb/Index";
 import RolesImage from "../../../assets/images/roles_logo.svg";
 import { useLocation } from "react-router-dom";
+import Breadcrumb from "../../../components/Breadcrumb/Index";
 
 const ViewSingleGame = () => {
   const location = useLocation();
@@ -12,7 +12,13 @@ const ViewSingleGame = () => {
     <Layout>
       <Title brand={false} title={name} image={RolesImage} />
 
-      <Breadcrumb mainLabel="Games Lists" label="Games" url="/games" />
+      <Breadcrumb
+        label="Games"
+        url="/games"
+        childLabel="Games List"
+        childUrl="/games/game-list"
+        mainLabel={name}
+      />
     </Layout>
   );
 };
