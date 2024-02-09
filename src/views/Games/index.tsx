@@ -182,7 +182,7 @@ const Games = () => {
                 return (
                   <div>
                     <img
-                      className="h-9 w-full"
+                      className="h-12 w-12"
                       src={rowData?.provider}
                       alt={rowData?.name}
                     />
@@ -205,7 +205,7 @@ const Games = () => {
                 return (
                   <div>
                     <img
-                      className="h-6 w-full"
+                      className="h-6 w-6"
                       src={rowData?.freeSpins}
                       alt={rowData?.name}
                     />
@@ -224,6 +224,18 @@ const Games = () => {
               header="CATEGORY"
               className="font-normal"
               sortable
+              body={(rowData) => {
+                return (
+                  <div className="flex items-center gap-1">
+                    <img
+                      className="h-8 w-8"
+                      src={rowData?.provider}
+                      alt={rowData?.name}
+                    />
+                    <div>{rowData?.category}</div>
+                  </div>
+                );
+              }}
             ></Column>
           </DataTable>
         </div>
