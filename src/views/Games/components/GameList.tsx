@@ -37,6 +37,9 @@ const GameList = () => {
           label="Add New Game List"
           icon="bx bx-plus"
           className="theme-btn"
+          onClick={() => {
+            navigate("/games/create-game-list");
+          }}
         />
       </div>
       <div className="my-6 p-6 rounded-lg bg-white">

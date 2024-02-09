@@ -14,6 +14,7 @@ import ViewPlayer from "./views/Players/components/ViewPlayer";
 import Games from "./views/Games";
 import GameList from "./views/Games/components/GameList";
 import ViewSingleGame from "./views/Games/components/ViewSingleGame";
+import CreateGameList from "./views/Games/components/CreateGameList";
 
 function App() {
   return (
@@ -91,6 +92,14 @@ function App() {
           element={
             <ProtectedRoutes>
               <ViewSingleGame />
+            </ProtectedRoutes>
+          }
+        />
+        <Route
+          path="/games/create-game-list"
+          element={
+            <ProtectedRoutes>
+              <CreateGameList />
             </ProtectedRoutes>
           }
         />

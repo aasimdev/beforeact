@@ -1,61 +1,36 @@
 // React Imports
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 // Prime React Imports
 import { InputText } from "primereact/inputtext";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
+import { Button } from "primereact/button";
 // Assets
 import RolesImage from "../../../assets/images/roles_logo.svg";
-import SortIcon from "../../../assets/images/sort_icon.svg";
 // Custom
 import Layout from "../../../components/Layout";
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import { CustomLabel } from "../../../components/Typography";
+import SortIcon from "../../../assets/images/sort_icon.svg";
 
-const SingleGameData = [
-  {
-    id: 1,
-    name: "Book of Shadows 1",
-    provider: RolesImage,
-    gameID: "123",
-    category: "Slots",
-  },
-  {
-    id: 2,
-    name: "Book of Shadows 2",
-    provider: RolesImage,
-    gameID: "456",
-    category: "Multiple",
-  },
-  {
-    id: 3,
-    name: "Book of Shadows 3",
-    provider: RolesImage,
-    gameID: "789",
-    category: "Live",
-  },
-];
+const CreateGameData: any = [];
 
-const ViewSingleGame = () => {
-  const location = useLocation();
-  const name = decodeURIComponent(location.pathname.split("/").pop() || "");
-
+const CreateGameList = () => {
+  const [listName, setListName] = useState("");
   const [addGame, setAddGame] = useState("");
 
   return (
     <Layout>
-      <Title brand={false} title={name} image={RolesImage} />
+      <Title brand={false} title="Create Games List" image={RolesImage} />
 
       <Breadcrumb
         label="Games"
         url="/games"
         childLabel="Games List"
         childUrl="/games/game-list"
-        mainLabel={name}
+        mainLabel="Create"
       />
-
       <div className="my-6 p-6 rounded-lg bg-white">
         <div className="flex flex-col gap-3 w-full">
           <CustomLabel htmlFor="listName">LIST NAME</CustomLabel>
@@ -64,8 +39,8 @@ const ViewSingleGame = () => {
             id="listName"
             placeholder="Name"
             className="theme-input shadow-none w-full"
-            value={name}
-            disabled={true}
+            value={listName}
+            onChange={(e) => setListName(e.target.value)}
           />
         </div>
 
@@ -95,7 +70,7 @@ const ViewSingleGame = () => {
 
         <div>
           <DataTable
-            value={SingleGameData}
+            value={CreateGameData}
             className="theme-table relative"
             sortIcon={() => {
               return (
@@ -104,7 +79,7 @@ const ViewSingleGame = () => {
                 </>
               );
             }}
-            paginator
+            paginator={CreateGameData.length > 0 ? true : false}
             rows={2}
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             paginatorTemplate={{
@@ -183,44 +158,14 @@ const ViewSingleGame = () => {
               className="font-normal"
               sortable
             ></Column>
-
-            <Column
-              field="category"
-              header=""
-              className="font-normal"
-              body={(rowData) => {
-                return (
-                  <div className="flex items-center gap-1">
-                    <img
-                      className="h-8 w-8"
-                      src={rowData?.provider}
-                      alt={rowData?.name}
-                    />
-                    <div>{rowData?.category}</div>
-                  </div>
-                );
-              }}
-            ></Column>
-
-            <Column
-              field="remove"
-              header=""
-              className="font-normal"
-              body={() => {
-                return (
-                  <div className="flex items-center gap-1">
-                    <button className="text-blue font-medium text-[18px]">
-                      Remove
-                    </button>
-                  </div>
-                );
-              }}
-            ></Column>
           </DataTable>
         </div>
+      </div>
+      <div className="flex justify-end">
+        <Button label="Create" className="theme-btn" />
       </div>
     </Layout>
   );
 };
 
-export default ViewSingleGame;
+export default CreateGameList;
