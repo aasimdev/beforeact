@@ -8,7 +8,7 @@ import { InputText } from "primereact/inputtext";
 // Assets
 import RolesImage from "../../assets/images/roles_logo.svg";
 import FreeSpinImage from "../../assets/images/freeSpin.svg";
-import NotFreeSpinImage from "../../assets/images/notFreeSpin.svg";
+import NotFreeSpinImage from "../../assets/images/noFreeSpin.svg";
 import SortIcon from "../../assets/images/sort_icon.svg";
 // Redux
 import { useGetAllUsersQuery } from "../../redux/api/userApiSlice";
