@@ -76,7 +76,13 @@ const Games = () => {
       {isLoading && <OverlayLoader />}
 
       <Title brand={false} title="Games" image={RolesImage} />
-      <div className="my-6 flex justify-end">
+      <div className="my-6 flex justify-end gap-6">
+        <Button
+          label="Add Game"
+          icon="bx bx-plus"
+          className="theme-btn"
+          onClick={() => navigate("/games/add-game")}
+        />
         <Button
           label="Game List"
           icon="bx bx-list-ul"
@@ -241,6 +247,23 @@ const Games = () => {
                       alt={rowData?.name}
                     />
                     <div>{rowData?.category}</div>
+                  </div>
+                );
+              }}
+            ></Column>
+            <Column
+              field=""
+              header=""
+              className="font-normal"
+              body={(rowData) => {
+                return (
+                  <div
+                    className="text-blue font-medium cursor-pointer"
+                    onClick={() =>
+                      navigate(`/games/update-game/${rowData?.id}`)
+                    }
+                  >
+                    Edit
                   </div>
                 );
               }}
