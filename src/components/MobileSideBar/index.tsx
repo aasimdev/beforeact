@@ -15,9 +15,10 @@ import { InputText } from "primereact/inputtext";
 import { CgGames } from "react-icons/cg";
 
 interface NavItem {
-  icon: string;
   label: string;
   to: string;
+  icon?: string;
+  image?: JSX.Element;
 }
 
 const SearchBar = ({ onSearchClick }: { onSearchClick: () => void }) => (
