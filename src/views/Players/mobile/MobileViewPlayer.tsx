@@ -67,19 +67,15 @@ const MobileViewPlayer = () => {
       </div>
 
       <div className="my-6 flex flex-col gap-4">
-        <Button
-          type="button"
-          className="theme-btn"
-          label="Actions"
-          icon="bx bx-chevron-down text-2xl"
-          iconPos="right"
-        />
-        <Button
-          type="button"
-          className="theme-btn"
-          label="Add Bonus"
-          icon="bx bx-plus text-2xl"
-        />
+        <Button className="theme-btn flex justify-center items-center">
+          Actions
+          <i className="bx bx-chevron-down text-2xl ml-2"></i>
+        </Button>
+
+        <Button className="theme-btn flex justify-center items-center">
+          <i className="bx bx-plus text-2xl mr-2"></i>
+          Add Bonus
+        </Button>
       </div>
       <div className="mb-6 mt-12">
         <div className="py-4 px-2 rounded-lg bg-white">
