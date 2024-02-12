@@ -21,6 +21,7 @@ import SignUpCodeImage from "../../../assets/images/SignUpCodeImage.svg";
 import Layout from "../../../components/Layout";
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
+import MobileViewPlayer from "../mobile/MobileViewPlayer";
 
 const cardsData = [
   {
@@ -110,93 +111,103 @@ const ViewPlayer = () => {
   const [toggleValue, setToggleValue] = useState("overview");
 
   return (
-    <Layout>
-      <Title brand={false} title={`Player: ${id}`} image={BrandImage} />
-      <Breadcrumb mainLabel={`Player: ${id}`} label="Players" url="/players" />
-      <div className="flex items-center my-6">
-        <Button
-          className={`shadow-none border-0 text-lg font-normal rounded-lg ${
-            toggleValue === "overview"
-              ? "bg-blue text-white"
-              : "bg-transparent text-gray"
-          }`}
-          onClick={() => {
-            setToggleValue("overview");
-          }}
-        >
-          OVERVIEW
-        </Button>
-        <Button
-          onClick={() => {
-            setToggleValue("bets");
-          }}
-          className={`shadow-none border-0 text-lg font-normal rounded-lg ${
-            toggleValue === "bets"
-              ? "bg-blue text-white"
-              : "bg-transparent text-gray"
-          }`}
-        >
-          BETS
-        </Button>
-        <Button
-          onClick={() => {
-            setToggleValue("payments");
-          }}
-          className={`shadow-none border-0 text-lg font-normal rounded-lg ${
-            toggleValue === "payments"
-              ? "bg-blue text-white"
-              : "bg-transparent text-gray"
-          }`}
-        >
-          PAYMENTS
-        </Button>
-      </div>
+    <>
+      <Layout>
+        <Title brand={false} title={`Player: ${id}`} image={BrandImage} />
+        <Breadcrumb
+          mainLabel={`Player: ${id}`}
+          label="Players"
+          url="/players"
+        />
+        <div className="flex items-center my-6">
+          <Button
+            className={`shadow-none border-0 text-lg font-normal rounded-lg ${
+              toggleValue === "overview"
+                ? "bg-blue text-white"
+                : "bg-transparent text-gray"
+            }`}
+            onClick={() => {
+              setToggleValue("overview");
+            }}
+          >
+            OVERVIEW
+          </Button>
+          <Button
+            onClick={() => {
+              setToggleValue("bets");
+            }}
+            className={`shadow-none border-0 text-lg font-normal rounded-lg ${
+              toggleValue === "bets"
+                ? "bg-blue text-white"
+                : "bg-transparent text-gray"
+            }`}
+          >
+            BETS
+          </Button>
+          <Button
+            onClick={() => {
+              setToggleValue("payments");
+            }}
+            className={`shadow-none border-0 text-lg font-normal rounded-lg ${
+              toggleValue === "payments"
+                ? "bg-blue text-white"
+                : "bg-transparent text-gray"
+            }`}
+          >
+            PAYMENTS
+          </Button>
+        </div>
 
-      <div className="my-6 flex justify-end items-center gap-4">
-        <Button
-          type="button"
-          className="theme-btn"
-          label="Actions"
-          icon="bx bx-chevron-down text-2xl"
-          iconPos="right"
-        />
-        <Button
-          type="button"
-          className="theme-btn"
-          label="Add Bonus"
-          icon="bx bx-plus text-2xl"
-        />
-      </div>
-      <div className="my-6 flex flex-wrap items-center gap-8">
-        {cardsData?.map((card) => {
-          return (
-            <div
-              className="p-6 rounded-lg bg-white w-[355px] h-[150px]"
-              key={card?.id}
-            >
-              <div className="flex justify-between">
-                <div className="flex flex-col">
-                  <h1 className="text-[22px] text-gray-100">{card?.title}</h1>
-                  <div
-                    className="text-[35px] font-semibold"
-                    style={{
-                      color: card?.color ? card?.color : "#697A8D",
-                    }}
-                  >
-                    {card?.value}
+        <div className="my-6 flex justify-end items-center gap-4">
+          <Button
+            type="button"
+            className="theme-btn"
+            label="Actions"
+            icon="bx bx-chevron-down text-2xl"
+            iconPos="right"
+          />
+          <Button
+            type="button"
+            className="theme-btn"
+            label="Add Bonus"
+            icon="bx bx-plus text-2xl"
+          />
+        </div>
+        <div className="my-6 flex flex-wrap items-center gap-8">
+          {cardsData?.map((card) => {
+            return (
+              <div
+                className="p-6 rounded-lg bg-white w-[355px] h-[150px]"
+                key={card?.id}
+              >
+                <div className="flex justify-between">
+                  <div className="flex flex-col">
+                    <h1 className="text-[22px] text-gray-100">{card?.title}</h1>
+                    <div
+                      className="text-[35px] font-semibold"
+                      style={{
+                        color: card?.color ? card?.color : "#697A8D",
+                      }}
+                    >
+                      {card?.value}
+                    </div>
+                    <div className="text-[14px] font-normal text-gray-100">
+                      {card?.date}
+                      {card?.time}
+                    </div>
                   </div>
-                  <div className="text-[14px] font-normal text-gray-100">
-                    {card?.date}
-                    {card?.time}
-                  </div>
+                  <img src={card?.image} alt={`${card?.title}`} />
                 </div>
-                <img src={card?.image} alt={`${card?.title}`} />
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+      </Layout>
+      {/* Mobile Version of player */}
+      <div className="px-4 pt-4 pb-10 sm:p-8 w-full flex-1 lg:ml-80 lg:hidden md:hidden sm:hidden">
+        <MobileViewPlayer />
       </div>
-    </Layout>
+    </>
   );
 };
 
