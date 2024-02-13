@@ -28,7 +28,8 @@ import DotLoader from "../../../components/Spinner/dotLoader";
 import DeleteUserFromRole from "./DeleteUserFromRole";
 import MobileEditRole from "../mobile/MobileEditRole";
 import Layout from "../../../components/Layout";
-import { MobileRoles } from "../../../assets";
+import { DesktopRoles, SortIcon } from "../../../assets";
+import { Paginator } from "primereact/paginator";
 
 const EditRole = () => {
   const location = useLocation();
@@ -43,6 +44,9 @@ const EditRole = () => {
   const [selectedPermissions, setSelectedPermissions] = useState<{
     [key: string]: boolean;
   }>({});
+  // pagination
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(2);
 
   // GET ROLE
   const { data, isLoading } = useGetRoleByIdQuery(id);
@@ -157,7 +161,7 @@ const EditRole = () => {
       <Layout>
         {(isLoading || dataLoading) && <OverlayLoader />}
 
-        <Title brand={false} title={data?.role?.name} image={MobileRoles} />
+        <Title brand={false} title={data?.role?.name} image={DesktopRoles} />
         <Breadcrumb mainLabel="Edit Roles" label="Roles" url="/roles" />
         <div className="mt-4 text-gray text-[18px] font-bold">NAME</div>
         <div className="mt-2 text-gray text-[14px]">
@@ -174,13 +178,24 @@ const EditRole = () => {
           <h3 className="pl-4 text-[22px] text-blue pb-6 font-normal">
             Users in Role
           </h3>
-          <DataTable value={data?.users} className="theme-table">
-            <Column field="userName" header="USER NAME"></Column>
-            <Column field="email" header="EMAIL"></Column>
+          <DataTable
+            value={data?.users}
+            className="theme-table relative"
+            sortIcon={() => {
+              return (
+                <>
+                  <img src={SortIcon} alt="Sort Icon" />
+                </>
+              );
+            }}
+          >
+            <Column field="userName" header="USER NAME" sortable></Column>
+            <Column field="email" header="EMAIL" sortable></Column>
             <Column
               field="dateJoined"
               header="DATE JOINED"
               body={(data) => formatDate(data.dateJoined)}
+              sortable
             ></Column>
             <Column field="Delete" body={(data) => DeleteColumn(data)}></Column>
           </DataTable>
@@ -237,6 +252,67 @@ const EditRole = () => {
               text
               className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
               onClick={() => setNewUser(true)}
+            />
+          </div>
+          <div>
+            <Paginator
+              className="flex justify-end items-center"
+              first={first}
+              rows={rows}
+              totalRecords={data?.users?.length}
+              onPageChange={(e) => {
+                setFirst(e.first);
+                setRows(e.rows);
+              }}
+              template={{
+                layout: "PrevPageLink PageLinks NextPageLink CurrentPageReport",
+                CurrentPageReport: (options) => {
+                  return (
+                    <div className="edit-paginator-current">
+                      {`Showing ${options?.first} to ${options?.last} of ${options?.totalRecords} entries`}
+                    </div>
+                  );
+                },
+                PrevPageLink: (options) => {
+                  return (
+                    <button
+                      onClick={options.onClick}
+                      disabled={options.disabled}
+                      className="mr-2 h-[48px] theme-btn-default"
+                    >
+                      Previous
+                    </button>
+                  );
+                },
+
+                NextPageLink: (options) => {
+                  return (
+                    <button
+                      onClick={options.onClick}
+                      disabled={options.disabled}
+                      className="ml-2 h-[48px] theme-btn-default"
+                    >
+                      Next
+                    </button>
+                  );
+                },
+                PageLinks: (options: any) => {
+                  const isActive = options.page === options.currentPage;
+
+                  return (
+                    <div
+                      className={`p-paginator-page p-paginator-element p-link p-paginator-page-start mx-2 rounded-lg font-medium ${
+                        isActive
+                          ? "bg-blue text-white shadow-btn"
+                          : "bg-white text-blue"
+                      }`}
+                      onClick={options.onClick}
+                    >
+                      {options.page + 1}
+                    </div>
+                  );
+                },
+              }}
             />
           </div>
         </div>

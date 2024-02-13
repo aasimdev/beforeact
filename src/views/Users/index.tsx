@@ -24,7 +24,8 @@ import DeleteUserModal from "./components/DeleteUserModal";
 // Assets
 import MobileUsers from "./mobile/MobileUsers";
 import Layout from "../../components/Layout";
-import { DesktopUser } from "../../assets";
+import { DesktopUser, SortIcon } from "../../assets";
+import { Paginator } from "primereact/paginator";
 
 interface UserDT {
   userName: any;
@@ -40,6 +41,9 @@ const Users = () => {
   const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
   const [activeUsers, setActiveUsers] = useState<UserDT[]>([]);
   const [deletedUsers, setDeletedUsers] = useState<UserDT[]>([]);
+  // pagination
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(5);
 
   // GET ALL USERS
   const { data, isLoading } = useGetAllUsersQuery({});
@@ -173,11 +177,18 @@ const Users = () => {
         {/* Active Users Table */}
         <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
           <DataTable
-            value={activeUsers}
+            value={activeUsers?.slice(first, first + rows)}
             editMode="row"
             dataKey="userName"
             onRowEditComplete={onRowEditComplete}
-            className="theme-table"
+            className="theme-table relative"
+            sortIcon={() => {
+              return (
+                <>
+                  <img src={SortIcon} alt="Sort Icon" />
+                </>
+              );
+            }}
             rowEditorInitIcon={
               <button
                 style={{
@@ -195,16 +206,19 @@ const Users = () => {
               field="userName"
               header="USER NAME"
               editor={(options) => textEditor(options)}
+              sortable
             ></Column>
             <Column
               field="email"
               header="EMAIL"
               editor={(options) => textEditor(options)}
+              sortable
             ></Column>
             <Column
               field="dateJoined"
               body={(data) => formatDate(data.dateJoined)}
               header="DATE JOINED"
+              sortable
             ></Column>
             <Column field="View" body={(data) => ViewColumn(data)}></Column>
             <Column rowEditor></Column>
@@ -270,6 +284,67 @@ const Users = () => {
               text
               className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
               onClick={() => setNewUser(true)}
+            />
+          </div>
+          <div>
+            <Paginator
+              className="flex justify-end items-center"
+              first={first}
+              rows={rows}
+              totalRecords={activeUsers?.length}
+              onPageChange={(e) => {
+                setFirst(e.first);
+                setRows(e.rows);
+              }}
+              template={{
+                layout: "PrevPageLink PageLinks NextPageLink CurrentPageReport",
+                CurrentPageReport: (options) => {
+                  return (
+                    <div className="edit-paginator-current">
+                      {`Showing ${options?.first} to ${options?.last} of ${options?.totalRecords} entries`}
+                    </div>
+                  );
+                },
+                PrevPageLink: (options) => {
+                  return (
+                    <button
+                      onClick={options.onClick}
+                      disabled={options.disabled}
+                      className="mr-2 h-[48px] theme-btn-default"
+                    >
+                      Previous
+                    </button>
+                  );
+                },
+
+                NextPageLink: (options) => {
+                  return (
+                    <button
+                      onClick={options.onClick}
+                      disabled={options.disabled}
+                      className="ml-2 h-[48px] theme-btn-default"
+                    >
+                      Next
+                    </button>
+                  );
+                },
+                PageLinks: (options: any) => {
+                  const isActive = options.page === options.currentPage;
+
+                  return (
+                    <div
+                      className={`p-paginator-page p-paginator-element p-link p-paginator-page-start mx-2 rounded-lg font-medium ${
+                        isActive
+                          ? "bg-blue text-white shadow-btn"
+                          : "bg-white text-blue"
+                      }`}
+                      onClick={options.onClick}
+                    >
+                      {options.page + 1}
+                    </div>
+                  );
+                },
+              }}
             />
           </div>
         </div>

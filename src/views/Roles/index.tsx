@@ -21,7 +21,8 @@ import DeleteRoleModal from "./components/DeleteRoleModal";
 // Assets
 import MobileRoles from "./mobile/MobileRoles";
 import Layout from "../../components/Layout";
-import { DesktopRoles } from "../../assets";
+import { DesktopRoles, SortIcon } from "../../assets";
+import { Paginator } from "primereact/paginator";
 
 interface RolesDT {
   name: string;
@@ -43,6 +44,9 @@ const Roles = () => {
   });
   const [selectedRole, setSelectedRole] = useState<RolesDT | null>(null);
   const [confirmPopup, setConfirmPopup] = useState<boolean>(false);
+  // pagination
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(5);
 
   // GET ALL ROLES
   const { data, isLoading } = useGetAllRolesQuery({});
@@ -137,9 +141,19 @@ const Roles = () => {
 
         <Title brand={false} title="Roles" image={DesktopRoles} />
         <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
-          <DataTable value={roles} className="theme-table">
-            <Column field="name" header="NAME"></Column>
-            <Column field="users" header="USERS"></Column>
+          <DataTable
+            value={roles?.slice(first, first + rows)}
+            className="theme-table relative"
+            sortIcon={() => {
+              return (
+                <>
+                  <img src={SortIcon} alt="Sort Icon" />
+                </>
+              );
+            }}
+          >
+            <Column field="name" header="NAME" sortable></Column>
+            <Column field="users" header="USERS" sortable></Column>
             <Column
               field="manageUsers"
               header="MANAGE USERS"
@@ -276,6 +290,67 @@ const Roles = () => {
               text
               className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
               onClick={() => setNewRole(true)}
+            />
+          </div>
+          <div>
+            <Paginator
+              className="flex justify-end items-center"
+              first={first}
+              rows={rows}
+              totalRecords={roles?.length}
+              onPageChange={(e) => {
+                setFirst(e.first);
+                setRows(e.rows);
+              }}
+              template={{
+                layout: "PrevPageLink PageLinks NextPageLink CurrentPageReport",
+                CurrentPageReport: (options) => {
+                  return (
+                    <div className="edit-paginator-current">
+                      {`Showing ${options?.first} to ${options?.last} of ${options?.totalRecords} entries`}
+                    </div>
+                  );
+                },
+                PrevPageLink: (options) => {
+                  return (
+                    <button
+                      onClick={options.onClick}
+                      disabled={options.disabled}
+                      className="mr-2 h-[48px] theme-btn-default"
+                    >
+                      Previous
+                    </button>
+                  );
+                },
+
+                NextPageLink: (options) => {
+                  return (
+                    <button
+                      onClick={options.onClick}
+                      disabled={options.disabled}
+                      className="ml-2 h-[48px] theme-btn-default"
+                    >
+                      Next
+                    </button>
+                  );
+                },
+                PageLinks: (options: any) => {
+                  const isActive = options.page === options.currentPage;
+
+                  return (
+                    <div
+                      className={`p-paginator-page p-paginator-element p-link p-paginator-page-start mx-2 rounded-lg font-medium ${
+                        isActive
+                          ? "bg-blue text-white shadow-btn"
+                          : "bg-white text-blue"
+                      }`}
+                      onClick={options.onClick}
+                    >
+                      {options.page + 1}
+                    </div>
+                  );
+                },
+              }}
             />
           </div>
         </div>
