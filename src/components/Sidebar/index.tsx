@@ -9,6 +9,7 @@ import {
 } from "../../redux/navItem/navItemSlice";
 import { useDispatch } from "react-redux";
 import useTypedSelector from "../../hooks/useTypedSelector";
+import { useLocation } from "react-router-dom";
 
 interface NavItem {
   label: string;
@@ -32,6 +33,7 @@ const Sidebar: React.FC = () => {
 
   const dispatch = useDispatch();
   const showAdminRoutes = useTypedSelector(adminRoutes);
+  const location = useLocation();
 
   return (
     <aside className="pt-2 w-80 bg-white shadow-sidebar h-screen z-10 fixed hidden sm:block">
@@ -47,19 +49,33 @@ const Sidebar: React.FC = () => {
             label={item.label}
             link={item.to}
             onClick={() => {
-              dispatch(setNavItem({ navItem: item?.to }));
+              dispatch(setNavItem(item?.to));
               localStorage.setItem("navItem", JSON.stringify(item?.to));
+              dispatch(setShowAdminRoutes(false));
             }}
           />
         ))}
 
-        <div onClick={() => dispatch(setShowAdminRoutes(!showAdminRoutes))}>
+        <div>
           <MenuItem
             icon="bx-group"
             label="Admin"
-            link={"/games" || "/users" || "/roles"}
+            link={
+              location.pathname === "/games"
+                ? "/games"
+                : location.pathname === "/users"
+                ? "/users"
+                : location.pathname === "/roles"
+                ? "/roles"
+                : "/games"
+            }
             child={true}
             showAdminRoutes={showAdminRoutes}
+            onClick={() => {
+              dispatch(setNavItem("/games"));
+              localStorage.setItem("navItem", JSON.stringify("/games"));
+              dispatch(setShowAdminRoutes(!showAdminRoutes));
+            }}
           />
         </div>
 
