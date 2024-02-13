@@ -4,6 +4,7 @@ import { CgGames } from "react-icons/cg";
 import { Logo } from "../../assets";
 import {
   adminRoutes,
+  setNavItem,
   setShowAdminRoutes,
 } from "../../redux/navItem/navItemSlice";
 import { useDispatch } from "react-redux";
@@ -45,6 +46,10 @@ const Sidebar: React.FC = () => {
             image={item?.image}
             label={item.label}
             link={item.to}
+            onClick={() => {
+              dispatch(setNavItem({ navItem: item?.to }));
+              localStorage.setItem("navItem", JSON.stringify(item?.to));
+            }}
           />
         ))}
 
@@ -66,6 +71,10 @@ const Sidebar: React.FC = () => {
               image={item?.image}
               label={item.label}
               link={item.to}
+              onClick={() => {
+                dispatch(setNavItem({ navItem: item?.to }));
+                localStorage.setItem("navItem", JSON.stringify(item?.to));
+              }}
             />
           ))}
       </div>

@@ -1,7 +1,5 @@
 import React from "react";
-import { useDispatch } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
-import { setNavItem } from "../../redux/navItem/navItemSlice";
 
 interface MenuItemProps {
   label: string;
@@ -10,6 +8,7 @@ interface MenuItemProps {
   image?: JSX.Element;
   child?: boolean;
   showAdminRoutes?: boolean;
+  onClick?: () => void;
 }
 
 const MenuItem: React.FC<MenuItemProps> = ({
@@ -19,8 +18,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   image,
   child,
   showAdminRoutes,
+  onClick,
 }) => {
-  const dispatch = useDispatch();
   const location = useLocation();
 
   const isActive = location.pathname === link;
@@ -31,10 +30,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
       className={`p-4 rounded-md inline-flex gap-2 items-center text-base text-gray w-full sm:w-[228px] ${
         isActive ? "navItem" : ""
       }`}
-      onClick={() => {
-        dispatch(setNavItem({ navItem: link }));
-        localStorage.setItem("navItem", JSON.stringify(link));
-      }}
+      onClick={onClick}
     >
       <div className="flex justify-between items-center w-full">
         <div className="flex items-center gap-2">
