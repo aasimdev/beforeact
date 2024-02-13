@@ -6,6 +6,8 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useNavigate } from "react-router-dom";
 import { DesktopRoles, SortIcon } from "../../../assets";
+import { useState } from "react";
+import { Paginator } from "primereact/paginator";
 
 const GamesListData = [
   {
@@ -25,6 +27,10 @@ const GamesListData = [
 const GameList = () => {
   const navigate = useNavigate();
 
+  // pagination
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(2);
+
   return (
     <Layout>
       <Title brand={false} title="Games Lists" image={DesktopRoles} />
@@ -43,7 +49,7 @@ const GameList = () => {
       </div>
       <div className="my-6 p-6 rounded-lg bg-white">
         <DataTable
-          value={GamesListData}
+          value={GamesListData?.slice(first, first + rows)}
           className="theme-table relative"
           sortIcon={() => {
             return (
@@ -51,55 +57,6 @@ const GameList = () => {
                 <img src={SortIcon} alt="Sort Icon" />
               </>
             );
-          }}
-          paginator
-          rows={2}
-          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-          paginatorTemplate={{
-            layout: "PrevPageLink PageLinks NextPageLink CurrentPageReport",
-
-            PrevPageLink: (options) => {
-              return (
-                <div className="paginator-nav-left">
-                  <button
-                    onClick={options.onClick}
-                    disabled={options.disabled}
-                    className="mr-2 h-[48px] theme-btn-default"
-                  >
-                    Previous
-                  </button>
-                </div>
-              );
-            },
-            NextPageLink: (options) => {
-              return (
-                <div className="paginator-nav-right">
-                  <button
-                    onClick={options.onClick}
-                    disabled={options.disabled}
-                    className="ml-2 h-[48px] theme-btn-default"
-                  >
-                    Next
-                  </button>
-                </div>
-              );
-            },
-            PageLinks: (options: any) => {
-              const isActive = options.page === options.currentPage;
-
-              return (
-                <div
-                  className={`p-paginator-page p-paginator-element p-link p-paginator-page-start mx-2 ${
-                    isActive
-                      ? "bg-blue text-white shadow-btn"
-                      : "bg-gray-500 text-gray-100"
-                  } rounded-lg font-medium`}
-                  onClick={options.onClick}
-                >
-                  {options?.page + 1}
-                </div>
-              );
-            },
           }}
         >
           <Column
@@ -124,6 +81,67 @@ const GameList = () => {
             }}
           ></Column>
         </DataTable>
+        <div>
+          <Paginator
+            className="flex justify-end items-center"
+            first={first}
+            rows={rows}
+            totalRecords={GamesListData?.length}
+            onPageChange={(e) => {
+              setFirst(e.first);
+              setRows(e.rows);
+            }}
+            template={{
+              layout: "PrevPageLink PageLinks NextPageLink CurrentPageReport",
+              CurrentPageReport: (options) => {
+                return (
+                  <div className="edit-paginator-current">
+                    {`Showing ${options?.first} to ${options?.last} of ${options?.totalRecords} entries`}
+                  </div>
+                );
+              },
+              PrevPageLink: (options) => {
+                return (
+                  <button
+                    onClick={options.onClick}
+                    disabled={options.disabled}
+                    className="mr-2 h-[48px] theme-btn-default"
+                  >
+                    Previous
+                  </button>
+                );
+              },
+
+              NextPageLink: (options) => {
+                return (
+                  <button
+                    onClick={options.onClick}
+                    disabled={options.disabled}
+                    className="ml-2 h-[48px] theme-btn-default"
+                  >
+                    Next
+                  </button>
+                );
+              },
+              PageLinks: (options: any) => {
+                const isActive = options.page === options.currentPage;
+
+                return (
+                  <div
+                    className={`p-paginator-page p-paginator-element p-link p-paginator-page-start mx-2 rounded-lg font-medium ${
+                      isActive
+                        ? "bg-blue text-white shadow-btn"
+                        : "bg-white text-blue"
+                    }`}
+                    onClick={options.onClick}
+                  >
+                    {options.page + 1}
+                  </div>
+                );
+              },
+            }}
+          />
+        </div>
       </div>
     </Layout>
   );
