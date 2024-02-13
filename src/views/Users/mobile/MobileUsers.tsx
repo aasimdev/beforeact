@@ -11,14 +11,13 @@ import {
 // Assets
 import RoundImage from "../../../assets/images/mobile_user.svg";
 // Custom
-import MobileSideBar from "../../../components/MobileSideBar";
-import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import ToastAlert from "../../../components/ToastAlert";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import MobileDeletedUsers from "./MobileDeletedUsers";
 import MobileUserList from "./MobileUserList";
+import MobileLayout from "../../../components/Layout/MobileLayout";
 
 const MobileUsers = () => {
   const [openCard, setOpenCard] = useState(false);
@@ -76,11 +75,8 @@ const MobileUsers = () => {
   };
 
   return (
-    <>
+    <MobileLayout>
       {usersLoading && <OverlayLoader />}
-
-      <MobileSideBar />
-      <Header />
 
       <div>
         <Title brand={false} title="Users" image={RoundImage} />
@@ -215,7 +211,7 @@ const MobileUsers = () => {
           )}
         </div>
       </div>
-    </>
+    </MobileLayout>
   );
 };
 

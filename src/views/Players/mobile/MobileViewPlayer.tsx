@@ -10,9 +10,9 @@ import TurnOverImage from "../../../assets/images/turnover.svg";
 import TotalWagerImage from "../../../assets/images/wager.svg";
 import GGRImage from "../../../assets/images/ggr.svg";
 // Custom
-import MobileSideBar from "../../../components/MobileSideBar";
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
+import MobileLayout from "../../../components/Layout/MobileLayout";
 
 const MobileViewPlayer = () => {
   const location = useLocation();
@@ -21,8 +21,7 @@ const MobileViewPlayer = () => {
   const [toggleValue, setToggleValue] = useState("overview");
 
   return (
-    <>
-      <MobileSideBar />
+    <MobileLayout>
       <Title brand={false} title={`Player: ${id}`} image={BrandImage} />
 
       <Breadcrumb mainLabel={`Player: ${id}`} label="Players" url="/players" />
@@ -125,7 +124,7 @@ const MobileViewPlayer = () => {
           </div>
         </div>
       </div>
-    </>
+    </MobileLayout>
   );
 };
 

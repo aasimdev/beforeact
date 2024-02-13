@@ -16,8 +16,6 @@ import { RiDeleteBinLine } from "react-icons/ri";
 // Assets
 import RolesImage from "../../../assets/images/mobile_roles.svg";
 // Custom
-import MobileSideBar from "../../../components/MobileSideBar";
-import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
@@ -25,6 +23,7 @@ import DotLoader from "../../../components/Spinner/dotLoader";
 import ToastAlert from "../../../components/ToastAlert";
 import DeleteUserFromRole from "../components/DeleteUserFromRole";
 import MobileEditPermission from "./MobileEditPermission";
+import MobileLayout from "../../../components/Layout/MobileLayout";
 
 const MobileEditRole = () => {
   const location = useLocation();
@@ -81,11 +80,8 @@ const MobileEditRole = () => {
     }
   };
   return (
-    <>
+    <MobileLayout>
       {(isLoading || dataLoading) && <OverlayLoader />}
-
-      <MobileSideBar />
-      <Header />
 
       <div>
         <Title brand={false} title={data?.role?.name} image={RolesImage} />
@@ -239,7 +235,7 @@ const MobileEditRole = () => {
         roleId={id}
         mobile={true}
       />
-    </>
+    </MobileLayout>
   );
 };
 

@@ -14,14 +14,13 @@ import {
   useGetAllRolesQuery,
 } from "../../../redux/api/roleApiSlice";
 // Custom
-import MobileSideBar from "../../../components/MobileSideBar";
-import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import ToastAlert from "../../../components/ToastAlert";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import DeleteRoleModal from "../components/DeleteRoleModal";
 import { useNavigate } from "react-router-dom";
+import MobileLayout from "../../../components/Layout/MobileLayout";
 
 const MobileRoles = () => {
   const navigate = useNavigate();
@@ -76,11 +75,9 @@ const MobileRoles = () => {
   };
 
   return (
-    <>
+    <MobileLayout>
       {isLoading && <OverlayLoader />}
 
-      <MobileSideBar />
-      <Header />
       <div>
         <Title brand={false} title="Roles" image={RolesImage} />
       </div>
@@ -204,7 +201,7 @@ const MobileRoles = () => {
         setSelectedRole={setSelectedRole}
         mobile={true}
       />
-    </>
+    </MobileLayout>
   );
 };
 

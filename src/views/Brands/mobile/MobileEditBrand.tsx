@@ -25,7 +25,7 @@ import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import ToastAlert from "../../../components/ToastAlert";
 import DeleteUserFromBrand from "../components/DeleteUserFromBrand";
-import MobileSideBar from "../../../components/MobileSideBar";
+import MobileLayout from "../../../components/Layout/MobileLayout";
 
 interface UserDT {
   userName: any;
@@ -112,9 +112,8 @@ const MobileEditBrand = () => {
   };
 
   return (
-    <>
+    <MobileLayout>
       {(isLoading || dataLoading) && <OverlayLoader />}
-      <MobileSideBar />
       <div className="w-full flex-1">
         <Title brand={BrandImage} title={title} mobile={true} />
         <Breadcrumb mainLabel="Manage Brands" label="Brands" url="/brands" />
@@ -129,7 +128,7 @@ const MobileEditBrand = () => {
             </h3>
           </div>
         ) : (
-          tenantUsers?.map((user,) => {
+          tenantUsers?.map((user) => {
             const randomColor = generateColor(data?.userName);
 
             return (
@@ -251,7 +250,7 @@ const MobileEditBrand = () => {
         id={id}
         mobile={true}
       />
-    </>
+    </MobileLayout>
   );
 };
 

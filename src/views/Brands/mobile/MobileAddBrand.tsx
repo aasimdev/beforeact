@@ -8,12 +8,11 @@ import { useCreateTenantMutation } from "../../../redux/api/brandApiSlice";
 // Assets
 import BrandImage from "../../../assets/images/mobile_brand.svg";
 // Custom
-import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import ToastAlert from "../../../components/ToastAlert";
 import MobileBrandList from "./MobileBrandList";
-import MobileSideBar from "../../../components/MobileSideBar";
+import MobileLayout from "../../../components/Layout/MobileLayout";
 
 const MobileAddBrand = () => {
   const [openCard, setOpenCard] = useState(false);
@@ -58,10 +57,7 @@ const MobileAddBrand = () => {
   };
 
   return (
-    <>
-      <MobileSideBar />
-      <Header />
-
+    <MobileLayout>
       <Title brand={false} title="Brands" image={BrandImage} />
       <div className={`${openCard ? "mt-6" : "my-0"}`}>
         <div
@@ -167,7 +163,7 @@ const MobileAddBrand = () => {
           <MobileBrandList />
         </div>
       </div>
-    </>
+    </MobileLayout>
   );
 };
 

@@ -1,5 +1,3 @@
-import MobileSideBar from "../../../components/MobileSideBar";
-import Header from "../../../components/Header";
 import Title from "../../../components/Title";
 import RolesImage from "../../../assets/images/mobile_roles.svg";
 import FreeSpinImage from "../../../assets/images/freeSpin.svg";
@@ -12,6 +10,7 @@ import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
+import MobileLayout from "../../../components/Layout/MobileLayout";
 
 const GamesData = [
   {
@@ -66,11 +65,8 @@ const MobileGameList = () => {
   }, [data]);
 
   return (
-    <>
+    <MobileLayout>
       {isLoading && <OverlayLoader />}
-
-      <MobileSideBar />
-      <Header />
 
       <Title brand={false} title="Games" image={RolesImage} />
 
@@ -161,7 +157,7 @@ const MobileGameList = () => {
           })}
         </div>
       </div>
-    </>
+    </MobileLayout>
   );
 };
 

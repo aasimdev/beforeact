@@ -1,13 +1,10 @@
-import Header from "../../../components/Header";
-import MobileSideBar from "../../../components/MobileSideBar";
+import MobileLayout from "../../../components/Layout/MobileLayout";
 
 const MobileDashboard = () => {
   return (
-    <div>
-      <MobileSideBar />
-      <Header />
+    <MobileLayout>
       <div className="my-2">Dashboard</div>
-    </div>
+    </MobileLayout>
   );
 };
 

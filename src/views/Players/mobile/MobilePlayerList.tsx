@@ -10,9 +10,8 @@ import { DataTable } from "primereact/datatable";
 import BrandImage from "../../../assets/images/mobile_brand.svg";
 import SortIcon from "../../../assets/images/sort_icon.svg";
 // Custom
-import Header from "../../../components/Header";
-import MobileSideBar from "../../../components/MobileSideBar";
 import Title from "../../../components/Title";
+import MobileLayout from "../../../components/Layout/MobileLayout";
 
 const labelStyle = {
   fontSize: "18px",
@@ -62,10 +61,7 @@ const MobilePlayerList = () => {
   });
 
   return (
-    <>
-      <MobileSideBar />
-      <Header />
-
+    <MobileLayout>
       <Title brand={false} title="Players" image={BrandImage} />
 
       <div className="my-6 p-6 rounded-lg bg-white">
@@ -311,7 +307,7 @@ const MobilePlayerList = () => {
           ></Column>
         </DataTable>
       </div>
-    </>
+    </MobileLayout>
   );
 };
 
