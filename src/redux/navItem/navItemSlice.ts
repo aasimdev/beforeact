@@ -11,11 +11,20 @@ const getInitialNavItem = () => {
   }
 };
 
+const getInitialAdminRoutes = () => {
+  const localStorageItem = localStorage.getItem("showAdminRoutes");
+  if (localStorageItem) {
+    return JSON.parse(localStorageItem);
+  } else {
+    return false;
+  }
+};
+
 const navItemSlice = createSlice({
   name: "navItem",
   initialState: {
     navItem: getInitialNavItem(),
-    showAdminRotes: false,
+    showAdminRotes: getInitialAdminRoutes(),
   },
   reducers: {
     setNavItem(state, action) {

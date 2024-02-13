@@ -52,6 +52,7 @@ const Sidebar: React.FC = () => {
               dispatch(setNavItem(item?.to));
               localStorage.setItem("navItem", JSON.stringify(item?.to));
               dispatch(setShowAdminRoutes(false));
+              localStorage.setItem("showAdminRoutes", JSON.stringify(false));
             }}
           />
         ))}
@@ -61,12 +62,12 @@ const Sidebar: React.FC = () => {
             icon="bx-group"
             label="Admin"
             link={
-              location.pathname === "/games"
-                ? "/games"
-                : location.pathname === "/users"
-                ? "/users"
-                : location.pathname === "/roles"
+              location.pathname.startsWith("/roles")
                 ? "/roles"
+                : location.pathname.startsWith("/users")
+                ? "/users"
+                : location.pathname.startsWith("/games")
+                ? "/games"
                 : "/games"
             }
             child={true}
@@ -75,6 +76,10 @@ const Sidebar: React.FC = () => {
               dispatch(setNavItem("/games"));
               localStorage.setItem("navItem", JSON.stringify("/games"));
               dispatch(setShowAdminRoutes(!showAdminRoutes));
+              localStorage.setItem(
+                "showAdminRoutes",
+                JSON.stringify(!showAdminRoutes)
+              );
             }}
           />
         </div>

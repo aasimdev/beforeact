@@ -22,14 +22,15 @@ const MenuItem: React.FC<MenuItemProps> = ({
 }) => {
   const location = useLocation();
 
-  const isActive = location.pathname === link;
-
   return (
     <NavLink
       to={link}
-      className={`p-4 rounded-md inline-flex gap-2 items-center text-base text-gray w-full sm:w-[228px] ${
-        isActive ? "navItem" : ""
+      className={`p-4 rounded-md inline-flex gap-2 items-center text-base text-gray w-full sm:w-[228px] navItem ${
+        location.pathname === "/games" ? "rounded-none" : ""
       }`}
+      style={{
+        marginTop: location.pathname === "/games" ? "0" : "",
+      }}
       onClick={onClick}
     >
       <div className="flex justify-between items-center w-full">
