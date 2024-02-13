@@ -133,6 +133,13 @@ span.p-paginator-current {
   left: 0;
 }
 
+.edit-paginator-current {
+  display: flex;
+  position: absolute;
+  left: 390px;
+  color: #6b7280;
+}
+
 .p-paginator-bottom.p-paginator.p-component {
   display: flex;
   justify-content: flex-end;

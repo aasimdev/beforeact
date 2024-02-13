@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useGetAllTenantsQuery } from "../../../redux/api/brandApiSlice";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
+import { SortIcon } from "../../../assets";
 
 interface BrandDT {
   name: any;
@@ -18,6 +19,9 @@ const BrandList = () => {
   const navigate = useNavigate();
   // states
   const [brands, setBrands] = useState([]);
+  // pagination
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(5);
 
   // GET ALL BRANDS
   const { data, isLoading } = useGetAllTenantsQuery({});
@@ -73,15 +77,78 @@ const BrandList = () => {
 
       <div className="bg-white p-6 rounded-lg shadow-sidebar">
         <DataTable
-          value={brands}
+          value={brands?.slice(first, first + rows)}
           className="theme-table"
           scrollable
-          scrollHeight="500px"
-          virtualScrollerOptions={{ itemSize: 46 }}
+          sortIcon={() => {
+            return (
+              <>
+                <img src={SortIcon} alt="Sort Icon" />
+              </>
+            );
+          }}
+          onPage={(e) => {
+            setFirst(e.first);
+            setRows(e.rows);
+          }}
+          paginator
+          rows={5}
+          currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+          paginatorTemplate={{
+            layout: "PrevPageLink PageLinks NextPageLink CurrentPageReport",
+
+            PrevPageLink: (options) => {
+              return (
+                <div className="paginator-nav-left">
+                  <button
+                    onClick={options.onClick}
+                    disabled={options.disabled}
+                    className="mr-2 h-[48px] theme-btn-default"
+                  >
+                    Previous
+                  </button>
+                </div>
+              );
+            },
+            NextPageLink: (options) => {
+              return (
+                <div className="paginator-nav-right">
+                  <button
+                    onClick={options.onClick}
+                    disabled={options.disabled}
+                    className="ml-2 h-[48px] theme-btn-default"
+                  >
+                    Next
+                  </button>
+                </div>
+              );
+            },
+            PageLinks: (options: any) => {
+              const isActive = options.page === options.currentPage;
+
+              return (
+                <div
+                  className={`p-paginator-page p-paginator-element p-link p-paginator-page-start mx-2 ${
+                    isActive
+                      ? "bg-blue text-white shadow-btn"
+                      : "bg-gray-500 text-gray-100"
+                  } rounded-lg font-medium`}
+                  onClick={options.onClick}
+                >
+                  {options?.page + 1}
+                </div>
+              );
+            },
+          }}
         >
-          <Column field="name" header="NAME" body={nameBodyTemplate}></Column>
-          <Column field="filterId" header="ID"></Column>
-          <Column field="website" header="WEBSITE"></Column>
+          <Column
+            field="name"
+            header="NAME"
+            sortable
+            body={nameBodyTemplate}
+          ></Column>
+          <Column field="filterId" header="ID" sortable></Column>
+          <Column field="website" header="WEBSITE" sortable></Column>
           <Column
             body={actionBodyTemplate}
             style={{ minWidth: "12rem" }}

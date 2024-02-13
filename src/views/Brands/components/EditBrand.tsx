@@ -23,7 +23,8 @@ import ToastAlert from "../../../components/ToastAlert";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import MobileEditBrand from "../mobile/MobileEditBrand";
 import Layout from "../../../components/Layout";
-import { Banana } from "../../../assets";
+import { Banana, SortIcon } from "../../../assets";
+import { Paginator } from "primereact/paginator";
 
 interface UserDT {
   userName: any;
@@ -45,6 +46,9 @@ const EditBrand = () => {
   const [visible, setVisible] = useState(false);
   const [selectedUser, setSelectedUser] = useState<UserDT | null>(null);
   const [activeUsers, setActiveUsers] = useState<any[]>([]);
+  // pagination
+  const [first, setFirst] = useState(0);
+  const [rows, setRows] = useState(2);
 
   useEffect(() => {
     const lastSegment = pathname.split("/").pop();
@@ -127,17 +131,29 @@ const EditBrand = () => {
             Users in Brand
           </h3>
 
-          <DataTable value={tenantUsers} className="theme-table">
-            <Column field="userName" header="USER NAME"></Column>
+          <DataTable
+            value={tenantUsers?.slice(first, first + rows)}
+            className="theme-table relative"
+            sortIcon={() => {
+              return (
+                <>
+                  <img src={SortIcon} alt="Sort Icon" />
+                </>
+              );
+            }}
+          >
+            <Column field="userName" header="USER NAME" sortable></Column>
             <Column
               field="email"
               header="EMAIL"
               body={(rowData) => (rowData.email ? rowData.email : "N/A")}
+              sortable
             ></Column>
             <Column
               field="dateJoined"
               header="DATE JOINED"
               body={(rowData) => formatDate(rowData.dateJoined)}
+              sortable
             ></Column>
             <Column
               body={actionBodyTemplate}
@@ -197,6 +213,67 @@ const EditBrand = () => {
               text
               className="p-0 text-lg text-blue block w-full text-left hover:bg-transparent focus:outline-0 focus:ring-0"
               onClick={() => setNewUser(true)}
+            />
+          </div>
+          <div>
+            <Paginator
+              className="flex justify-end items-center"
+              first={first}
+              rows={rows}
+              totalRecords={tenantUsers?.length}
+              onPageChange={(e) => {
+                setFirst(e.first);
+                setRows(e.rows);
+              }}
+              template={{
+                layout: "PrevPageLink PageLinks NextPageLink CurrentPageReport",
+                CurrentPageReport: (options) => {
+                  return (
+                    <div className="edit-paginator-current">
+                      {`Showing ${options?.first} to ${options?.last} of ${options?.totalRecords} entries`}
+                    </div>
+                  );
+                },
+                PrevPageLink: (options) => {
+                  return (
+                    <button
+                      onClick={options.onClick}
+                      disabled={options.disabled}
+                      className="mr-2 h-[48px] theme-btn-default"
+                    >
+                      Previous
+                    </button>
+                  );
+                },
+
+                NextPageLink: (options) => {
+                  return (
+                    <button
+                      onClick={options.onClick}
+                      disabled={options.disabled}
+                      className="ml-2 h-[48px] theme-btn-default"
+                    >
+                      Next
+                    </button>
+                  );
+                },
+                PageLinks: (options: any) => {
+                  const isActive = options.page === options.currentPage;
+
+                  return (
+                    <div
+                      className={`p-paginator-page p-paginator-element p-link p-paginator-page-start mx-2 rounded-lg font-medium ${
+                        isActive
+                          ? "bg-blue text-white shadow-btn"
+                          : "bg-white text-blue"
+                      }`}
+                      onClick={options.onClick}
+                    >
+                      {options.page + 1}
+                    </div>
+                  );
+                },
+              }}
             />
           </div>
         </div>
