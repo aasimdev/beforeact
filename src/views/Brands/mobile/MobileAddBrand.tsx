@@ -5,14 +5,13 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 // Redux
 import { useCreateTenantMutation } from "../../../redux/api/brandApiSlice";
-// Assets
-import BrandImage from "../../../assets/images/mobile_brand.svg";
 // Custom
 import Title from "../../../components/Title";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import ToastAlert from "../../../components/ToastAlert";
 import MobileBrandList from "./MobileBrandList";
 import MobileLayout from "../../../components/Layout/MobileLayout";
+import { MobileBrand } from "../../../assets";
 
 const MobileAddBrand = () => {
   const [openCard, setOpenCard] = useState(false);
@@ -58,7 +57,7 @@ const MobileAddBrand = () => {
 
   return (
     <MobileLayout>
-      <Title brand={false} title="Brands" image={BrandImage} />
+      <Title brand={false} title="Brands" image={MobileBrand} />
       <div className={`${openCard ? "mt-6" : "my-0"}`}>
         <div
           className={`py-4 rounded-lg ${

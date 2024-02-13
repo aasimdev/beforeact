@@ -22,9 +22,9 @@ import ToastAlert from "../../components/ToastAlert";
 import DotLoader from "../../components/Spinner/dotLoader";
 import DeleteUserModal from "./components/DeleteUserModal";
 // Assets
-import RoundImage from "../../assets/images/users_logo.svg";
 import MobileUsers from "./mobile/MobileUsers";
 import Layout from "../../components/Layout";
+import { DesktopUser } from "../../assets";
 
 interface UserDT {
   userName: any;
@@ -168,7 +168,7 @@ const Users = () => {
       <Layout>
         {isLoading && <OverlayLoader />}
 
-        <Title brand={false} title="Users" image={RoundImage} />
+        <Title brand={false} title="Users" image={DesktopUser} />
 
         {/* Active Users Table */}
         <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">

@@ -26,10 +26,9 @@ import Breadcrumb from "../../../components/Breadcrumb/Index";
 import ToastAlert from "../../../components/ToastAlert";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import DeleteUserFromRole from "./DeleteUserFromRole";
-// Assets
-import RolesImage from "../../../assets/images/roles_logo.svg";
 import MobileEditRole from "../mobile/MobileEditRole";
 import Layout from "../../../components/Layout";
+import { MobileRoles } from "../../../assets";
 
 const EditRole = () => {
   const location = useLocation();
@@ -158,7 +157,7 @@ const EditRole = () => {
       <Layout>
         {(isLoading || dataLoading) && <OverlayLoader />}
 
-        <Title brand={false} title={data?.role?.name} image={RolesImage} />
+        <Title brand={false} title={data?.role?.name} image={MobileRoles} />
         <Breadcrumb mainLabel="Edit Roles" label="Roles" url="/roles" />
         <div className="mt-4 text-gray text-[18px] font-bold">NAME</div>
         <div className="mt-2 text-gray text-[14px]">

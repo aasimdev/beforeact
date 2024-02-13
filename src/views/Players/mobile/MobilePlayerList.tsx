@@ -6,12 +6,10 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
-// Assets
-import BrandImage from "../../../assets/images/mobile_brand.svg";
-import SortIcon from "../../../assets/images/sort_icon.svg";
 // Custom
 import Title from "../../../components/Title";
 import MobileLayout from "../../../components/Layout/MobileLayout";
+import { MobileBrand, SortIcon } from "../../../assets";
 
 const labelStyle = {
   fontSize: "18px",
@@ -62,7 +60,7 @@ const MobilePlayerList = () => {
 
   return (
     <MobileLayout>
-      <Title brand={false} title="Players" image={BrandImage} />
+      <Title brand={false} title="Players" image={MobileBrand} />
 
       <div className="my-6 p-6 rounded-lg bg-white">
         <div className="flex justify-between items-center">

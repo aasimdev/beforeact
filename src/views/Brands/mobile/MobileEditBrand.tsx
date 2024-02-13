@@ -4,8 +4,6 @@ import { useLocation, useParams } from "react-router-dom";
 // Prime React Imports
 import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
-// Assets
-import BrandImage from "../../../assets/images/brands_logo.svg";
 // Utils
 import {
   capitalizeFirstLetter,
@@ -26,6 +24,7 @@ import DotLoader from "../../../components/Spinner/dotLoader";
 import ToastAlert from "../../../components/ToastAlert";
 import DeleteUserFromBrand from "../components/DeleteUserFromBrand";
 import MobileLayout from "../../../components/Layout/MobileLayout";
+import { MobileBrand } from "../../../assets";
 
 interface UserDT {
   userName: any;
@@ -115,7 +114,7 @@ const MobileEditBrand = () => {
     <MobileLayout>
       {(isLoading || dataLoading) && <OverlayLoader />}
       <div className="w-full flex-1">
-        <Title brand={BrandImage} title={title} mobile={true} />
+        <Title brand={MobileBrand} title={title} mobile={true} />
         <Breadcrumb mainLabel="Manage Brands" label="Brands" url="/brands" />
         <div className="bg-white p-4 rounded-lg shadow-sidebar">
           <h3 className="text-[27px] text-blue font-medium">Users in Brand</h3>

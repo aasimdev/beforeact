@@ -3,8 +3,7 @@ import React, { ReactNode } from "react";
 // Prime Imports
 import { Dialog } from "primereact/dialog";
 import { Image } from "primereact/image";
-// Local Imports
-import closeIcon from "../../assets/images/close-icon.svg";
+import { CloseIcon } from "../../assets";
 
 interface ConfirmPopupProps {
   confirmPopup: boolean;
@@ -17,7 +16,7 @@ const ConfirmPopup: React.FC<ConfirmPopupProps> = (props) => {
   const { confirmPopup, setConfirmPopup, children, mobile } = props;
 
   // Close Popup Icon
-  const closeIconTemplate = <Image src={closeIcon} alt="close icon" />;
+  const closeIconTemplate = <Image src={CloseIcon} alt="close icon" />;
 
   return (
     <Dialog

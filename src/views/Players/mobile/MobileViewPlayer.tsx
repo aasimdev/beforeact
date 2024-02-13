@@ -3,16 +3,17 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 // Prime React Imports
 import { Button } from "primereact/button";
-// Assets
-import BrandImage from "../../../assets/images/mobile_brand.svg";
-import BalanceImage from "../../../assets/images/balance.svg";
-import TurnOverImage from "../../../assets/images/turnover.svg";
-import TotalWagerImage from "../../../assets/images/wager.svg";
-import GGRImage from "../../../assets/images/ggr.svg";
 // Custom
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import MobileLayout from "../../../components/Layout/MobileLayout";
+import {
+  BalanceImage,
+  MobileBrand,
+  TurnOverImage,
+  TotalWagerImage,
+  GGRImage,
+} from "../../../assets";
 
 const MobileViewPlayer = () => {
   const location = useLocation();
@@ -22,7 +23,7 @@ const MobileViewPlayer = () => {
 
   return (
     <MobileLayout>
-      <Title brand={false} title={`Player: ${id}`} image={BrandImage} />
+      <Title brand={false} title={`Player: ${id}`} image={MobileBrand} />
 
       <Breadcrumb mainLabel={`Player: ${id}`} label="Players" url="/players" />
 

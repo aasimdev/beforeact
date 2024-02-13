@@ -1,9 +1,7 @@
 import { Dialog } from "primereact/dialog";
 import { Divider } from "primereact/divider";
-import ApesLogo from "../../../assets/images/logo-apes.png";
-import SharkLogo from "../../../assets/images/logo-shark.png";
-import DiceLogo from "../../../assets/images/logo-dice.png";
 import { formatDate } from "../../../utils";
+import { Banana, SharkLogo, DiceLogo } from "../../../assets";
 
 interface ViewUserDT {
   visible: boolean;
@@ -72,7 +70,7 @@ const ViewUserModal: React.FC<ViewUserDT> = (props) => {
                 <div className="flex flex-wrap justify-center gap-6 mt-8">
                   <div>
                     <div className="mb-2">
-                      <img src={ApesLogo} alt="logo" />
+                      <img src={Banana} alt="logo" />
                     </div>
                     <span className="text-gray text-lg">Apes</span>
                   </div>

@@ -3,25 +3,26 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 // Prime React
 import { Button } from "primereact/button";
-// Assets
-import BrandImage from "../../../assets/images/brands_logo.svg";
-import BalanceImage from "../../../assets/images/balance.svg";
-import TurnOverImage from "../../../assets/images/turnover.svg";
-import TotalWagerImage from "../../../assets/images/wager.svg";
-import GGRImage from "../../../assets/images/ggr.svg";
-import DepositImage from "../../../assets/images/depositAmount.svg";
-import LastDeposit from "../../../assets/images/lastDeposit.svg";
-import DepositCount from "../../../assets/images/depositCount.svg";
-import BouncesImage from "../../../assets/images/bonuses.svg";
-import SignupImage from "../../../assets/images/signUpDate.svg";
-import LastBetImage from "../../../assets/images/lastBet.svg";
-import TotalBetsImage from "../../../assets/images/totalBets.svg";
-import SignUpCodeImage from "../../../assets/images/SignUpCodeImage.svg";
 // Custom
 import Layout from "../../../components/Layout";
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import MobileViewPlayer from "../mobile/MobileViewPlayer";
+import {
+  BalanceImage,
+  DesktopBrand,
+  GGRImage,
+  TurnOverImage,
+  TotalWagerImage,
+  TotalBetsImage,
+  SignUpCodeImage,
+  LastBetImage,
+  SignupImage,
+  BouncesImage,
+  DepositCount,
+  LastDeposit,
+  DepositImage,
+} from "../../../assets";
 
 const cardsData = [
   {
@@ -113,7 +114,7 @@ const ViewPlayer = () => {
   return (
     <>
       <Layout>
-        <Title brand={false} title={`Player: ${id}`} image={BrandImage} />
+        <Title brand={false} title={`Player: ${id}`} image={DesktopBrand} />
         <Breadcrumb
           mainLabel={`Player: ${id}`}
           label="Players"

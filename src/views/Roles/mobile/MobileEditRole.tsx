@@ -13,8 +13,6 @@ import {
 import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
 // React Icons
 import { RiDeleteBinLine } from "react-icons/ri";
-// Assets
-import RolesImage from "../../../assets/images/mobile_roles.svg";
 // Custom
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
@@ -24,6 +22,7 @@ import ToastAlert from "../../../components/ToastAlert";
 import DeleteUserFromRole from "../components/DeleteUserFromRole";
 import MobileEditPermission from "./MobileEditPermission";
 import MobileLayout from "../../../components/Layout/MobileLayout";
+import { MobileRoles } from "../../../assets";
 
 const MobileEditRole = () => {
   const location = useLocation();
@@ -84,7 +83,7 @@ const MobileEditRole = () => {
       {(isLoading || dataLoading) && <OverlayLoader />}
 
       <div>
-        <Title brand={false} title={data?.role?.name} image={RolesImage} />
+        <Title brand={false} title={data?.role?.name} image={MobileRoles} />
         <Breadcrumb mainLabel="Edit Roles" label="Roles" url="/roles" />
       </div>
 

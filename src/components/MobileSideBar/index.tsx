@@ -10,9 +10,9 @@ import { CgProfile } from "react-icons/cg";
 // Custom
 import MenuItem from "../../components/MenuItem";
 // Assets
-import LogoImg from "../../assets/images/logo.svg";
 import { InputText } from "primereact/inputtext";
 import { CgGames } from "react-icons/cg";
+import { Logo } from "../../assets";
 
 interface NavItem {
   label: string;
@@ -98,7 +98,7 @@ const MobileSideBar = () => {
         </div>
         <div className="space-y-2 px-4">
           <div className="my-4">
-            <Image src={LogoImg} alt="Image" width="162" />
+            <Image src={Logo} alt="Image" width="162" />
           </div>
           {navItems.map((item, index) => (
             <MenuItem

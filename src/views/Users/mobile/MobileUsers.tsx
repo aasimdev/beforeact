@@ -8,8 +8,6 @@ import {
   useCreateUserMutation,
   useGetAllUsersQuery,
 } from "../../../redux/api/userApiSlice";
-// Assets
-import RoundImage from "../../../assets/images/mobile_user.svg";
 // Custom
 import Title from "../../../components/Title";
 import DotLoader from "../../../components/Spinner/dotLoader";
@@ -18,6 +16,7 @@ import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import MobileDeletedUsers from "./MobileDeletedUsers";
 import MobileUserList from "./MobileUserList";
 import MobileLayout from "../../../components/Layout/MobileLayout";
+import { MobileUser } from "../../../assets";
 
 const MobileUsers = () => {
   const [openCard, setOpenCard] = useState(false);
@@ -79,7 +78,7 @@ const MobileUsers = () => {
       {usersLoading && <OverlayLoader />}
 
       <div>
-        <Title brand={false} title="Users" image={RoundImage} />
+        <Title brand={false} title="Users" image={MobileUser} />
 
         <div className="flex items-center my-6">
           <Button

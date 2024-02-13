@@ -11,12 +11,10 @@ import { useLoginMutation } from "../../redux/api/authApiSlice";
 // Icons
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { GoEyeClosed } from "react-icons/go";
-// Assets
-import LoginImage from "../../assets/images/login_image.png";
-import RocketLogo from "../../assets/images/rocket_logo.svg";
 // Custom
 import DotLoader from "../../components/Spinner/dotLoader";
 import ToastAlert from "../../components/ToastAlert";
+import { LoginImage, RocketLogo } from "../../assets";
 
 const Login: React.FC = () => {
   const navigate = useNavigate();

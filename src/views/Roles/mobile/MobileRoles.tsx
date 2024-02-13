@@ -6,8 +6,6 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 // React Icons
 import { RiDeleteBinLine } from "react-icons/ri";
-// Assets
-import RolesImage from "../../../assets/images/mobile_roles.svg";
 // Redux
 import {
   useCreateRoleMutation,
@@ -21,6 +19,7 @@ import DotLoader from "../../../components/Spinner/dotLoader";
 import DeleteRoleModal from "../components/DeleteRoleModal";
 import { useNavigate } from "react-router-dom";
 import MobileLayout from "../../../components/Layout/MobileLayout";
+import { MobileBrand } from "../../../assets";
 
 const MobileRoles = () => {
   const navigate = useNavigate();
@@ -79,7 +78,7 @@ const MobileRoles = () => {
       {isLoading && <OverlayLoader />}
 
       <div>
-        <Title brand={false} title="Roles" image={RolesImage} />
+        <Title brand={false} title="Roles" image={MobileBrand} />
       </div>
 
       {/* Table Show */}

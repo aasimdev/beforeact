@@ -1,42 +1,39 @@
 import Title from "../../../components/Title";
-import RolesImage from "../../../assets/images/mobile_roles.svg";
-import FreeSpinImage from "../../../assets/images/freeSpin.svg";
-import NotFreeSpinImage from "../../../assets/images/noFreeSpin.svg";
 import { useEffect, useState } from "react";
 import { Button } from "primereact/button";
 // import { useNavigate } from "react-router-dom";
-import GameLogo from "../../../assets/images/Game_logo.svg";
 import { useGetAllUsersQuery } from "../../../redux/api/userApiSlice";
 import OverlayLoader from "../../../components/Spinner/OverlayLoader";
 import { InputText } from "primereact/inputtext";
 import { Dropdown } from "primereact/dropdown";
 import MobileLayout from "../../../components/Layout/MobileLayout";
+import { FreeSpin, GameLogo, MobileRoles, NotFreeSpin } from "../../../assets";
 
 const GamesData = [
   {
     id: 1,
     name: "Game 1",
-    provider: RolesImage,
+    provider: MobileRoles,
     gameID: "123",
-    freeSpins: FreeSpinImage,
+    freeSpins: FreeSpin,
     minimumBet: "£0.1",
     category: "Slots",
   },
   {
     id: 2,
     name: "Game 2",
-    provider: RolesImage,
+    provider: MobileRoles,
     gameID: "456",
-    freeSpins: NotFreeSpinImage,
+    freeSpins: NotFreeSpin,
     minimumBet: "£0.2",
     category: "Multiple",
   },
   {
     id: 3,
     name: "Game 3",
-    provider: RolesImage,
+    provider: MobileRoles,
     gameID: "789",
-    freeSpins: FreeSpinImage,
+    freeSpins: FreeSpin,
     minimumBet: "£0.3",
     category: "Live",
   },
@@ -68,7 +65,7 @@ const MobileGameList = () => {
     <MobileLayout>
       {isLoading && <OverlayLoader />}
 
-      <Title brand={false} title="Games" image={RolesImage} />
+      <Title brand={false} title="Games" image={MobileRoles} />
 
       <div className="my-6">
         <div className="flex items-center gap-4 cursor-pointer">

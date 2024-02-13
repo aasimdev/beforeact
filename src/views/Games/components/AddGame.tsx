@@ -4,13 +4,12 @@ import { useLocation } from "react-router-dom";
 // Prime React Imports
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
-// Assets
-import RolesImage from "../../../assets/images/roles_logo.svg";
 // Custom
 import Layout from "../../../components/Layout";
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import { CustomLabel } from "../../../components/Typography";
+import { DesktopRoles } from "../../../assets";
 
 const AddGame = () => {
   const location = useLocation();
@@ -28,7 +27,7 @@ const AddGame = () => {
       <Title
         brand={false}
         title={id ? "Update Game" : "Add New Game"}
-        image={RolesImage}
+        image={DesktopRoles}
       />
 
       <Breadcrumb

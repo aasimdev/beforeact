@@ -2,14 +2,13 @@
 import { useState } from "react";
 // Prime Imports
 import { Button } from "primereact/button";
-// Assets
-import BrandImage from "../../assets/images/brands_logo.svg";
 // Custom
 import Title from "../../components/Title";
 import BrandList from "./components/BrandList";
 import AddBrandModal from "./components/AddBrandModal";
 import MobileAddBrand from "./mobile/MobileAddBrand";
 import Layout from "../../components/Layout";
+import { DesktopBrand } from "../../assets";
 
 const Brands = () => {
   // states
@@ -18,7 +17,7 @@ const Brands = () => {
   return (
     <>
       <Layout>
-        <Title brand={false} title="Brands" image={BrandImage} />
+        <Title brand={false} title="Brands" image={DesktopBrand} />
         <div className="my-6 text-right">
           <Button
             className="theme-btn"

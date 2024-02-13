@@ -5,11 +5,6 @@ import { Button } from "primereact/button";
 import { Dropdown } from "primereact/dropdown";
 import { Divider } from "primereact/divider";
 import { InputText } from "primereact/inputtext";
-// Assets
-import RolesImage from "../../assets/images/roles_logo.svg";
-import FreeSpinImage from "../../assets/images/freeSpin.svg";
-import NotFreeSpinImage from "../../assets/images/noFreeSpin.svg";
-import SortIcon from "../../assets/images/sort_icon.svg";
 // Redux
 import { useGetAllUsersQuery } from "../../redux/api/userApiSlice";
 // Custom
@@ -21,32 +16,39 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { useNavigate } from "react-router-dom";
 import MobileGameList from "./mobile/MobileGameList";
+import {
+  DesktopBrand,
+  DesktopRoles,
+  FreeSpin,
+  NotFreeSpin,
+  SortIcon,
+} from "../../assets";
 
 const GamesData = [
   {
     id: 1,
     name: "Game 1",
-    provider: RolesImage,
+    provider: DesktopRoles,
     gameID: "123",
-    freeSpins: FreeSpinImage,
+    freeSpins: FreeSpin,
     minimumBet: "£0.1",
     category: "Slots",
   },
   {
     id: 2,
     name: "Game 2",
-    provider: RolesImage,
+    provider: DesktopRoles,
     gameID: "456",
-    freeSpins: NotFreeSpinImage,
+    freeSpins: NotFreeSpin,
     minimumBet: "£0.2",
     category: "Multiple",
   },
   {
     id: 3,
     name: "Game 3",
-    provider: RolesImage,
+    provider: DesktopRoles,
     gameID: "789",
-    freeSpins: FreeSpinImage,
+    freeSpins: FreeSpin,
     minimumBet: "£0.3",
     category: "Live",
   },
@@ -77,7 +79,7 @@ const Games = () => {
       <Layout>
         {isLoading && <OverlayLoader />}
 
-        <Title brand={false} title="Games" image={RolesImage} />
+        <Title brand={false} title="Games" image={DesktopBrand} />
         <div className="my-6 flex justify-end gap-6">
           <Button
             label="Add Game"

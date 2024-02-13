@@ -6,8 +6,6 @@ import { DataTable } from "primereact/datatable";
 import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { Dropdown } from "primereact/dropdown";
-// Assets
-import BrandLogoImg from "../../../assets/images/banana.png";
 // Redux
 import {
   useAddUsersToTenantMutation,
@@ -25,6 +23,7 @@ import ToastAlert from "../../../components/ToastAlert";
 import DotLoader from "../../../components/Spinner/dotLoader";
 import MobileEditBrand from "../mobile/MobileEditBrand";
 import Layout from "../../../components/Layout";
+import { Banana } from "../../../assets";
 
 interface UserDT {
   userName: any;
@@ -121,7 +120,7 @@ const EditBrand = () => {
       <Layout>
         {(isLoading || dataLoading) && <OverlayLoader />}
 
-        <Title brand={BrandLogoImg} title={title} />
+        <Title brand={Banana} title={title} />
         <Breadcrumb mainLabel="Manage Brands" label="Brands" url="/brands" />
         <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
           <h3 className="text-[28px] text-blue pt-2 pb-8 px-6 font-medium">

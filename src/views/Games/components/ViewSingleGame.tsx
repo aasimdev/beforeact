@@ -5,34 +5,32 @@ import { useLocation } from "react-router-dom";
 import { InputText } from "primereact/inputtext";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-// Assets
-import RolesImage from "../../../assets/images/roles_logo.svg";
-import SortIcon from "../../../assets/images/sort_icon.svg";
 // Custom
 import Layout from "../../../components/Layout";
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import { CustomLabel } from "../../../components/Typography";
+import { DesktopRoles, SortIcon } from "../../../assets";
 
 const SingleGameData = [
   {
     id: 1,
     name: "Book of Shadows 1",
-    provider: RolesImage,
+    provider: DesktopRoles,
     gameID: "123",
     category: "Slots",
   },
   {
     id: 2,
     name: "Book of Shadows 2",
-    provider: RolesImage,
+    provider: DesktopRoles,
     gameID: "456",
     category: "Multiple",
   },
   {
     id: 3,
     name: "Book of Shadows 3",
-    provider: RolesImage,
+    provider: DesktopRoles,
     gameID: "789",
     category: "Live",
   },
@@ -46,7 +44,7 @@ const ViewSingleGame = () => {
 
   return (
     <Layout>
-      <Title brand={false} title={name} image={RolesImage} />
+      <Title brand={false} title={name} image={DesktopRoles} />
 
       <Breadcrumb
         label="Games"

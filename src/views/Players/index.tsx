@@ -6,14 +6,12 @@ import { Button } from "primereact/button";
 import { Divider } from "primereact/divider";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-// Assets
-import BrandImage from "../../assets/images/brands_logo.svg";
-import SortIcon from "../../assets/images/sort_icon.svg";
 // Custom
 import Layout from "../../components/Layout";
 import Title from "../../components/Title";
 import { useNavigate } from "react-router-dom";
 import MobilePlayerList from "./mobile/MobilePlayerList";
+import { DesktopBrand, SortIcon } from "../../assets";
 
 const labelStyle = {
   fontSize: "18px",
@@ -65,7 +63,7 @@ const Players = () => {
   return (
     <>
       <Layout>
-        <Title brand={false} title="Players" image={BrandImage} />
+        <Title brand={false} title="Players" image={DesktopBrand} />
         <div className="my-6 bg-white p-6 rounded-lg">
           <div className="flex justify-between items-center">
             <div

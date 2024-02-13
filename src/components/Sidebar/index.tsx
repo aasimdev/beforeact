@@ -1,7 +1,7 @@
 import { Image } from "primereact/image";
-import LogoImg from "../../assets/images/logo.svg";
 import MenuItem from "../../components/MenuItem";
 import { CgGames } from "react-icons/cg";
+import { Logo } from "../../assets";
 
 interface NavItem {
   label: string;
@@ -23,7 +23,7 @@ const Sidebar: React.FC = () => {
     <aside className="pt-2 w-80 bg-white shadow-sidebar h-screen z-10 fixed hidden sm:block">
       <div className="py-2 px-8">
         {/* <a href="#"> */}
-        <Image src={LogoImg} alt="Image" width="204" />
+        <Image src={Logo} alt="Image" width="204" />
         {/* </a> */}
       </div>
       <div className="pt-6 space-y-2 px-4">

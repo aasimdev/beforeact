@@ -1,9 +1,9 @@
 import { Image } from "primereact/image";
 import React, { useState } from "react";
-import cubeImg from "../../assets/images/brands_logo.svg";
 import { Button } from "primereact/button";
 import BrandLogoModal from "../../views/Brands/components/BrandLogoModal";
 import { generateColor } from "../../utils";
+import { DesktopBrand } from "../../assets";
 
 interface TitleProps {
   title: string;
@@ -69,7 +69,7 @@ const Title: React.FC<TitleProps> = (props) => {
             </div>
           ) : (
             <div className="pl-6 pr-2">
-              <Image src={image || cubeImg} alt="Cube" />
+              <Image src={image || DesktopBrand} alt="Cube" />
             </div>
           )}
 

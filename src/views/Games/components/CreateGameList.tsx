@@ -5,14 +5,12 @@ import { InputText } from "primereact/inputtext";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { Button } from "primereact/button";
-// Assets
-import RolesImage from "../../../assets/images/roles_logo.svg";
 // Custom
 import Layout from "../../../components/Layout";
 import Title from "../../../components/Title";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import { CustomLabel } from "../../../components/Typography";
-import SortIcon from "../../../assets/images/sort_icon.svg";
+import { DesktopRoles, SortIcon } from "../../../assets";
 
 const CreateGameData: any = [];
 
@@ -22,7 +20,7 @@ const CreateGameList = () => {
 
   return (
     <Layout>
-      <Title brand={false} title="Create Games List" image={RolesImage} />
+      <Title brand={false} title="Create Games List" image={DesktopRoles} />
 
       <Breadcrumb
         label="Games"

@@ -19,9 +19,9 @@ import DotLoader from "../../components/Spinner/dotLoader";
 import Title from "../../components/Title";
 import DeleteRoleModal from "./components/DeleteRoleModal";
 // Assets
-import RoundImage from "../../assets/images/roles_logo.svg";
 import MobileRoles from "./mobile/MobileRoles";
 import Layout from "../../components/Layout";
+import { DesktopRoles } from "../../assets";
 
 interface RolesDT {
   name: string;
@@ -135,7 +135,7 @@ const Roles = () => {
       <Layout>
         {isLoading && <OverlayLoader />}
 
-        <Title brand={false} title="Roles" image={RoundImage} />
+        <Title brand={false} title="Roles" image={DesktopRoles} />
         <div className="bg-white p-6 rounded-lg shadow-sidebar mt-6">
           <DataTable value={roles} className="theme-table">
             <Column field="name" header="NAME"></Column>

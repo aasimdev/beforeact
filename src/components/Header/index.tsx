@@ -2,13 +2,13 @@ import { Button } from "primereact/button";
 import { Image } from "primereact/image";
 import { InputText } from "primereact/inputtext";
 import React, { useRef, useState } from "react";
-import profilePhoro from "../../assets/images/1.png";
 import { Menu } from "primereact/menu";
 // import api from "../api/api";
 // import { useAuth } from "../store/AuthStore";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/auth/authSlice";
+import { UserAvatar } from "../../assets";
 
 const Header: React.FC = () => {
   const [value, setValue] = useState("");
@@ -54,7 +54,7 @@ const Header: React.FC = () => {
           className="rounded-full static p-0 w-10 h-10 bg-transparent border-0 focus:outline-0 focus:ring-0"
           onClick={(event) => menuLeft.current?.toggle(event)}
         >
-          <Image src={profilePhoro} />
+          <Image src={UserAvatar} />
           <span className="w-2 h-2 rounded-full bg-green shadow-[0px_0px_0px_2px_white] inline-block absolute right-0.5 bottom-0.5"></span>
         </Button>
       </div>

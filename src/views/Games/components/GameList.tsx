@@ -1,12 +1,11 @@
 import Layout from "../../../components/Layout";
 import Title from "../../../components/Title";
-import RolesImage from "../../../assets/images/roles_logo.svg";
 import Breadcrumb from "../../../components/Breadcrumb/Index";
 import { Button } from "primereact/button";
 import { DataTable } from "primereact/datatable";
-import SortIcon from "../../../assets/images/sort_icon.svg";
 import { Column } from "primereact/column";
 import { useNavigate } from "react-router-dom";
+import { DesktopRoles, SortIcon } from "../../../assets";
 
 const GamesListData = [
   {
@@ -28,7 +27,7 @@ const GameList = () => {
 
   return (
     <Layout>
-      <Title brand={false} title="Games Lists" image={RolesImage} />
+      <Title brand={false} title="Games Lists" image={DesktopRoles} />
 
       <Breadcrumb mainLabel="Games Lists" label="Games" url="/games" />
 
